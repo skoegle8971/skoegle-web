@@ -52,6 +52,30 @@ export default function Footer() {
     >
       <Grid container spacing={4}>
         {/* Column 1 */}
+
+        <Grid item xs={12} md={4}>
+  <Box mb={2}>
+    <img src="/logo.png" alt="Skoegle Logo" style={{ height: 50 }} />
+  </Box>
+
+  <Typography variant="body2" fontWeight="bold" gutterBottom>
+    Contact
+  </Typography>
+  <Typography variant="body2" gutterBottom>
+    <strong>Address:</strong> 52/2, 2nd Main Rd, Vyalikaval, Lower Palace Orchards, Malleshwaram
+  </Typography>
+  <Typography variant="body2" gutterBottom>
+    <strong>Phone:</strong> 080-31211083 / 9902495354
+  </Typography>
+  <Typography variant="body2" gutterBottom>
+    <strong>Hours:</strong> 9:00 - 6:00, Mon - Sat
+  </Typography>
+  <Typography variant="body2">
+    <strong>Email:</strong> info@skoegle.in
+  </Typography>
+</Grid>
+
+        
         <Grid item xs={12} md={4}>
           <Typography variant="body2" fontWeight="bold" mb={2}>
             Our Brands:
@@ -100,7 +124,7 @@ export default function Footer() {
             <Typography key={text} variant="body2" mb={1}>
               <MuiLink href="#" underline="hover" color="inherit">
                 {text}
-              </MuiLink>
+              </MuiLink>                    
             </Typography>
           ))}
         </Grid>
@@ -119,6 +143,7 @@ export default function Footer() {
         <Typography variant="body2" color="text.secondary">
           Copyrights © SKOEGLE IOT INNOVATIONS PVT. LTD
         </Typography>
+       
         <Box mt={{ xs: 2, md: 0 }}>
           {socialLinks.map(({ icon: Icon, url }, index) => (
             <IconButton
