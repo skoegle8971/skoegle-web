@@ -23,12 +23,12 @@ export default function ResponsiveNavbar() {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const menuItems = [
-    "Insights",
-    "Industries",
+    "Home",
+    "Products",
     "Services",
-    "Careers",
-    "News",
-    "About us",
+    "Support",
+    "About Us",
+    "More",
   ];
 
   return (
@@ -87,7 +87,7 @@ export default function ResponsiveNavbar() {
         <Box sx={{ width: 280, p: 2 }}>
           <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
             <Typography variant="h6" sx={{ fontWeight: "bold", color: "#0077cc" }}>
-              SKOEGLE
+              Menu
             </Typography>
             <IconButton onClick={() => setMenuOpen(false)}>
               <HiOutlineX size={26} />

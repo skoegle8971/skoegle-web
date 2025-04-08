@@ -5,7 +5,7 @@ export default function App(){
     return(
    <Layout >
       <h1>Skoegle</h1>  
-    <img src="/file.svg"></img>      
+    <img src="/file.svg"/>    
       </Layout>
     )
   }
