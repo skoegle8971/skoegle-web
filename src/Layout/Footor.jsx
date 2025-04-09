@@ -118,18 +118,11 @@ export default function Footer() {
               <Box display="flex" alignItems="center">
                 <AccessTimeIcon sx={{ mr: 1, fontSize: 20 }} />
                 <Typography variant="body2">
-                  9:00 - 6:00, Mon - Sat
+                  9:00 - 6:00  Mon - Sat
                 </Typography>
               </Box>
               
-              <Box display="flex" alignItems="center">
-                <EmailIcon sx={{ mr: 1, fontSize: 20 }} />
-                <Typography variant="body2">
-                  <MuiLink href="mailto:info@skoegle.in" color="inherit" underline="hover">
-                    info@skoegle.in
-                  </MuiLink>
-                </Typography>
-              </Box>
+             
             </Stack>
           </Grid>
 
@@ -142,15 +135,15 @@ export default function Footer() {
               <PhoneIcon sx={{ mr: 1, fontSize: 18 }} />
               <Typography variant="body2">
                 <MuiLink href="tel:+31205050442" color="inherit" underline="hover">
-                  +3120 5050442
+                +91 99024 95354
                 </MuiLink>
               </Typography>
             </Box>
             <Box display="flex" alignItems="center" mb={3}>
               <EmailIcon sx={{ mr: 1, fontSize: 18 }} />
               <Typography variant="body2">
-                <MuiLink href="mailto:support@skoegle.in" color="inherit" underline="hover">
-                  Mail Support
+                <MuiLink href="mailto:info@skoegle.in" color="inherit" underline="hover">
+                info@skoegle.in
                 </MuiLink>
               </Typography>
             </Box>
@@ -162,15 +155,15 @@ export default function Footer() {
               <PhoneIcon sx={{ mr: 1, fontSize: 18 }} />
               <Typography variant="body2">
                 <MuiLink href="tel:+31205050444" color="inherit" underline="hover">
-                  +3120 5050444
+                +91 95915 05241
                 </MuiLink>
               </Typography>
             </Box>
             <Box display="flex" alignItems="center" mb={3}>
               <EmailIcon sx={{ mr: 1, fontSize: 18 }} />
               <Typography variant="body2">
-                <MuiLink href="mailto:sales@skoegle.in" color="inherit" underline="hover">
-                  Mail Sales
+                <MuiLink href="mailto:gayathri@sales.skoegle.com" color="inherit" underline="hover">
+                gayathri@sales.skoegle.com
                 </MuiLink>
               </Typography>
             </Box>
@@ -229,7 +222,7 @@ export default function Footer() {
               Copyright © {currentYear} SKOEGLE IOT INNOVATIONS PVT. LTD. All rights reserved.
             </Typography>
             <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5 }}>
-              Last updated: 2025-04-08
+         
             </Typography>
           </Box>
          

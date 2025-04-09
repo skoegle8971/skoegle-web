@@ -1,8 +1,77 @@
-export default function App(){
-    return(
-<>
-      <h1>IotTech</h1>  
-   
-      </>
-    )
-  }
+import { Button, Typography, Box, Grid, Card, CardMedia } from "@mui/material";
+
+export default function App() {
+  return (
+    <>
+      <Box sx={{ bgcolor: "#f5f5f5", color: "#212121", py: 5, px: { xs: 2, md: 8 } }}>
+        <Typography variant="h3" sx={{ fontWeight: "bold", mb: 4, fontFamily: "Orbitron, sans-serif" }}>
+          IotTech
+        </Typography>
+
+        <Grid container spacing={4} alignItems="center">
+          {/* Left Image */}
+          <Grid item xs={12} md={6}>
+            <Card sx={{ borderRadius: 2, overflow: "hidden", boxShadow: 3 }}>
+              <CardMedia
+                component="img"
+                image="/image.png" // Replace with actual path
+                alt="Engineers Working"
+              />
+            </Card>
+          </Grid>
+
+          {/* Right Content */}
+          <Grid item xs={12} md={6}>
+            <Typography
+              variant="h4"
+              sx={{ fontFamily: "Orbitron, sans-serif", mb: 2 }}
+            >
+              Transform Your Business With{" "}
+              <Box component="span" sx={{ color: "#0288d1" }}>
+                Iot Technology
+              </Box>
+            </Typography>
+
+            <Typography sx={{ color: "#616161", mb: 3 }}>
+            We customize our solutions,
+designed for your goals,
+shaped by your challenges,
+aligned with your vision,
+and built to deliver impact.
+            </Typography>
+
+            <Button
+              variant="outlined"
+              sx={{
+                color: "#0288d1",
+                borderColor: "#0288d1",
+                "&:hover": {
+                  bgcolor: "#0288d1",
+                  color: "#fff",
+                },
+                px: 4,
+                py: 1.5,
+                borderRadius: 5,
+                fontWeight: "bold",
+                textTransform: "none",
+              }}
+            >
+              Learn More
+            </Button>
+
+            {/* Right-side Mini Image */}
+            <Box mt={4}>
+              <Card sx={{ maxWidth: 300, borderRadius: 3 }}>
+                <CardMedia
+                  component="img"
+                  image="/image2.png" // Replace with actual path
+                  alt="iot with Laptop"
+                />
+              </Card>
+            </Box>
+          </Grid>
+        </Grid>
+      </Box>
+    </>
+  );
+}
