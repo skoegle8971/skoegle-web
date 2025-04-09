@@ -12,7 +12,8 @@ export default function App() {
           {/* Left Image */}
           <Grid item xs={12} md={6}>
             <Card sx={{ borderRadius: 2, overflow: "hidden", boxShadow: 3 }}>
-              <CardMedia
+              <CardMedia 
+              sx={{ height: 400 }}
                 component="img"
                 image="/image.png" // Replace with actual path
                 alt="Engineers Working"
@@ -34,10 +35,12 @@ export default function App() {
 
             <Typography sx={{ color: "#616161", mb: 3 }}>
             We customize our solutions,
-designed for your goals,
-shaped by your challenges,
-aligned with your vision,
-and built to deliver impact.
+designed for your goals, 
+<br/>
+shaped by your challenges
+<br/>
+
+
             </Typography>
 
             <Button
@@ -49,8 +52,8 @@ and built to deliver impact.
                   bgcolor: "#0288d1",
                   color: "#fff",
                 },
-                px: 4,
-                py: 1.5,
+                px: 3,
+                py: -1,
                 borderRadius: 5,
                 fontWeight: "bold",
                 textTransform: "none",
