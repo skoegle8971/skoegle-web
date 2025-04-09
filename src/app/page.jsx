@@ -9,7 +9,7 @@ export default function App(){
   {/* <IotBlogs/> */}
   {/* <IotServices/> */}
   <IotProjects/>
-  {/* <IotTech/> */}
+  <IotTech/>
     
     </Layout>
   )
