@@ -38,13 +38,13 @@ export default function App() {
   return (
     <Box sx={{ bgcolor: '#f5f5f5', color: '#000', minHeight: '100vh' }}>
       {/* Header */}
-      <AppBar position="static" sx={{ bgcolor: '#040430' }} elevation={2}>
+      {/* <AppBar position="static" sx={{ bgcolor: '#040430' }} elevation={2}>
         <Toolbar>
           <Typography variant="h6" sx={{ fontWeight: 700, letterSpacing: 1 }}>
             IoT-Blogs
           </Typography>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
 
       {/* Main Content */}
       <Box
