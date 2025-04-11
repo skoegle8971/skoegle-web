@@ -6,13 +6,11 @@ import IotTech from '../Components/IotTech'
 export default function App(){
   return(
    <Layout>
-    <br/>
-  {/* <IotBlogs/> */}
-  {/* <IotServices/> */}
-  <IotTech/>
-  <br/>
-  <IotProjects/>
-    
+    <br/>  
+    <IotTech/>
+    <IotServices/>
+    <IotProjects/>
+    <IotBlogs/>
     </Layout>
   )
 }

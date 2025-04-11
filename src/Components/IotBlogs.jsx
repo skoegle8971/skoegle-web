@@ -36,7 +36,7 @@ export default function App() {
   };
 
   return (
-    <Box sx={{ bgcolor: '#020D13', color: '#fff', minHeight: '100vh' }}>
+    <Box sx={{ bgcolor: '#f5f5f5', color: '#000', minHeight: '100vh' }}>
       {/* Header */}
       <AppBar position="static" sx={{ bgcolor: '#040430' }} elevation={2}>
         <Toolbar>
@@ -62,7 +62,7 @@ export default function App() {
                 Articles
               </Box>
             </Typography>
-            <Typography variant="body2" color="grey.500" mt={1}>
+            <Typography variant="body2" color="text.secondary" mt={1}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua
             </Typography>
@@ -89,8 +89,8 @@ export default function App() {
                   >
                     <Card
                       sx={{
-                        bgcolor: 'transparent',
-                        color: '#fff',
+                        bgcolor: '#fff',
+                        color: 'text.primary',
                         borderRadius: 2,
                         overflow: 'hidden',
                         height: '100%',
@@ -102,13 +102,13 @@ export default function App() {
                         height="160"
                         image={post.image}
                         alt={post.title}
-                        sx={{ filter: 'brightness(65%)' }}
+                        sx={{ filter: 'brightness(85%)' }}
                       />
                       <CardContent>
                         <Typography variant="subtitle1" fontWeight={600}>
                           {post.title}
                         </Typography>
-                        <Typography variant="body2" color="grey.500" mt={1}>
+                        <Typography variant="body2" color="text.secondary" mt={1}>
                           Lorem ipsum dolor sit amet, consectetur adipiscing elit...
                         </Typography>
                       </CardContent>
