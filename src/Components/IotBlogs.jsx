@@ -2,8 +2,6 @@
 
 import React from 'react';
 import {
-  AppBar,
-  Toolbar,
   Typography,
   Box,
   Container,
@@ -36,17 +34,7 @@ export default function App() {
   };
 
   return (
-    <Box sx={{ bgcolor: '#020D13', color: '#fff', minHeight: '100vh' }}>
-      {/* Header */}
-      <AppBar position="static" sx={{ bgcolor: '#040430' }} elevation={2}>
-        <Toolbar>
-          <Typography variant="h6" sx={{ fontWeight: 700, letterSpacing: 1 }}>
-            IoT-Blogs
-          </Typography>
-        </Toolbar>
-      </AppBar>
-
-      {/* Main Content */}
+    <Box sx={{ bgcolor: '#f5f5f5', color: '#000', minHeight: '100vh' }}>
       <Box
         sx={{
           display: 'flex',
@@ -62,7 +50,7 @@ export default function App() {
                 Articles
               </Box>
             </Typography>
-            <Typography variant="body2" color="grey.500" mt={1}>
+            <Typography variant="body2" color="text.secondary" mt={1}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua
             </Typography>
@@ -70,12 +58,25 @@ export default function App() {
 
           <Grid container spacing={3} justifyContent="center">
             {blogPosts.map((post, index) => (
-              <Grid item xs={12} sm={4} key={index}>
+              <Grid
+                item
+                key={index}
+                xs={12}
+                sm={index < 2 ? 6 : 12}
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
                 <motion.div
                   initial={{ opacity: 0, y: 40 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.2 }}
                   whileHover={{ scale: 1.03 }}
+                  style={{
+                    width: index < 2 ? '100%' : '50%',
+                    maxWidth: 500,
+                  }}
                 >
                   <ButtonBase
                     onClick={() => handleClick(post.title)}
@@ -89,26 +90,28 @@ export default function App() {
                   >
                     <Card
                       sx={{
-                        bgcolor: 'transparent',
-                        color: '#fff',
+                        bgcolor: '#fff',
+                        color: 'text.primary',
                         borderRadius: 2,
                         overflow: 'hidden',
-                        height: '100%',
+                        height: 360,
+                        display: 'flex',
+                        flexDirection: 'column',
                         boxShadow: 3,
                       }}
                     >
                       <CardMedia
                         component="img"
-                        height="160"
+                        height="180"
                         image={post.image}
                         alt={post.title}
-                        sx={{ filter: 'brightness(65%)' }}
+                        sx={{ filter: 'brightness(85%)' }}
                       />
                       <CardContent>
                         <Typography variant="subtitle1" fontWeight={600}>
                           {post.title}
                         </Typography>
-                        <Typography variant="body2" color="grey.500" mt={1}>
+                        <Typography variant="body2" color="text.secondary" mt={1}>
                           Lorem ipsum dolor sit amet, consectetur adipiscing elit...
                         </Typography>
                       </CardContent>
