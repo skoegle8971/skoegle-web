@@ -7,8 +7,8 @@ export default function App(){
   return(
    <Layout>
     <br/>
-  {/* <IotBlogs/> */}
-  {/* <IotServices/> */}
+  <IotBlogs/>
+  <IotServices/>
   <IotTech/>
   <br/>
   <IotProjects/>
