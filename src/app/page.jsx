@@ -12,7 +12,6 @@ export default function App(){
     <br/>  
     <IotServices/>
     <br/>  
-    <br/>  
     <IotBlogs/>
     </Layout>
   )

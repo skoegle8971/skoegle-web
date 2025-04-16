@@ -27,7 +27,7 @@ export default function App() {
     {
       title: 'Smart Home Automation',
       description:
-        'Control lights, appliances, and security systems remotely using smart IoT solutions.',
+        'Control lights, appliances, and security systems remotely using smart IoT solutions for further info.',
       image: '/images.jpg',
     },
     {
