@@ -10,6 +10,7 @@ import {
   CardContent,
   CardMedia,
   ButtonBase,
+  Button,
 } from '@mui/material';
 import { motion } from 'framer-motion';
 
@@ -20,11 +21,11 @@ const blogPosts = [
   },
   {
     title: 'Exploring The Ethics Of AI And Robotics In Society',
-    image: '/blog2.jpg',
+    image: '/blog4.jpg',
   },
   {
     title: 'How AI Is Changing The Face Of Digital Marketing',
-    image: '/blog3.jpg',
+    image: '/image7.jpg',
   },
 ];
 
@@ -62,7 +63,8 @@ export default function App() {
                 item
                 key={index}
                 xs={12}
-                sm={index < 2 ? 6 : 12}
+                sm={6}
+                md={index < 2 ? 6 : 12}
                 sx={{
                   display: 'flex',
                   justifyContent: 'center',
@@ -73,10 +75,7 @@ export default function App() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.2 }}
                   whileHover={{ scale: 1.03 }}
-                  style={{
-                    width: index < 2 ? '100%' : '50%',
-                    maxWidth: 500,
-                  }}
+                  style={{ width: '100%' }}
                 >
                   <ButtonBase
                     onClick={() => handleClick(post.title)}
@@ -121,6 +120,31 @@ export default function App() {
               </Grid>
             ))}
           </Grid>
+
+          {/* Add View All Services Button Below */}
+          <Box textAlign="center" mt={6}>
+            <Button
+              variant="outlined"
+              onClick={() => console.log('View all services clicked')}
+              sx={{
+                borderRadius: '999px',
+                borderColor: '#00CFFF',
+                color: '#00CFFF',
+                backgroundColor: 'rgba(0, 207, 255, 0.1)',
+                px: 4,
+                py: 1.5,
+                fontWeight: 'bold',
+                letterSpacing: 1,
+                textTransform: 'uppercase',
+                '&:hover': {
+                  backgroundColor: 'rgba(0, 207, 255, 0.2)',
+                  borderColor: '#00CFFF',
+                },
+              }}
+            >
+              View All Blogs
+            </Button>
+          </Box>
         </Container>
       </Box>
     </Box>
