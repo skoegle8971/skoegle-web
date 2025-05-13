@@ -86,6 +86,7 @@ export default function Footer() {
     "Careers": "/careers",
     "Our Team": "/team",
     "Our Innovations": "/innovations",
+    
   };
 
   return (

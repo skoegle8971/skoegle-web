@@ -14,12 +14,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider appearance={{ baseTheme: "light" }}>
       <html lang="en">
         <body className={ibmPlexSans.className} style={{ margin: 0, padding: 0 }}>
           {/* Header with UserButton shown only when signed in */}
           <header className="flex justify-between items-center p-4 border-b bg-white shadow-sm">
-            <h1 className="text-xl font-semibold text-blue-700">Skoegle</h1>
+            {/* <h1 className="text-xl font-semibold text-blue-700">Skoegle</h1> */}
             {/* <SignedIn>
               <UserButton afterSignOutUrl="/" />
             </SignedIn> */}

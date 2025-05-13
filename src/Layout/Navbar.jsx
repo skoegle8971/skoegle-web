@@ -26,8 +26,8 @@ import {
   HiOutlineChevronRight,
   HiOutlineChevronDown,
 } from "react-icons/hi";
-import { useUser, SignOutButton, UserButton } from "@clerk/nextjs"; // Import UserButton
-import Link from "next/link"; // Import Link
+import { useUser, SignOutButton, UserButton } from "@clerk/nextjs";
+import Link from "next/link";
 
 const BRAND_COLOR = "#0077cc";
 
@@ -56,7 +56,8 @@ export default function ResponsiveNavbar() {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const moreRef = useRef(null);
   const { isSignedIn } = useUser();
-
+  const userButtonRef = useRef(null);
+ 
   useEffect(() => {
     function handleClickOutside(event) {
       if (moreRef.current && !moreRef.current.contains(event.target)) {
@@ -71,13 +72,12 @@ export default function ResponsiveNavbar() {
   const handleDropdownToggle = () => setDropdownOpen((prev) => !prev);
   const handleDropdownClose = () => setDropdownOpen(false);
   const handleMobileMoreToggle = () => setMoreExpanded(!moreExpanded);
-  const handleSignUpClick = () => !isSignedIn && router.push("/signup");
+  const handleSignUpClick = () => !isSignedIn && router.push("/signin");
 
   return (
     <Box sx={{ flexGrow: 2 }}>
       <AppBar position="static" sx={{ backgroundColor: "#fff", color: "#000", boxShadow: 3 }}>
         <Toolbar sx={{ justifyContent: "space-between", px: { xs: 2, md: 4 } }}>
-          {/* Left - Logo and Menu */}
           <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 2, md: 4 } }}>
             <Typography variant="h6" sx={{ fontWeight: "bold", color: BRAND_COLOR }}>
               <Link href="/" style={{ textDecoration: "none", color: BRAND_COLOR }}>
@@ -154,31 +154,13 @@ export default function ResponsiveNavbar() {
               </Box>
             )}
           </Box>
+          
 
-          {/* Right - Buttons */}
           {!isMobile ? (
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
               {isSignedIn ? (
-                // Show UserButton only when the user is signed in
-                <UserButton
-                  sx={{
-                    backgroundColor: BRAND_COLOR,
-                    color: "#fff",
-                    border: "none",
-                    px: 3,
-                    py: 1,
-                    borderRadius: "20px",
-                    fontWeight: 500,
-                    fontSize: 14,
-                    cursor: "pointer",
-                    transition: "background 0.3s ease",
-                    "&:hover": {
-                      backgroundColor: "#005fa3",
-                    },
-                  }}
-                />
+                <UserButton />
               ) : (
-                // Show Sign In button when the user is not signed in
                 <Box
                   component="button"
                   onClick={handleSignUpClick}
@@ -202,7 +184,6 @@ export default function ResponsiveNavbar() {
                 </Box>
               )}
 
-              {/* Show Search icon for both signed in and signed out */}
               <Box
                 sx={{
                   display: "flex",
@@ -230,10 +211,9 @@ export default function ResponsiveNavbar() {
         </Toolbar>
       </AppBar>
 
-      {/* Mobile Drawer */}
       <Drawer anchor="right" open={menuOpen} onClose={() => setMenuOpen(false)}>
         <Box sx={{ width: 280, p: 2 }}>
-          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
+          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
             <Typography variant="h6" sx={{ fontWeight: "bold", color: BRAND_COLOR }}>
               Menu
             </Typography>
@@ -242,7 +222,51 @@ export default function ResponsiveNavbar() {
             </IconButton>
           </Box>
 
-          <List disablePadding>
+      {isSignedIn ? (
+       <Box
+        onClick={() => {
+         const innerBtn = userButtonRef.current?.querySelector("button");
+        if (innerBtn) innerBtn.click();
+        }}
+           sx={{
+         backgroundColor: BRAND_COLOR,
+          p: 1.5,
+          borderRadius: 2,
+           display: "flex",
+          justifyContent: "center",
+         alignItems: "center",
+          cursor: "pointer",
+         "&:hover": {
+         backgroundColor: "#005fa3",
+          },
+       }}
+        >
+    <div ref={userButtonRef}>
+      <UserButton />
+    </div>
+  </Box>
+) : (
+  <Box
+    onClick={() => router.push("/signin")}
+    sx={{
+      textAlign: "center",
+      py: 1.5,
+      borderRadius: 1,
+      backgroundColor: "#e6f3ff",
+      color: "#000",
+      fontWeight: 500,
+      fontSize: 14,
+      cursor: "pointer",
+      "&:hover": {
+        backgroundColor: "#cce6ff",
+      },
+    }}
+  >
+    Sign In
+  </Box>
+)}
+
+         <List disablePadding>
             {MENU_ITEMS.map(({ label, path }, idx) => (
               <ListItem
                 key={idx}
@@ -292,55 +316,7 @@ export default function ResponsiveNavbar() {
               </Collapse>
             </Box>
           </List>
-
-          <Box sx={{ display: "flex", justifyContent: "space-between", gap: 1, mt: 2 }}>
-            <Box
-              onClick={() => router.push("/login")}
-              sx={{
-                flex: 1,
-                textAlign: "center",
-                py: 1.5,
-                borderRadius: 1,
-                backgroundColor: "#e6f3ff",
-                cursor: "pointer",
-              }}
-            >
-              Sign In
-            </Box>
-            {isSignedIn ? (
-              <SignOutButton signOutCallback={() => router.push("/")}>
-                <Box
-                  sx={{
-                    flex: 1,
-                    textAlign: "center",
-                    py: 1.5,
-                    borderRadius: 1,
-                    backgroundColor: BRAND_COLOR,
-                    color: "white",
-                    cursor: "pointer",
-                  }}
-                >
-                  Log Out
-                </Box>
-              </SignOutButton>
-            ) : (
-              <Box
-                onClick={handleSignUpClick}
-                sx={{
-                  flex: 1,
-                  textAlign: "center",
-                  py: 1.5,
-                  borderRadius: 1,
-                  backgroundColor: BRAND_COLOR,
-                  color: "white",
-                  cursor: "pointer",
-                }}
-              >
-                Sign Up
-              </Box>
-            )}
-          </Box>
-        </Box>
+           </Box>
       </Drawer>
 
       <style jsx global>{`
