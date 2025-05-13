@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   Box,
@@ -22,7 +21,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-  
+
   const socialLinks = [
     {
       icon: LinkedInIcon,
@@ -52,7 +51,7 @@ export default function Footer() {
   ];
 
   const ourBrands = ["Vmarg", "Dmarg"];
-  
+
   const mainLinks = [
     "About us",
     "Our Products",
@@ -60,7 +59,7 @@ export default function Footer() {
     "Terms and Conditions",
     "Contact Us",
   ];
-  
+
   const additionalLinks = [
     "Sign In",
     "Sign up",
@@ -68,8 +67,27 @@ export default function Footer() {
     "News",
     "Careers",
     "Our Team",
-    "Our Innovations"
+    "Our Innovations",
   ];
+
+  const mainLinkUrls = {
+    "About us": "/about",
+    "Our Products": "/products",
+    "Privacy Policy": "/privacy-policy",
+    "Terms and Conditions": "/terms-and-conditions",
+    "Contact Us": "/contact",
+  };
+
+  const additionalLinkUrls = {
+    "Sign In": "/signin",
+    "Sign up": "/signup",
+    "Blogs": "/blog",
+    "News": "/news",
+    "Careers": "/careers",
+    "Our Team": "/team",
+    "Our Innovations": "/innovations",
+    
+  };
 
   return (
     <Box
@@ -93,36 +111,33 @@ export default function Footer() {
             <Typography variant="body2" fontWeight="bold" gutterBottom>
               Contact Information
             </Typography>
-            
+
             <Stack spacing={2} sx={{ mt: 2 }}>
               <Box display="flex" alignItems="flex-start">
                 <LocationOnIcon sx={{ mr: 1, fontSize: 20, mt: 0.5 }} />
                 <Typography variant="body2">
-                  52/2, 2nd Main Rd, Vyalikaval, Lower Palace Orchards, Malleshwaram
+                  52/2, 2nd Main Rd, Vyalikaval, Lower Palace Orchards,
+                  Malleshwaram
                 </Typography>
               </Box>
-              
+
               <Box display="flex" alignItems="center">
                 <PhoneIcon sx={{ mr: 1, fontSize: 20 }} />
                 <Typography variant="body2">
                   <MuiLink href="tel:08031211083" color="inherit" underline="hover">
                     080-31211083
-                  </MuiLink>
-                  {" / "}
+                  </MuiLink>{" "}
+                  /{" "}
                   <MuiLink href="tel:9902495354" color="inherit" underline="hover">
                     9902495354
                   </MuiLink>
                 </Typography>
               </Box>
-              
+
               <Box display="flex" alignItems="center">
                 <AccessTimeIcon sx={{ mr: 1, fontSize: 20 }} />
-                <Typography variant="body2">
-                  9:00 - 6:00  Mon - Sat
-                </Typography>
+                <Typography variant="body2">9:00 - 6:00 Mon - Sat</Typography>
               </Box>
-              
-             
             </Stack>
           </Grid>
 
@@ -135,7 +150,7 @@ export default function Footer() {
               <PhoneIcon sx={{ mr: 1, fontSize: 18 }} />
               <Typography variant="body2">
                 <MuiLink href="tel:+31205050442" color="inherit" underline="hover">
-                +91 99024 95354
+                  +91 99024 95354
                 </MuiLink>
               </Typography>
             </Box>
@@ -143,7 +158,7 @@ export default function Footer() {
               <EmailIcon sx={{ mr: 1, fontSize: 18 }} />
               <Typography variant="body2">
                 <MuiLink href="mailto:info@skoegle.in" color="inherit" underline="hover">
-                info@skoegle.in
+                  info@skoegle.in
                 </MuiLink>
               </Typography>
             </Box>
@@ -155,19 +170,23 @@ export default function Footer() {
               <PhoneIcon sx={{ mr: 1, fontSize: 18 }} />
               <Typography variant="body2">
                 <MuiLink href="tel:+31205050444" color="inherit" underline="hover">
-                +91 95915 05241
+                  +91 95915 05241
                 </MuiLink>
               </Typography>
             </Box>
             <Box display="flex" alignItems="center" mb={3}>
               <EmailIcon sx={{ mr: 1, fontSize: 18 }} />
               <Typography variant="body2">
-                <MuiLink href="mailto:gayathri@sales.skoegle.com" color="inherit" underline="hover">
-                gayathri@sales.skoegle.com
+                <MuiLink
+                  href="mailto:gayathri@sales.skoegle.com"
+                  color="inherit"
+                  underline="hover"
+                >
+                  gayathri@sales.skoegle.com
                 </MuiLink>
               </Typography>
             </Box>
-            
+
             <Typography variant="body2" fontWeight="bold" mb={2}>
               Our Brands:
             </Typography>
@@ -185,7 +204,7 @@ export default function Footer() {
             </Typography>
             {mainLinks.map((text) => (
               <Typography key={text} variant="body2" mb={1.5}>
-                <MuiLink href="#" underline="hover" color="inherit">
+                <MuiLink href={mainLinkUrls[text]} underline="hover" color="inherit">
                   {text}
                 </MuiLink>
               </Typography>
@@ -199,15 +218,14 @@ export default function Footer() {
             </Typography>
             {additionalLinks.map((text) => (
               <Typography key={text} variant="body2" mb={1.5}>
-                <MuiLink href="#" underline="hover" color="inherit">
+                <MuiLink href={additionalLinkUrls[text]} underline="hover" color="inherit">
                   {text}
-                </MuiLink>                    
+                </MuiLink>
               </Typography>
             ))}
           </Grid>
         </Grid>
 
-        {/* Divider */}
         <Divider sx={{ my: 4 }} />
 
         {/* Bottom Row */}
@@ -221,11 +239,8 @@ export default function Footer() {
             <Typography variant="body2" color="text.secondary">
               Copyright © {currentYear} SKOEGLE IOT INNOVATIONS PVT. LTD. All rights reserved.
             </Typography>
-            <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5 }}>
-         
-            </Typography>
           </Box>
-         
+
           <Box mt={{ xs: 3, md: 0 }}>
             {socialLinks.map(({ icon: Icon, url, label }, index) => (
               <IconButton
@@ -242,7 +257,7 @@ export default function Footer() {
                   color: "#000",
                   "&:hover": {
                     backgroundColor: "rgba(0,0,0,0.08)",
-                  }
+                  },
                 }}
               >
                 <Icon />

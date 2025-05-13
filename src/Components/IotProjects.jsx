@@ -22,19 +22,19 @@ export default function App() {
       title: 'Tracking Technology',
       description:
         'Discover how GPS and IoT enable efficient asset and vehicle tracking across industries.',
-      image: '/images.jpg',
+      image: '/image1.jpg',
     },
     {
       title: 'Smart Home Automation',
       description:
         'Control lights, appliances, and security systems remotely using smart IoT solutions for further info.',
-      image: '/images.jpg',
+      image: '/image3.jpg',
     },
     {
       title: 'Industrial IoT Solutions',
       description:
         'Monitor and manage machinery, energy consumption, and predictive maintenance with IIoT.',
-      image: '/iot.jpg',
+      image: '/image6.jpg',
     },
   ];
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import {
   AppBar,
@@ -15,132 +16,103 @@ import {
   useMediaQuery,
   Collapse,
   Paper,
-  Popper,
-  ClickAwayListener,
-  Grow,
   MenuList,
   MenuItem,
 } from "@mui/material";
 import { FiSearch } from "react-icons/fi";
-import { 
-  HiOutlineMenu, 
-  HiOutlineX, 
-  HiOutlineChevronRight, 
-  HiOutlineChevronDown 
+import {
+  HiOutlineMenu,
+  HiOutlineX,
+  HiOutlineChevronRight,
+  HiOutlineChevronDown,
 } from "react-icons/hi";
+import { useUser, SignOutButton, UserButton } from "@clerk/nextjs";
+import Link from "next/link";
 
-// Constants for reusability
 const BRAND_COLOR = "#0077cc";
+
 const MENU_ITEMS = [
-  "Home",
-  "Products",
-  "Services",
-  "Support",
-  "About Us",
+  { label: "Home", path: "/" },
+  { label: "Products", path: "/products" },
+  { label: "Services", path: "/services" },
+  { label: "Support", path: "/support" },
+  { label: "About Us", path: "/about" },
 ];
 
-// Dropdown items for "More"
 const MORE_DROPDOWN_ITEMS = [
-  "Careers",
-  "Blog",
-  "Resources",
-  "Partners",
-  "Contact Us"
+  { label: "Careers", path: "/careers" },
+  { label: "Blog", path: "/blog" },
+  { label: "Resources", path: "/resources" },
+  { label: "Partners", path: "/partners" },
+  { label: "Contact Us", path: "/contact" },
 ];
 
 export default function ResponsiveNavbar() {
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [moreExpanded, setMoreExpanded] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const moreRef = useRef(null);
-
-  // Close dropdown when clicking outside
+  const { isSignedIn } = useUser();
+  const userButtonRef = useRef(null);
+ 
   useEffect(() => {
     function handleClickOutside(event) {
       if (moreRef.current && !moreRef.current.contains(event.target)) {
         setDropdownOpen(false);
       }
     }
-    
+
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [moreRef]);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
-  const handleDropdownToggle = () => {
-    setDropdownOpen((prev) => !prev);
-  };
-
-  const handleDropdownClose = () => {
-    setDropdownOpen(false);
-  };
-
-  const handleMobileMoreToggle = () => {
-    setMoreExpanded(!moreExpanded);
-  };
+  const handleDropdownToggle = () => setDropdownOpen((prev) => !prev);
+  const handleDropdownClose = () => setDropdownOpen(false);
+  const handleMobileMoreToggle = () => setMoreExpanded(!moreExpanded);
+  const handleSignUpClick = () => !isSignedIn && router.push("/signin");
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: "#fff", color: "#000", boxShadow: 1 }}>
+    <Box sx={{ flexGrow: 2 }}>
+      <AppBar position="static" sx={{ backgroundColor: "#fff", color: "#000", boxShadow: 3 }}>
         <Toolbar sx={{ justifyContent: "space-between", px: { xs: 2, md: 4 } }}>
-          {/* Left Section */}
           <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 2, md: 4 } }}>
             <Typography variant="h6" sx={{ fontWeight: "bold", color: BRAND_COLOR }}>
-              SKOEGLE
+              <Link href="/" style={{ textDecoration: "none", color: BRAND_COLOR }}>
+                SKOEGLE
+              </Link>
             </Typography>
-            
+
             {!isMobile && (
-              <Box
-                component="nav"
-                sx={{
-                  display: "flex",
-                  gap: 3,
-                }}
-              >
-                <Box
-                  component="ul"
-                  sx={{
-                    display: "flex",
-                    gap: 3,
-                    listStyle: "none",
-                    m: 0,
-                    p: 0,
-                  }}
-                >
-                  {MENU_ITEMS.map((item, idx) => (
+              <Box component="nav" sx={{ display: "flex", gap: 3 }}>
+                <Box component="ul" sx={{ display: "flex", gap: 3, listStyle: "none", m: 0, p: 0 }}>
+                  {MENU_ITEMS.map(({ label, path }, idx) => (
                     <Box
                       component="li"
                       key={idx}
                       className="menu-item"
                       sx={{ cursor: "pointer" }}
+                      onClick={() => router.push(path)}
                     >
-                      {item}
+                      {label}
                     </Box>
                   ))}
-                  
-                  {/* More dropdown for desktop */}
+
                   <Box
                     component="li"
                     className="menu-item"
                     ref={moreRef}
                     onClick={handleDropdownToggle}
-                    sx={{ 
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      position: "relative"
-                    }}
+                    sx={{ cursor: "pointer", display: "flex", alignItems: "center", position: "relative" }}
                   >
                     More
-                    <HiOutlineChevronDown 
-                      style={{ marginLeft: 4 }} 
+                    <HiOutlineChevronDown
+                      style={{ marginLeft: 4 }}
                       className={dropdownOpen ? "chevron-rotate" : ""}
                     />
-                    
-                    {/* Dropdown menu */}
+
                     {dropdownOpen && (
                       <Paper
                         elevation={3}
@@ -155,20 +127,23 @@ export default function ResponsiveNavbar() {
                         }}
                       >
                         <MenuList>
-                          {MORE_DROPDOWN_ITEMS.map((item, idx) => (
-                            <MenuItem 
-                              key={idx} 
-                              onClick={handleDropdownClose}
-                              sx={{ 
-                                fontSize: "14px", 
+                          {MORE_DROPDOWN_ITEMS.map(({ label, path }, idx) => (
+                            <MenuItem
+                              key={idx}
+                              onClick={() => {
+                                handleDropdownClose();
+                                router.push(path);
+                              }}
+                              sx={{
+                                fontSize: "14px",
                                 py: 1.2,
                                 "&:hover": {
                                   color: BRAND_COLOR,
-                                  backgroundColor: "rgba(0, 119, 204, 0.04)"
-                                }
+                                  backgroundColor: "rgba(0, 119, 204, 0.04)",
+                                },
                               }}
                             >
-                              {item}
+                              {label}
                             </MenuItem>
                           ))}
                         </MenuList>
@@ -179,35 +154,56 @@ export default function ResponsiveNavbar() {
               </Box>
             )}
           </Box>
+          
 
-          {/* Right Section */}
           {!isMobile ? (
-            <Box 
-              sx={{ 
-                display: "flex", 
-                alignItems: "center", 
-                fontWeight: 500, 
-                fontSize: 16,
-                cursor: "pointer",
-                "&:hover": { color: BRAND_COLOR }
-              }}
-            >
-              <span>Search</span>
-              <FiSearch style={{ marginLeft: 6 }} />
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+              {isSignedIn ? (
+                <UserButton />
+              ) : (
+                <Box
+                  component="button"
+                  onClick={handleSignUpClick}
+                  sx={{
+                    backgroundColor: BRAND_COLOR,
+                    color: "#fff",
+                    border: "none",
+                    px: 3,
+                    py: 1,
+                    borderRadius: "20px",
+                    fontWeight: 500,
+                    fontSize: 14,
+                    cursor: "pointer",
+                    transition: "background 0.3s ease",
+                    "&:hover": {
+                      backgroundColor: "#005fa3",
+                    },
+                  }}
+                >
+                  Sign In
+                </Box>
+              )}
+
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  fontWeight: 500,
+                  fontSize: 16,
+                  cursor: "pointer",
+                  "&:hover": { color: BRAND_COLOR },
+                }}
+              >
+                <span>Search</span>
+                <FiSearch style={{ marginLeft: 6 }} />
+              </Box>
             </Box>
           ) : (
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-              <IconButton 
-                sx={{ color: "#555" }}
-                aria-label="search"
-              >
+              <IconButton sx={{ color: "#555" }}>
                 <FiSearch size={18} />
               </IconButton>
-              <IconButton 
-                onClick={() => setMenuOpen(true)}
-                sx={{ color: "#555" }}
-                aria-label="menu"
-              >
+              <IconButton onClick={() => setMenuOpen(true)} sx={{ color: "#555" }}>
                 <HiOutlineMenu size={26} />
               </IconButton>
             </Box>
@@ -215,63 +211,79 @@ export default function ResponsiveNavbar() {
         </Toolbar>
       </AppBar>
 
-      {/* Drawer for mobile */}
-      <Drawer 
-        anchor="right" 
-        open={menuOpen} 
-        onClose={() => setMenuOpen(false)}
-      >
+      <Drawer anchor="right" open={menuOpen} onClose={() => setMenuOpen(false)}>
         <Box sx={{ width: 280, p: 2 }}>
-          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
+          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
             <Typography variant="h6" sx={{ fontWeight: "bold", color: BRAND_COLOR }}>
               Menu
             </Typography>
-            <IconButton 
-              onClick={() => setMenuOpen(false)}
-              aria-label="close menu"
-            >
+            <IconButton onClick={() => setMenuOpen(false)}>
               <HiOutlineX size={26} />
             </IconButton>
           </Box>
-          
-          <List component="nav" disablePadding>
-            {MENU_ITEMS.map((item, idx) => (
+
+      {isSignedIn ? (
+       <Box
+        onClick={() => {
+         const innerBtn = userButtonRef.current?.querySelector("button");
+        if (innerBtn) innerBtn.click();
+        }}
+           sx={{
+         backgroundColor: BRAND_COLOR,
+          p: 1.5,
+          borderRadius: 2,
+           display: "flex",
+          justifyContent: "center",
+         alignItems: "center",
+          cursor: "pointer",
+         "&:hover": {
+         backgroundColor: "#005fa3",
+          },
+       }}
+        >
+    <div ref={userButtonRef}>
+      <UserButton />
+    </div>
+  </Box>
+) : (
+  <Box
+    onClick={() => router.push("/signin")}
+    sx={{
+      textAlign: "center",
+      py: 1.5,
+      borderRadius: 1,
+      backgroundColor: "#e6f3ff",
+      color: "#000",
+      fontWeight: 500,
+      fontSize: 14,
+      cursor: "pointer",
+      "&:hover": {
+        backgroundColor: "#cce6ff",
+      },
+    }}
+  >
+    Sign In
+  </Box>
+)}
+
+         <List disablePadding>
+            {MENU_ITEMS.map(({ label, path }, idx) => (
               <ListItem
                 key={idx}
                 button
-                sx={{
-                  backgroundColor: "#f7f7f7",
-                  mb: 1,
-                  borderRadius: 1,
-                  fontWeight: 500,
-                  fontSize: 16,
-                  transition: "all 0.2s ease",
-                  "&:hover": {
-                    backgroundColor: "#e9f3fc",
-                  }
+                sx={{ mb: 1 }}
+                onClick={() => {
+                  router.push(path);
+                  setMenuOpen(false);
                 }}
               >
-                <ListItemText primary={item} />
+                <ListItemText primary={label} />
                 <HiOutlineChevronRight />
               </ListItem>
             ))}
-            
-            {/* More dropdown in mobile */}
+
             <Box sx={{ mb: 1 }}>
-              <ListItem
-                button
-                onClick={handleMobileMoreToggle}
-                sx={{
-                  backgroundColor: "#f7f7f7",
-                  borderRadius: moreExpanded ? "8px 8px 0 0" : 1,
-                  fontWeight: 500,
-                  fontSize: 16,
-                  transition: "all 0.2s ease",
-                  "&:hover": {
-                    backgroundColor: "#e9f3fc",
-                  }
-                }}
-              >
+              <ListItem button onClick={handleMobileMoreToggle}>
                 <ListItemText primary="More" />
                 <IconButton
                   sx={{
@@ -284,55 +296,29 @@ export default function ResponsiveNavbar() {
                   <HiOutlineChevronRight />
                 </IconButton>
               </ListItem>
-              
+
               <Collapse in={moreExpanded} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  {MORE_DROPDOWN_ITEMS.map((item, idx) => (
+                <List disablePadding>
+                  {MORE_DROPDOWN_ITEMS.map(({ label, path }, idx) => (
                     <ListItem
                       key={idx}
                       button
-                      sx={{
-                        pl: 4,
-                        backgroundColor: "#edf5fb",
-                        borderTop: idx !== 0 ? "1px solid rgba(0,0,0,0.05)" : "none",
-                        borderRadius: idx === MORE_DROPDOWN_ITEMS.length - 1 ? "0 0 8px 8px" : "0",
-                        "&:hover": {
-                          backgroundColor: "#e0eef9",
-                        }
+                      sx={{ pl: 4 }}
+                      onClick={() => {
+                        router.push(path);
+                        setMenuOpen(false);
                       }}
                     >
-                      <ListItemText 
-                        primary={item} 
-                        primaryTypographyProps={{ fontSize: 15 }}
-                      />
+                      <ListItemText primary={label} />
                     </ListItem>
                   ))}
                 </List>
               </Collapse>
             </Box>
           </List>
-          
-          {/* Mobile search button */}
-          <Box 
-            sx={{ 
-              display: "flex", 
-              alignItems: "center", 
-              justifyContent: "center",
-              backgroundColor: BRAND_COLOR,
-              color: "white",
-              py: 1.5,
-              borderRadius: 1,
-              mt: 2,
-              cursor: "pointer"
-            }}
-          >
-            <FiSearch style={{ marginRight: 8 }} />
-            <Typography>Search</Typography>
-          </Box>
-        </Box>
+           </Box>
       </Drawer>
 
-      {/* Styles for animations and transitions */}
       <style jsx global>{`
         .menu-item {
           position: relative;
@@ -341,13 +327,11 @@ export default function ResponsiveNavbar() {
           color: #00001a;
           transition: color 0.2s ease;
         }
-
         .menu-item:hover {
           color: ${BRAND_COLOR};
         }
-
         .menu-item::after {
-          content: '';
+          content: "";
           position: absolute;
           bottom: -4px;
           left: 0;
@@ -358,11 +342,9 @@ export default function ResponsiveNavbar() {
           transform-origin: left;
           transition: transform 0.3s ease-in-out;
         }
-
         .menu-item:hover::after {
           transform: scaleX(1);
         }
-        
         .chevron-rotate {
           transform: rotate(180deg);
           transition: transform 0.3s ease;
