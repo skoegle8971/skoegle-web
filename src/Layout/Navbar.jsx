@@ -56,8 +56,7 @@ export default function ResponsiveNavbar() {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const moreRef = useRef(null);
   const { isSignedIn } = useUser();
-  const userButtonRef = useRef(null);
- 
+
   useEffect(() => {
     function handleClickOutside(event) {
       if (moreRef.current && !moreRef.current.contains(event.target)) {
@@ -154,7 +153,6 @@ export default function ResponsiveNavbar() {
               </Box>
             )}
           </Box>
-          
 
           {!isMobile ? (
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
@@ -222,51 +220,48 @@ export default function ResponsiveNavbar() {
             </IconButton>
           </Box>
 
-      {isSignedIn ? (
-       <Box
-        onClick={() => {
-         const innerBtn = userButtonRef.current?.querySelector("button");
-        if (innerBtn) innerBtn.click();
-        }}
-           sx={{
-         backgroundColor: BRAND_COLOR,
-          p: 1.5,
-          borderRadius: 2,
-           display: "flex",
-          justifyContent: "center",
-         alignItems: "center",
-          cursor: "pointer",
-         "&:hover": {
-         backgroundColor: "#005fa3",
-          },
-       }}
-        >
-    <div ref={userButtonRef}>
-      <UserButton />
-    </div>
-  </Box>
-) : (
-  <Box
-    onClick={() => router.push("/signin")}
-    sx={{
-      textAlign: "center",
-      py: 1.5,
-      borderRadius: 1,
-      backgroundColor: "#e6f3ff",
-      color: "#000",
-      fontWeight: 500,
-      fontSize: 14,
-      cursor: "pointer",
-      "&:hover": {
-        backgroundColor: "#cce6ff",
-      },
-    }}
-  >
-    Sign In
-  </Box>
-)}
+          {isSignedIn ? (
+            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2, mb: 2 }}>
+              <UserButton />
+              <SignOutButton signOutCallback={() => router.push("/")}>
+                <Box
+                  sx={{
+                    px: 3,
+                    py: 1.2,
+                    borderRadius: 1,
+                    backgroundColor: BRAND_COLOR,
+                    color: "white",
+                    cursor: "pointer",
+                    textAlign: "center",
+                    width: "100%",
+                  }}
+                >
+                  Log Out
+                </Box>
+              </SignOutButton>
+            </Box>
+          ) : (
+            <Box
+              onClick={() => router.push("/signin")}
+              sx={{
+                textAlign: "center",
+                py: 1.5,
+                borderRadius: 1,
+                backgroundColor: "#e6f3ff",
+                color: "#000",
+                fontWeight: 500,
+                fontSize: 14,
+                cursor: "pointer",
+                "&:hover": {
+                  backgroundColor: "#cce6ff",
+                },
+              }}
+            >
+              Sign In
+            </Box>
+          )}
 
-         <List disablePadding>
+          <List disablePadding>
             {MENU_ITEMS.map(({ label, path }, idx) => (
               <ListItem
                 key={idx}
@@ -316,7 +311,7 @@ export default function ResponsiveNavbar() {
               </Collapse>
             </Box>
           </List>
-           </Box>
+        </Box>
       </Drawer>
 
       <style jsx global>{`

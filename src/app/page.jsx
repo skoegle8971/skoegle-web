@@ -10,8 +10,8 @@ export default function App(){
     <div>
     <IotHomes/>
     <br/>
-    <IotProjects/>
-    <br/>
+    {/* <IotProjects/> */}
+    {/* <br/> */}
     <IotTech/>
     <br/>
     <IotServices/>

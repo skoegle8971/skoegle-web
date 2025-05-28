@@ -11,7 +11,6 @@ import {
   CardContent, 
   CardMedia,
   Chip,
-  Divider,
   IconButton,
   useTheme
 } from '@mui/material';
@@ -20,14 +19,39 @@ import {
   Security, 
   EnergySavingsLeaf, 
   SettingsRemote,
-  ArrowForward
+  ArrowForward,
+  Pause, 
+  PlayArrow, 
+  VolumeOff, 
+  VolumeUp
 } from '@mui/icons-material';
-import { useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 export default function IoTHomes() {
   const theme = useTheme();
   const [activeTab, setActiveTab] = useState('all');
   const [isVisible, setIsVisible] = useState(false);
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+
+  const togglePlayback = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
 
   useEffect(() => {
     setIsVisible(true);
@@ -40,36 +64,35 @@ export default function IoTHomes() {
       description: "Centralized control for all your IoT devices",
       category: "control",
       icon: <SettingsRemote fontSize="large" />,
-      image: "/iot-hub.jpg"
+      image: "/id-card holder-ap.jpg"
     },
     {
       title: "AI Security System",
       description: "Facial recognition and anomaly detection",
       category: "security",
       icon: <Security fontSize="large" />,
-      image: "/iot-security.jpg"
+      image: "/hip-hanging-ap.jpg"
     },
     {
       title: "Energy Optimizer",
       description: "Reduce consumption with smart automation",
       category: "energy",
       icon: <EnergySavingsLeaf fontSize="large" />,
-      image: "/iot-energy.jpg"
+      image: "/kids-shoe-ap.jpg"
     },
     {
       title: "Robotic Assistants",
       description: "Daily task automation with IBM Watson integration",
       category: "robotics",
       icon: <SmartToy fontSize="large" />,
-      image: "/iot-robot.jpg"
+      image: "/trekking-tracker-ap.jpg"
     }
   ];
 
   const stats = [
-    { value: "30%", label: "Energy Savings" },
+    { value: "40%", label: "Energy Savings" },
     { value: "24/7", label: "Security Monitoring" },
-    { value: "200+", label: "Device Integrations" },
-    { value: "AI", label: "Powered by IBM z17" }
+    { value: "1000+", label: "Device Integrations" },
   ];
 
   return (
@@ -98,7 +121,7 @@ export default function IoTHomes() {
               Smart Living with IoT Homes
             </Typography>
             <Typography variant="h5" sx={{ mb: 4, color: 'text.secondary' }}>
-              Seamlessly integrated with IBM z17 AI capabilities and our robotics ecosystem
+              Powered by SKOEGLE’s next-generation IoT and cloud solutions designed to automate and optimize your smart home.
             </Typography>
             <Box sx={{ display: 'flex', gap: 2 }}>
               <Button 
@@ -127,34 +150,54 @@ export default function IoTHomes() {
               </Button>
             </Box>
           </Grid>
+
           <Grid item xs={12} md={6}>
-            <Box sx={{
-              position: 'relative',
-              height: 400,
-              borderRadius: 4,
-              overflow: 'hidden',
-              boxShadow: `0 20px 40px rgba(0, 78, 146, 0.2)`
-            }}>
-              <img 
-                src="/smart-home-hero.jpg" 
-                alt="Smart Home Dashboard" 
+            <Box
+              sx={{
+                position: 'relative',
+                height: 400,
+                borderRadius: 4,
+                overflow: 'hidden',
+                boxShadow: `0 20px 40px rgba(0, 78, 146, 0.2)`,
+              }}
+            >
+              <video
+                ref={videoRef}
+                src="/skovid.mp4"
+                autoPlay
+                muted={isMuted}
+                loop
                 style={{
                   objectFit: 'cover',
                   width: '100%',
-                  height: '100%'
+                  height: '100%',
                 }}
               />
-              <Box sx={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                bgcolor: 'rgba(0, 0, 0, 0.6)',
-                color: 'white',
-                p: 3,
-                backdropFilter: 'blur(10px)'
-              }}>
-                
+              <Box sx={{ position: 'absolute', bottom: 16, right: 16, display: 'flex', gap: 1 }}>
+                <IconButton
+                  onClick={togglePlayback}
+                  sx={{
+                    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                    color: 'white',
+                    '&:hover': {
+                      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    },
+                  }}
+                >
+                  {isPlaying ? <Pause /> : <PlayArrow />}
+                </IconButton>
+                <IconButton
+                  onClick={toggleMute}
+                  sx={{
+                    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                    color: 'white',
+                    '&:hover': {
+                      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    },
+                  }}
+                >
+                  {isMuted ? <VolumeOff /> : <VolumeUp />}
+                </IconButton>
               </Box>
             </Box>
           </Grid>
@@ -183,10 +226,16 @@ export default function IoTHomes() {
               </Grid>
             ))}
           </Grid>
+          <Typography variant="subtitle2" sx={{ mt: 2, textAlign: 'center', color: 'rgba(255,255,255,0.7)' }}>
+            SKOEGLE brings next-gen IoT innovations powered by secure cloud computing
+          </Typography>
         </Box>
 
         {/* Solutions Grid */}
         <Box sx={{ mb: 8 }}>
+          <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 700, mb: 4 }}>
+            Explore SKOEGLE’s IoT-Powered Smart Living Solutions
+          </Typography>
           <Box sx={{ 
             display: 'flex', 
             justifyContent: 'center', 
@@ -272,11 +321,11 @@ export default function IoTHomes() {
           mb: 8
         }}>
           <Typography variant="h4" sx={{ fontWeight: 700, mb: 3, textAlign: 'center' }}>
-            Powered by IBM z17 AI Core
+            SKOEGLE-Powered IoT and Cloud Integration
           </Typography>
           <Typography variant="body1" sx={{ mb: 4, textAlign: 'center', maxWidth: 800, mx: 'auto' }}>
-            Our IoT ecosystem leverages IBM's enterprise-grade AI to deliver predictive automation, 
-            enhanced security, and energy optimization at scale.
+            The SKOEGLE IoT ecosystem delivers predictive automation, advanced security,
+            and scalable energy optimization through its powerful cloud-native infrastructure built for homes and industries.
           </Typography>
           <Grid container spacing={4} alignItems="center">
             <Grid item xs={12} md={6}>
@@ -291,10 +340,10 @@ export default function IoTHomes() {
                   Key Integrations:
                 </Typography>
                 <ul style={{ paddingLeft: 20 }}>
-                  <li><Typography>Real-time anomaly detection</Typography></li>
-                  <li><Typography>Predictive maintenance alerts</Typography></li>
-                  <li><Typography>Voice assistant compatibility</Typography></li>
-                  <li><Typography>Blockchain-secured devices</Typography></li>
+                  <li><Typography>Real-time location tracking</Typography></li>
+                  <li><Typography>Powered with geo fencing</Typography></li>
+                  <li><Typography>Robust API integration for seamless third-party connectivity</Typography></li>
+                  <li><Typography>Edge-to-cloud server architecture for scalable performance</Typography></li>
                 </ul>
               </Box>
             </Grid>
@@ -319,6 +368,11 @@ export default function IoTHomes() {
             </Grid>
           </Grid>
         </Box>
+
+        {/* Footer Note */}
+        <Typography variant="caption" sx={{ textAlign: 'center', display: 'block', mt: 4, color: 'text.secondary' }}>
+          © 2025 SKOEGLE — Empowering smart living through IoT and cloud technologies.
+        </Typography>
       </Container>
     </Box>
   );
