@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { Suspense } from "react";
-import SearchClient from "./SearchClient";
+import SearchClient from "./searchclient";
 
 export default function SearchPage() {
   return (
