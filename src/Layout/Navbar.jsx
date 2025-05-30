@@ -18,6 +18,7 @@ import {
   Paper,
   MenuList,
   MenuItem,
+  InputBase,
 } from "@mui/material";
 import { FiSearch } from "react-icons/fi";
 import {
@@ -52,12 +53,13 @@ export default function ResponsiveNavbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [moreExpanded, setMoreExpanded] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchText, setSearchText] = useState("");
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const moreRef = useRef(null);
   const { isSignedIn } = useUser();
-  const userButtonRef = useRef(null);
- 
+
   useEffect(() => {
     function handleClickOutside(event) {
       if (moreRef.current && !moreRef.current.contains(event.target)) {
@@ -73,6 +75,15 @@ export default function ResponsiveNavbar() {
   const handleDropdownClose = () => setDropdownOpen(false);
   const handleMobileMoreToggle = () => setMoreExpanded(!moreExpanded);
   const handleSignUpClick = () => !isSignedIn && router.push("/signin");
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchText.trim() !== "") {
+      router.push(`/search?q=${encodeURIComponent(searchText.trim())}`);
+      setSearchText("");
+      setSearchOpen(false);
+    }
+  };
 
   return (
     <Box sx={{ flexGrow: 2 }}>
@@ -154,10 +165,43 @@ export default function ResponsiveNavbar() {
               </Box>
             )}
           </Box>
-          
 
           {!isMobile ? (
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+              {searchOpen ? (
+                <form onSubmit={handleSearchSubmit}>
+                  <InputBase
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                    placeholder="Search..."
+                    sx={{
+                      border: "1px solid #ccc",
+                      borderRadius: 1,
+                      px: 1.5,
+                      py: 0.5,
+                      minWidth: 200,
+                      fontSize: 14,
+                    }}
+                    autoFocus
+                  />
+                </form>
+              ) : (
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    fontWeight: 500,
+                    fontSize: 16,
+                    cursor: "pointer",
+                    "&:hover": { color: BRAND_COLOR },
+                  }}
+                  onClick={() => setSearchOpen(true)}
+                >
+                  <span>Search</span>
+                  <FiSearch style={{ marginLeft: 6 }} />
+                </Box>
+              )}
+
               {isSignedIn ? (
                 <UserButton />
               ) : (
@@ -183,24 +227,10 @@ export default function ResponsiveNavbar() {
                   Sign In
                 </Box>
               )}
-
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  fontWeight: 500,
-                  fontSize: 16,
-                  cursor: "pointer",
-                  "&:hover": { color: BRAND_COLOR },
-                }}
-              >
-                <span>Search</span>
-                <FiSearch style={{ marginLeft: 6 }} />
-              </Box>
             </Box>
           ) : (
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-              <IconButton sx={{ color: "#555" }}>
+              <IconButton onClick={() => setSearchOpen(!searchOpen)} sx={{ color: "#555" }}>
                 <FiSearch size={18} />
               </IconButton>
               <IconButton onClick={() => setMenuOpen(true)} sx={{ color: "#555" }}>
@@ -211,113 +241,34 @@ export default function ResponsiveNavbar() {
         </Toolbar>
       </AppBar>
 
-      <Drawer anchor="right" open={menuOpen} onClose={() => setMenuOpen(false)}>
-        <Box sx={{ width: 280, p: 2 }}>
-          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
-            <Typography variant="h6" sx={{ fontWeight: "bold", color: BRAND_COLOR }}>
-              Menu
-            </Typography>
-            <IconButton onClick={() => setMenuOpen(false)}>
-              <HiOutlineX size={26} />
-            </IconButton>
-          </Box>
-
-      {isSignedIn ? (
-       <Box
-        onClick={() => {
-         const innerBtn = userButtonRef.current?.querySelector("button");
-        if (innerBtn) innerBtn.click();
-        }}
-           sx={{
-         backgroundColor: BRAND_COLOR,
-          p: 1.5,
-          borderRadius: 2,
-           display: "flex",
-          justifyContent: "center",
-         alignItems: "center",
-          cursor: "pointer",
-         "&:hover": {
-         backgroundColor: "#005fa3",
-          },
-       }}
+      {/* SearchBar collapse on mobile */}
+      {isMobile && searchOpen && (
+        <Box
+          component="form"
+          onSubmit={handleSearchSubmit}
+          sx={{
+            px: 2,
+            py: 1,
+            borderBottom: "1px solid #eee",
+            backgroundColor: "#f9f9f9",
+          }}
         >
-    <div ref={userButtonRef}>
-      <UserButton />
-    </div>
-  </Box>
-) : (
-  <Box
-    onClick={() => router.push("/signin")}
-    sx={{
-      textAlign: "center",
-      py: 1.5,
-      borderRadius: 1,
-      backgroundColor: "#e6f3ff",
-      color: "#000",
-      fontWeight: 500,
-      fontSize: 14,
-      cursor: "pointer",
-      "&:hover": {
-        backgroundColor: "#cce6ff",
-      },
-    }}
-  >
-    Sign In
-  </Box>
-)}
-
-         <List disablePadding>
-            {MENU_ITEMS.map(({ label, path }, idx) => (
-              <ListItem
-                key={idx}
-                button
-                sx={{ mb: 1 }}
-                onClick={() => {
-                  router.push(path);
-                  setMenuOpen(false);
-                }}
-              >
-                <ListItemText primary={label} />
-                <HiOutlineChevronRight />
-              </ListItem>
-            ))}
-
-            <Box sx={{ mb: 1 }}>
-              <ListItem button onClick={handleMobileMoreToggle}>
-                <ListItemText primary="More" />
-                <IconButton
-                  sx={{
-                    p: 0,
-                    transform: moreExpanded ? "rotate(90deg)" : "rotate(0deg)",
-                    transition: "transform 0.3s ease",
-                  }}
-                  size="small"
-                >
-                  <HiOutlineChevronRight />
-                </IconButton>
-              </ListItem>
-
-              <Collapse in={moreExpanded} timeout="auto" unmountOnExit>
-                <List disablePadding>
-                  {MORE_DROPDOWN_ITEMS.map(({ label, path }, idx) => (
-                    <ListItem
-                      key={idx}
-                      button
-                      sx={{ pl: 4 }}
-                      onClick={() => {
-                        router.push(path);
-                        setMenuOpen(false);
-                      }}
-                    >
-                      <ListItemText primary={label} />
-                    </ListItem>
-                  ))}
-                </List>
-              </Collapse>
-            </Box>
-          </List>
-           </Box>
-      </Drawer>
+          <InputBase
+            fullWidth
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+            placeholder="Search..."
+            sx={{
+              px: 1,
+              py: 0.5,
+              border: "1px solid #ccc",
+              borderRadius: 1,
+              backgroundColor: "#fff",
+            }}
+            autoFocus
+          />
+        </Box>
+      )}
 
       <style jsx global>{`
         .menu-item {

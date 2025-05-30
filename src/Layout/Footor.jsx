@@ -1,4 +1,5 @@
 import React from "react";
+import NextLink from "next/link";
 import {
   Box,
   Grid,
@@ -25,69 +26,58 @@ export default function Footer() {
   const socialLinks = [
     {
       icon: LinkedInIcon,
-      url: "https://www.linkedin.com/company/skoegle-technologies-pvt-ltd/",
+      url: "https://in.linkedin.com/company/skoegle-technologies-pvt-ltd",
       label: "LinkedIn",
+      hoverColor: "#0077B5",
     },
     {
       icon: InstagramIcon,
       url: "https://www.instagram.com/skoegledotin?igshE",
       label: "Instagram",
+      hoverColor: "#E1306C",
     },
     {
       icon: FacebookIcon,
       url: "https://www.facebook.com/share/FaqX1J4icD43EUNx/?mibextid",
       label: "Facebook",
+      hoverColor: "#1877F2",
     },
     {
       icon: YouTubeIcon,
       url: "https://www.youtube.com/channel/UCdAF2lce5VtTXxdq6ZPHIZw",
       label: "YouTube",
+      hoverColor: "#FF0000",
     },
     {
       icon: LanguageIcon,
       url: "https://skoegle.in",
       label: "Website",
+      hoverColor: "#0A66C2",
     },
   ];
 
-  const ourBrands = ["Vmarg", "Dmarg"];
+  const ourBrands = [
+    { name: "Vmarg", url: "https://vmarg.skoegle.com" },
+    { name: "Dmarg", url: "https://geocam.skoegle.com" }
+  ];
 
   const mainLinks = [
-    "About us",
-    "Our Products",
-    "Privacy Policy",
-    "Terms and Conditions",
-    "Contact Us",
+    { label: "About us", href: "/about" },
+    { label: "Our Products", href: "/products" },
+    { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Terms and Conditions", href: "/terms" },
+    { label: "Contact Us", href: "/contact" },
   ];
 
   const additionalLinks = [
-    "Sign In",
-    "Sign up",
-    "Blogs",
-    "News",
-    "Careers",
-    "Our Team",
-    "Our Innovations",
+    { label: "Sign In", href: "/signin" },
+    { label: "Sign up", href: "/signup" },
+    { label: "Blogs", href: "/blog" },
+    { label: "News", href: "/news" },
+    { label: "Careers", href: "/careers" },
+    { label: "Our Team", href: "/team" },
+    { label: "Our Innovations", href: "/innovations" },
   ];
-
-  const mainLinkUrls = {
-    "About us": "/about",
-    "Our Products": "/products",
-    "Privacy Policy": "/privacy-policy",
-    "Terms and Conditions": "/terms-and-conditions",
-    "Contact Us": "/contact",
-  };
-
-  const additionalLinkUrls = {
-    "Sign In": "/signin",
-    "Sign up": "/signup",
-    "Blogs": "/blog",
-    "News": "/news",
-    "Careers": "/careers",
-    "Our Team": "/team",
-    "Our Innovations": "/innovations",
-    
-  };
 
   return (
     <Box
@@ -107,36 +97,31 @@ export default function Footer() {
             <Box mb={3}>
               <img src="/logo.png" alt="Skoegle Logo" style={{ height: 50 }} />
             </Box>
-
             <Typography variant="body2" fontWeight="bold" gutterBottom>
               Contact Information
             </Typography>
-
             <Stack spacing={2} sx={{ mt: 2 }}>
               <Box display="flex" alignItems="flex-start">
                 <LocationOnIcon sx={{ mr: 1, fontSize: 20, mt: 0.5 }} />
                 <Typography variant="body2">
-                  52/2, 2nd Main Rd, Vyalikaval, Lower Palace Orchards,
-                  Malleshwaram
+                  52/2, 2nd Main Rd, Vyalikaval, Lower Palace Orchards, Malleshwaram
                 </Typography>
               </Box>
-
               <Box display="flex" alignItems="center">
                 <PhoneIcon sx={{ mr: 1, fontSize: 20 }} />
                 <Typography variant="body2">
                   <MuiLink href="tel:08031211083" color="inherit" underline="hover">
                     080-31211083
-                  </MuiLink>{" "}
-                  /{" "}
+                  </MuiLink>
+                  {" / "}
                   <MuiLink href="tel:9902495354" color="inherit" underline="hover">
                     9902495354
                   </MuiLink>
                 </Typography>
               </Box>
-
               <Box display="flex" alignItems="center">
                 <AccessTimeIcon sx={{ mr: 1, fontSize: 20 }} />
-                <Typography variant="body2">9:00 - 6:00 Mon - Sat</Typography>
+                <Typography variant="body2">9:00 - 6:00  Mon - Sat</Typography>
               </Box>
             </Stack>
           </Grid>
@@ -177,23 +162,25 @@ export default function Footer() {
             <Box display="flex" alignItems="center" mb={3}>
               <EmailIcon sx={{ mr: 1, fontSize: 18 }} />
               <Typography variant="body2">
-                <MuiLink
-                  href="mailto:gayathri@sales.skoegle.com"
-                  color="inherit"
-                  underline="hover"
-                >
+                <MuiLink href="mailto:gayathri@sales.skoegle.com" color="inherit" underline="hover">
                   gayathri@sales.skoegle.com
                 </MuiLink>
               </Typography>
             </Box>
 
-            <Typography variant="body2" fontWeight="bold" mb={2}>
-              Our Brands:
-            </Typography>
+            <Typography variant="h6">Our Brands:</Typography>
             {ourBrands.map((brand) => (
-              <Typography key={brand} variant="body2" mb={1}>
-                {brand}
-              </Typography>
+              <MuiLink
+                key={brand.name}
+                href={brand.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                underline="hover"
+                variant="body2"
+                sx={{ display: "block", mb: 1 }}
+              >
+                {brand.name}
+              </MuiLink>
             ))}
           </Grid>
 
@@ -202,11 +189,13 @@ export default function Footer() {
             <Typography variant="body2" fontWeight="bold" mb={2}>
               Company
             </Typography>
-            {mainLinks.map((text) => (
-              <Typography key={text} variant="body2" mb={1.5}>
-                <MuiLink href={mainLinkUrls[text]} underline="hover" color="inherit">
-                  {text}
-                </MuiLink>
+            {mainLinks.map((item) => (
+              <Typography key={item.label} variant="body2" mb={1.5}>
+                <NextLink href={item.href} passHref legacyBehavior>
+                  <MuiLink underline="hover" color="inherit">
+                    {item.label}
+                  </MuiLink>
+                </NextLink>
               </Typography>
             ))}
           </Grid>
@@ -216,17 +205,19 @@ export default function Footer() {
             <Typography variant="body2" fontWeight="bold" mb={2}>
               Quick Links
             </Typography>
-            {additionalLinks.map((text) => (
-              <Typography key={text} variant="body2" mb={1.5}>
-                <MuiLink href={additionalLinkUrls[text]} underline="hover" color="inherit">
-                  {text}
-                </MuiLink>
+            {additionalLinks.map((item) => (
+              <Typography key={item.label} variant="body2" mb={1.5}>
+                <NextLink href={item.href} passHref legacyBehavior>
+                  <MuiLink underline="hover" color="inherit">
+                    {item.label}
+                  </MuiLink>
+                </NextLink>
               </Typography>
             ))}
           </Grid>
         </Grid>
 
-        <Divider sx={{ my: 4 }} />
+        <Divider sx={{ my: 2, height: "1px" }} />
 
         {/* Bottom Row */}
         <Box
@@ -235,14 +226,12 @@ export default function Footer() {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Box>
-            <Typography variant="body2" color="text.secondary">
-              Copyright © {currentYear} SKOEGLE IOT INNOVATIONS PVT. LTD. All rights reserved.
-            </Typography>
-          </Box>
+          <Typography variant="body2" color="text.secondary">
+            Copyright © {currentYear} SKOEGLE IOT INNOVATIONS PVT. LTD. All rights reserved.
+          </Typography>
 
           <Box mt={{ xs: 3, md: 0 }}>
-            {socialLinks.map(({ icon: Icon, url, label }, index) => (
+            {socialLinks.map(({ icon: Icon, url, label, hoverColor }, index) => (
               <IconButton
                 key={index}
                 component="a"
@@ -251,12 +240,13 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 aria-label={label}
                 sx={{
-                  border: "1px solid #000",
-                  borderRadius: "50%",
-                  mx: 0.5,
                   color: "#000",
+                  mx: 0.5,
+                  transition: "all 0.3s ease",
                   "&:hover": {
-                    backgroundColor: "rgba(0,0,0,0.08)",
+                    color: hoverColor,
+                    backgroundColor: "transparent",
+                    transform: "scale(1.1)",
                   },
                 }}
               >
