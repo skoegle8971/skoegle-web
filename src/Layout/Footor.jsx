@@ -1,5 +1,5 @@
 import React from "react";
-import Link from '@mui/material/Link';
+import NextLink from "next/link";
 import {
   Box,
   Grid,
@@ -56,25 +56,27 @@ export default function Footer() {
     },
   ];
 
-const ourBrands = [
-  { name: "Vmarg", url: "https://vmarg.skoegle.com" },
-  { name: "Dmarg", url: "https://geocam.skoegle.com" }
-];
-  const mainLinks = [
-    "About us",
-    "Our Products",
-    "Privacy Policy",
-    "Terms and Conditions",
-    "Contact Us",
+  const ourBrands = [
+    { name: "Vmarg", url: "https://vmarg.skoegle.com" },
+    { name: "Dmarg", url: "https://geocam.skoegle.com" }
   ];
+
+  const mainLinks = [
+    { label: "About us", href: "/about" },
+    { label: "Our Products", href: "/products" },
+    { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Terms and Conditions", href: "/terms" },
+    { label: "Contact Us", href: "/contact" },
+  ];
+
   const additionalLinks = [
-    "Sign In",
-    "Sign up",
-    "Blogs",
-    "News",
-    "Careers",
-    "Our Team",
-    "Our Innovations",
+    { label: "Sign In", href: "/signin" },
+    { label: "Sign up", href: "/signup" },
+    { label: "Blogs", href: "/blog" },
+    { label: "News", href: "/news" },
+    { label: "Careers", href: "/careers" },
+    { label: "Our Team", href: "/team" },
+    { label: "Our Innovations", href: "/innovations" },
   ];
 
   return (
@@ -119,9 +121,7 @@ const ourBrands = [
               </Box>
               <Box display="flex" alignItems="center">
                 <AccessTimeIcon sx={{ mr: 1, fontSize: 20 }} />
-                <Typography variant="body2">
-                  9:00 - 6:00  Mon - Sat
-                </Typography>
+                <Typography variant="body2">9:00 - 6:00  Mon - Sat</Typography>
               </Box>
             </Stack>
           </Grid>
@@ -169,19 +169,19 @@ const ourBrands = [
             </Box>
 
             <Typography variant="h6">Our Brands:</Typography>
-              {ourBrands.map((brand) => (
-                <Link
-                  key={brand.name}
-                  href={brand.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  underline="hover"
-                  variant="body2"
-                  sx={{ display: "block", mb: 1 }}
-                >
+            {ourBrands.map((brand) => (
+              <MuiLink
+                key={brand.name}
+                href={brand.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                underline="hover"
+                variant="body2"
+                sx={{ display: "block", mb: 1 }}
+              >
                 {brand.name}
-                </Link>
-              ))}
+              </MuiLink>
+            ))}
           </Grid>
 
           {/* Column 3 - Main Links */}
@@ -189,11 +189,13 @@ const ourBrands = [
             <Typography variant="body2" fontWeight="bold" mb={2}>
               Company
             </Typography>
-            {mainLinks.map((text) => (
-              <Typography key={text} variant="body2" mb={1.5}>
-                <MuiLink href="#" underline="hover" color="inherit">
-                  {text}
-                </MuiLink>
+            {mainLinks.map((item) => (
+              <Typography key={item.label} variant="body2" mb={1.5}>
+                <NextLink href={item.href} passHref legacyBehavior>
+                  <MuiLink underline="hover" color="inherit">
+                    {item.label}
+                  </MuiLink>
+                </NextLink>
               </Typography>
             ))}
           </Grid>
@@ -203,18 +205,19 @@ const ourBrands = [
             <Typography variant="body2" fontWeight="bold" mb={2}>
               Quick Links
             </Typography>
-            {additionalLinks.map((text) => (
-              <Typography key={text} variant="body2" mb={1.5}>
-                <MuiLink href="#" underline="hover" color="inherit">
-                  {text}
-                </MuiLink>
+            {additionalLinks.map((item) => (
+              <Typography key={item.label} variant="body2" mb={1.5}>
+                <NextLink href={item.href} passHref legacyBehavior>
+                  <MuiLink underline="hover" color="inherit">
+                    {item.label}
+                  </MuiLink>
+                </NextLink>
               </Typography>
             ))}
           </Grid>
         </Grid>
 
-        {/* Divider */}
-        <Divider sx={{ my: 4 }} />
+        <Divider sx={{ my: 2, height: "1px" }} />
 
         {/* Bottom Row */}
         <Box
@@ -223,11 +226,9 @@ const ourBrands = [
           alignItems="center"
           justifyContent="space-between"
         >
-          <Box>
-            <Typography variant="body2" color="text.secondary">
-              Copyright © {currentYear} SKOEGLE IOT INNOVATIONS PVT. LTD. All rights reserved.
-            </Typography>
-          </Box>
+          <Typography variant="body2" color="text.secondary">
+            Copyright © {currentYear} SKOEGLE IOT INNOVATIONS PVT. LTD. All rights reserved.
+          </Typography>
 
           <Box mt={{ xs: 3, md: 0 }}>
             {socialLinks.map(({ icon: Icon, url, label, hoverColor }, index) => (
