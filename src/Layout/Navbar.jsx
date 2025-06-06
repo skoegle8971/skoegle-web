@@ -48,9 +48,8 @@ const MENU_ITEMS = [
 
 const MORE_DROPDOWN_ITEMS = [
   { label: "Careers", path: "/careers" },
-  { label: "Blog", path: "/blog" },
+  { label: "Blog", path: "https://skoegle.blogspot.com/?m=1", external: true },
   { label: "Resources", path: "/resources" },
-  { label: "Partners", path: "/partners" },
   { label: "Contact Us", path: "/contact" },
 ];
 
