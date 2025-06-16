@@ -36,3 +36,62 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## ADD Product Views
+
+curl --location 'http://localhost:3000/api/products/view' \
+--header 'Content-Type: application/json' \
+--data '{
+  "productId": "PRDssDS001",
+  "name": "Smart Tracker X1",
+  "subheading": "Advanced GPS Security",
+  "productImages": ["/img1.jpg", "/img2.jpg"],
+  "video": "https://www.youtube.com/watch?v=demo",
+  "productFeatures": [
+    {
+      "image": "/feature1.png",
+      "title": "Live Tracking",
+      "subheading": "Real-time location updates"
+    }
+  ],
+  "specifications": [
+    {
+      "category": "GNSS",
+      "data": {
+        "satellites": "GPS, GLONASS",
+        "accuracy": "2.5m"
+      }
+    }
+  ],
+  "downloads": {
+    "android": "https://play.google.com/store/apps/details?id=app",
+    "ios": "https://apps.apple.com/app/id123456789",
+    "pdfManual": "/downloads/manual.pdf"
+  }
+}
+' 
+
+
+
+## Get Product ID
+
+
+curl --location --request GET 'http://localhost:3000/api/products/view?productId=PRDssDS001' \
+--header 'Content-Type: application/json' \
+
+'
+
+
+## set Products 
+
+curl --location 'http://localhost:3000/api/products' \
+--header 'Content-Type: application/json' \
+--data '{
+    "productName": "ID Csard Tracker",
+    "productSubheading": "The future of mobile",
+    "productFeatures": ["Face ID", "5G Support", "OLED Display"],
+    "productImages": ["https://example.com/image1.jpg", "https://example.com/image2.jpg"]
+  }'
+
+
+  ## 

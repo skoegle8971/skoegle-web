@@ -2,8 +2,7 @@ import mongoose from 'mongoose';
 
 const ProductSchema = new mongoose.Schema({
   productId: {
-    type: String,
-    required: true,
+    type: String, 
     unique: true,
   },
   productName: String,
@@ -12,4 +11,4 @@ const ProductSchema = new mongoose.Schema({
   productImages: [String],
 }, { timestamps: true });
 
-export default mongoose.models.Product || mongoose.model('Product', ProductSchema);
+export default mongoose.models.Product || mongoose.model("Product", ProductSchema);;
