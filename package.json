@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+     "deploy": "docker build -t my-nextjs-app . && docker tag my-nextjs-app manoj20002/my-nextjs-app:latest && docker push manoj20002/my-nextjs-app:latest"
+
   },
   "dependencies": {
     "@clerk/nextjs": "^6.18.5",
