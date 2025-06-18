@@ -38,7 +38,7 @@ export default function OrdersPage() {
       const fetchOrders = async () => {
         try {
           const response = await axios.get(
-            `${process.env.PAYMENTS_URL}/order/history/?userid=${user.id}`
+            `https://payments.skoegle.com/api/order/history/?userid=${user.id}`
           );
           setOrders(response.data.data || []);
         } catch (error) {
