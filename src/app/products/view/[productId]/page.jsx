@@ -1,7 +1,8 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
+import { useUser } from '@clerk/nextjs';
 import Layout from "../../../../Layout/Layout";
 import axios from 'axios';
 
@@ -39,7 +40,10 @@ import CloseIcon from '@mui/icons-material/Close';
 
 export default function ProductPage() {
   const { productId } = useParams();
+  const router = useRouter();
   const hasFetched = useRef(false);
+
+  const { isSignedIn, isLoaded } = useUser();
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -48,8 +52,20 @@ export default function ProductPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
 
+  // Redirect unauthenticated users
+useEffect(() => {
+  if (typeof window !== 'undefined' && isLoaded && !isSignedIn) {
+    const currentPath = window.location.pathname + window.location.search;
+    const redirectUrl = encodeURIComponent(currentPath);
+    router.replace(`/signin?redirect_url=${redirectUrl}`);
+  }
+}, [isLoaded, isSignedIn, router]);
+
+
+
+  // Fetch product after auth check
   useEffect(() => {
-    if (!productId || hasFetched.current) return;
+    if (!productId || hasFetched.current || !isSignedIn) return;
     hasFetched.current = true;
 
     const fetchProduct = async () => {
@@ -65,7 +81,15 @@ export default function ProductPage() {
     };
 
     fetchProduct();
-  }, [productId]);
+  }, [productId, isSignedIn]);
+
+  if (!isLoaded || !isSignedIn) {
+    return (
+      <Box p={4} display="flex" justifyContent="center">
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   if (loading) {
     return (
@@ -90,10 +114,7 @@ export default function ProductPage() {
 
   return (
     <Layout>
-      <br/>
-      <br/>
-       <br/>
-      <br/>
+      <br /><br /><br /><br />
       <Container maxWidth="lg" sx={{ py: 4 }}>
         <Grid container spacing={4}>
           {/* Media Section */}
@@ -232,7 +253,6 @@ export default function ProductPage() {
       {/* Modal for More Media */}
       <Dialog open={isModalOpen} onClose={() => setIsModalOpen(false)} maxWidth="md" fullWidth>
         <DialogContent sx={{ position: 'relative', p: 0, bgcolor: 'black' }}>
-          {/* Close Button */}
           <IconButton
             onClick={() => setIsModalOpen(false)}
             sx={{ position: 'absolute', top: 8, right: 8, color: 'white', zIndex: 10 }}
@@ -240,7 +260,6 @@ export default function ProductPage() {
             <CloseIcon />
           </IconButton>
 
-          {/* Back Button */}
           {currentMediaIndex > 0 && (
             <IconButton
               onClick={() => setCurrentMediaIndex((i) => i - 1)}
@@ -250,7 +269,6 @@ export default function ProductPage() {
             </IconButton>
           )}
 
-          {/* Forward Button */}
           {currentMediaIndex < mediaItems.length - 1 && (
             <IconButton
               onClick={() => setCurrentMediaIndex((i) => i + 1)}
@@ -260,20 +278,11 @@ export default function ProductPage() {
             </IconButton>
           )}
 
-          {/* Media Viewer */}
           <Box sx={{ width: '100%', height: '70vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             {mediaItems[currentMediaIndex].includes('.mp4') ? (
-              <video
-                src={mediaItems[currentMediaIndex]}
-                controls
-                style={{ maxWidth: '100%', maxHeight: '100%' }}
-              />
+              <video src={mediaItems[currentMediaIndex]} controls style={{ maxWidth: '100%', maxHeight: '100%' }} />
             ) : (
-              <img
-                src={mediaItems[currentMediaIndex]}
-                alt={`media-${currentMediaIndex}`}
-                style={{ maxWidth: '100%', maxHeight: '100%' }}
-              />
+              <img src={mediaItems[currentMediaIndex]} alt={`media-${currentMediaIndex}`} style={{ maxWidth: '100%', maxHeight: '100%' }} />
             )}
           </Box>
         </DialogContent>
