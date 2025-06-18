@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import Layout from "../../../../Layout/Layout";
 import axios from 'axios';
+import Link from 'next/link';
 
 import {
   Container,
@@ -13,7 +14,7 @@ import {
   Card,
   CardContent,
   CardMedia,
-  Link,
+  Link as MuiLink, // ✅ renamed to avoid conflict
   Box,
   CircularProgress,
   Paper,
@@ -53,15 +54,13 @@ export default function ProductPage() {
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
 
   // Redirect unauthenticated users
-useEffect(() => {
-  if (typeof window !== 'undefined' && isLoaded && !isSignedIn) {
-    const currentPath = window.location.pathname + window.location.search;
-    const redirectUrl = encodeURIComponent(currentPath);
-    router.replace(`/signin?redirect_url=${redirectUrl}`);
-  }
-}, [isLoaded, isSignedIn, router]);
-
-
+  useEffect(() => {
+    if (typeof window !== 'undefined' && isLoaded && !isSignedIn) {
+      const currentPath = window.location.pathname + window.location.search;
+      const redirectUrl = encodeURIComponent(currentPath);
+      router.replace(`/signin?redirect_url=${redirectUrl}`);
+    }
+  }, [isLoaded, isSignedIn, router]);
 
   // Fetch product after auth check
   useEffect(() => {
@@ -159,9 +158,17 @@ useEffect(() => {
             </Typography>
 
             <Stack direction="row" spacing={2} sx={{ mb: 3 }}>
-              <Button variant="contained" color="success" startIcon={<PaymentIcon />}>Buy Now</Button>
-              <Button variant="contained" color="primary" startIcon={<ShoppingCartIcon />}>Add to Cart</Button>
-              <Button variant="outlined" color="secondary" startIcon={<ContactSupportIcon />}>Contact Us</Button>
+              <Link href={`/products/checkout/${product?.productId}`} passHref legacyBehavior>
+                <Button variant="contained" color="success" startIcon={<PaymentIcon />}>
+                  Buy Now
+                </Button>
+              </Link>
+
+              <Link href="/contact" passHref legacyBehavior>
+                <Button variant="outlined" color="secondary" startIcon={<ContactSupportIcon />}>
+                  Contact Us
+                </Button>
+              </Link>
             </Stack>
 
             {/* Downloads */}
@@ -170,25 +177,25 @@ useEffect(() => {
                 <Typography variant="h6" gutterBottom>Downloads & Apps</Typography>
                 <Stack spacing={1}>
                   {product.downloads.android && (
-                    <Link href={product.downloads.android} target="_blank" underline="hover">
+                    <MuiLink href={product.downloads.android} target="_blank" underline="hover">
                       <Button startIcon={<AndroidIcon />} variant="outlined" fullWidth>
                         Android App
                       </Button>
-                    </Link>
+                    </MuiLink>
                   )}
                   {product.downloads.ios && (
-                    <Link href={product.downloads.ios} target="_blank" underline="hover">
+                    <MuiLink href={product.downloads.ios} target="_blank" underline="hover">
                       <Button startIcon={<AppleIcon />} variant="outlined" fullWidth>
                         iOS App
                       </Button>
-                    </Link>
+                    </MuiLink>
                   )}
                   {product.downloads.pdfManual && (
-                    <Link href={product.downloads.pdfManual} target="_blank" underline="hover">
+                    <MuiLink href={product.downloads.pdfManual} target="_blank" underline="hover">
                       <Button startIcon={<PictureAsPdfIcon />} variant="outlined" fullWidth>
                         PDF Manual
                       </Button>
-                    </Link>
+                    </MuiLink>
                   )}
                 </Stack>
               </Box>
