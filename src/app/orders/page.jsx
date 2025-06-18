@@ -38,7 +38,7 @@ export default function OrdersPage() {
       const fetchOrders = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:5000/api/order/history/?userid=${user.id}`
+            `${process.env.PAYMENTS_URL}/order/history/?userid=${user.id}`
           );
           setOrders(response.data.data || []);
         } catch (error) {
