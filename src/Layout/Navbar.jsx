@@ -43,6 +43,7 @@ const MENU_ITEMS = [
   { label: "Products", path: "/products" },
   { label: "Services", path: "/services" },
   { label: "Support", path: "/support" },
+  { label: "Your Orders", path: "/orders" },
 ];
 
 const MORE_DROPDOWN_ITEMS = [

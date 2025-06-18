@@ -1,0 +1,244 @@
+'use client';
+
+import Layout from "../../../../Layout/Layout";
+import { useUser } from '@clerk/nextjs';
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
+import {
+  Grid,
+  Card,
+  CardContent,
+  Typography,
+  TextField,
+  Button,
+  Divider,
+  Box,
+} from '@mui/material';
+
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr('1234567890abcdef'); // Use env var in production
+
+export default function Checkout() {
+  const { user, isLoaded ,isSignedIn} = useUser();
+  const { productId } = useParams();
+  const router = useRouter();
+
+  const [product, setProduct] = useState(null);
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [deliveryAddress, setDeliveryAddress] = useState('');
+  const [pincode, setPincode] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [district, setDistrict] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const res = await axios.get(`/api/products/views?productId=${productId}`);
+        setProduct(res.data.data);
+      } catch (err) {
+        console.error("Error fetching product:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (productId) fetchProduct();
+  }, [productId]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && isLoaded && !isSignedIn) {
+      const currentPath = window.location.pathname + window.location.search;
+      const redirectUrl = encodeURIComponent(currentPath);
+      router.replace(`/signin?redirect_url=${redirectUrl}`);
+    }
+  }, [isLoaded, isSignedIn, router]);
+
+
+  const handlePincodeChange = async (pin) => {
+    setPincode(pin);
+    if (pin.length === 6) {
+      try {
+        const res = await axios.get(`https://api.postalpincode.in/pincode/${pin}`);
+        const info = res.data?.[0];
+        if (info?.Status === 'Success') {
+          const postOffice = info.PostOffice?.[0];
+          setCity(postOffice?.Name || '');
+          setState(postOffice?.State || '');
+          setDistrict(postOffice?.District || '');
+        } else {
+          setCity('');
+          setState('');
+          setDistrict('');
+        }
+      } catch (err) {
+        console.error("Pincode fetch failed:", err);
+      }
+    }
+  };
+
+  const handleCheckout = () => {
+    if (!phoneNumber.trim() || !deliveryAddress.trim()) {
+      return alert("Please enter both phone number and delivery address.");
+    }
+
+    const payload = {
+      name: user.fullName,
+      email: user.primaryEmailAddress?.emailAddress,
+      amount: product.amount,
+      redirectingurl: "http://localhost:3000/thankyou",
+      address: deliveryAddress,
+      phonenumber: phoneNumber,
+      userid: user.id,
+      productname: product.name,
+    };
+
+    const encrypted = cryptr.encrypt(JSON.stringify(payload));
+    const finalURL = `https://payments.skoegle.com/pay?data=${encodeURIComponent(encrypted)}`;
+    router.push(finalURL);
+  };
+
+  if (!isLoaded || loading) {
+    return (
+      <Layout>
+        <Typography variant="h6" align="center" mt={4}>Loading...</Typography>
+      </Layout>
+    );
+  }
+
+  if (!user) {
+    return (
+      <Layout>
+        <Typography variant="h6" align="center" mt={4}>User not signed in.</Typography>
+      </Layout>
+    );
+  }
+
+  return (
+    <Layout>
+      <Box sx={{ padding: 4 }}>
+        <Typography variant="h4" gutterBottom>Checkout</Typography>
+
+        <Grid container spacing={4}>
+          {/* Left: Address & Contact */}
+          <Grid item xs={12} md={7}>
+            <Card>
+              <CardContent>
+                <Typography variant="h6" gutterBottom>Delivery Information</Typography>
+
+                <TextField
+                  fullWidth
+                  label="Full Name"
+                  value={user.fullName}
+                  margin="normal"
+                  disabled
+                />
+
+                <TextField
+                  fullWidth
+                  label="Email"
+                  value={user.primaryEmailAddress?.emailAddress}
+                  margin="normal"
+                  disabled
+                />
+
+                <TextField
+                  fullWidth
+                  label="Phone Number"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  margin="normal"
+                />
+
+                <TextField
+                  fullWidth
+                  label="Pincode"
+                  value={pincode}
+                  onChange={(e) => handlePincodeChange(e.target.value)}
+                  margin="normal"
+                />
+
+                <TextField
+                  fullWidth
+                  label="City"
+                  value={city}
+                  margin="normal"
+                  disabled
+                />
+
+                <TextField
+                  fullWidth
+                  label="District"
+                  value={district}
+                  margin="normal"
+                  disabled
+                />
+
+                <TextField
+                  fullWidth
+                  label="State"
+                  value={state}
+                  margin="normal"
+                  disabled
+                />
+
+                <TextField
+                  fullWidth
+                  label="Delivery Address"
+                  multiline
+                  rows={4}
+                  value={deliveryAddress}
+                  onChange={(e) => setDeliveryAddress(e.target.value)}
+                  margin="normal"
+                />
+              </CardContent>
+            </Card>
+          </Grid>
+
+          {/* Right: Order Summary */}
+          <Grid item xs={12} md={5}>
+            <Card>
+              <CardContent>
+                <Typography variant="h6" gutterBottom>Order Summary</Typography>
+                {product ? (
+                  <>
+                    <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+                      <img
+                        src={product.productImages?.[0]}
+                        alt={product.name}
+                        width={100}
+                        style={{ borderRadius: '10px' }}
+                      />
+                      <Box>
+                        <Typography variant="subtitle1">{product.name}</Typography>
+                        <Typography variant="body2" color="text.secondary">{product.subheading}</Typography>
+                      </Box>
+                    </Box>
+
+                    <Divider sx={{ my: 2 }} />
+
+                    <Typography variant="body1"><strong>Amount:</strong> ₹{product.amount}</Typography>
+
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      sx={{ mt: 3 }}
+                      onClick={handleCheckout}
+                    >
+                      Place Order & Pay
+                    </Button>
+                  </>
+                ) : (
+                  <Typography variant="body2">Product not found.</Typography>
+                )}
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+      </Box>
+    </Layout>
+  );
+}
