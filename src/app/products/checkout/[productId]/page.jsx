@@ -96,7 +96,7 @@ export default function Checkout() {
     };
 
     const encrypted = cryptr.encrypt(JSON.stringify(payload));
-    const finalURL = `${process.env.PAYMENTS_URL}?data=${encodeURIComponent(encrypted)}`;
+    const finalURL = `${process.env.PAYMENTS_URL}/pay/?data=${encodeURIComponent(encrypted)}`;
     router.push(finalURL);
   };
 
