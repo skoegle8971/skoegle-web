@@ -88,7 +88,7 @@ export default function Checkout() {
       name: user.fullName,
       email: user.primaryEmailAddress?.emailAddress,
       amount: product.amount,
-      redirectingurl: `${process.env.CLIENT_URL}/orders`,
+     redirectingurl: `https://skoegle.com/orders`,
       address: deliveryAddress,
       phonenumber: phoneNumber,
       userid: user.id,
@@ -96,7 +96,7 @@ export default function Checkout() {
     };
 
     const encrypted = cryptr.encrypt(JSON.stringify(payload));
-    const finalURL = `${process.env.PAYMENTS_URL}?data=${encodeURIComponent(encrypted)}`;
+    const finalURL = `https://payments.skoegle.com/pay?data=${encodeURIComponent(encrypted)}`;
     router.push(finalURL);
   };
 
