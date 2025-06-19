@@ -15,13 +15,14 @@ import {
   Button,
   Divider,
   Box,
+  Skeleton
 } from '@mui/material';
 
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr('1234567890abcdef'); // Use env var in production
 
 export default function Checkout() {
-  const { user, isLoaded ,isSignedIn} = useUser();
+  const { user, isLoaded, isSignedIn } = useUser();
   const { productId } = useParams();
   const router = useRouter();
 
@@ -56,7 +57,6 @@ export default function Checkout() {
     }
   }, [isLoaded, isSignedIn, router]);
 
-
   const handlePincodeChange = async (pin) => {
     setPincode(pin);
     if (pin.length === 6) {
@@ -88,7 +88,7 @@ export default function Checkout() {
       name: user.fullName,
       email: user.primaryEmailAddress?.emailAddress,
       amount: product.amount,
-     redirectingurl: `https://skoegle.com/orders`,
+      redirectingurl: `https://skoegle.com/orders`,
       address: deliveryAddress,
       phonenumber: phoneNumber,
       userid: user.id,
@@ -103,7 +103,38 @@ export default function Checkout() {
   if (!isLoaded || loading) {
     return (
       <Layout>
-        <Typography variant="h6" align="center" mt={4}>Loading...</Typography>
+        <Box sx={{ padding: 4 }}>
+          <Grid container spacing={4}>
+            <Grid item xs={12} md={7}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>Delivery Information</Typography>
+                  {[...Array(7)].map((_, index) => (
+                    <Skeleton key={index} height={56} sx={{ marginBottom: 2 }} variant="rounded" />
+                  ))}
+                </CardContent>
+              </Card>
+            </Grid>
+
+            <Grid item xs={12} md={5}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>Order Summary</Typography>
+                  <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+                    <Skeleton variant="rectangular" width={100} height={100} sx={{ borderRadius: 2 }} />
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Skeleton width="80%" height={24} />
+                      <Skeleton width="60%" height={20} />
+                    </Box>
+                  </Box>
+                  <Divider sx={{ my: 2 }} />
+                  <Skeleton width="40%" height={24} />
+                  <Skeleton width="100%" height={40} sx={{ mt: 3 }} />
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        </Box>
       </Layout>
     );
   }
@@ -122,7 +153,6 @@ export default function Checkout() {
         <Typography variant="h4" gutterBottom>Checkout</Typography>
 
         <Grid container spacing={4}>
-          {/* Left: Address & Contact */}
           <Grid item xs={12} md={7}>
             <Card>
               <CardContent>
@@ -197,7 +227,6 @@ export default function Checkout() {
             </Card>
           </Grid>
 
-          {/* Right: Order Summary */}
           <Grid item xs={12} md={5}>
             <Card>
               <CardContent>
