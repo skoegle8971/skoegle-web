@@ -67,28 +67,28 @@ export default function IoTHomes() {
   const iotSolutions = [
     {
       title: "SKOEGLE GPS Tracker",
-      description: "Real-time GPS tracking powered by SKOEGLE’s cloud-integrated IoT infrastructure for vehicles, assets, and personnel.",
+      description: "Get real-time GPS tracking for vehicles, assets, and personnel — powered by secure, cloud-connected IoT infrastructure.",
       category: "gps",
       icon: <GpsFixedIcon />,
       image: "/id-card holder-ap.jpg"
     },
     {
       title: "SKOEGLE Cloud IoT Platform",
-      description: "Centralized IoT management with geofencing and predictive analytics in the SKOEGLE secure cloud environment.",
+      description: "Centralized IoT device management with geofencing, analytics, and remote control — all in Skoegle’s secure cloud ecosystem.",
       category: "cloud",
       icon: <CloudIcon />,
       image: "/hip-hanging-ap.jpg"
     },
     {
       title: "SKOEGLE Geo-fencing System",
-      description: "Define virtual boundaries and trigger smart alerts with SKOEGLE’s GPS-enabled IoT geofencing solutions.",
+      description: "Set virtual boundaries and trigger automated alerts using Skoegle's GPS-enabled geofencing intelligence.",
       category: "geo-fencing",
       icon: <MapIcon />,
       image: "/kids-shoe-ap.jpg"
     },
     {
       title: "SKOEGLE Fleet Management",
-      description: "Monitor and manage your fleet vehicles with SKOEGLE’s integrated GPS and cloud-based IoT solutions.",
+      description: "Empower fleet efficiency with predictive diagnostics, live route tracking, and driver behavior insights — all through an AI-enhanced, cloud-connected platform.",
       category: "gps",
       icon: <DirectionsCarIcon />,
       image: "/trekking-tracker-ap.jpg"
@@ -96,9 +96,9 @@ export default function IoTHomes() {
   ];
 
   const stats = [
-    { value: "40%", label: "Energy Savings with SKOEGLE IoT" },
-    { value: "24/7", label: "GPS & Security Monitoring" },
-    { value: "1000+", label: "Cloud-Integrated IoT Devices" }
+    { value: "Upto 40%", label: "Energy Efficiency Boost with SKOEGLE IoT" },
+    { value: "24/7", label: "Real-Time GPS & Security Oversight" },
+    { value: "1000+", label: "Cloud-Connected IoT Deployments" }
   ];
 
   return (
@@ -126,10 +126,10 @@ export default function IoTHomes() {
                 WebkitTextFillColor: 'transparent'
               }}
             >
-              Smart Living with SKOEGLE IoT Homes
-            </Typography>
+              Smart Living with Skoegle IoT            </Typography>
             <Typography variant="h5" sx={{ mb: 4, color: 'text.secondary' }}>
-              Experience next-generation IoT, GPS, geofencing, and cloud-based smart home solutions powered by SKOEGLE.
+              Next-gen IoT, GPS, and geofencing solutions powered by secure cloud technology — built for smarter, safer, and more connected lifestyles.
+
             </Typography>
             <Box sx={{ display: 'flex', gap: 2 }}>
               <Button
@@ -155,7 +155,7 @@ export default function IoTHomes() {
                   borderRadius: 2,
                   borderWidth: 2,
                 }}
-              > 
+              >
                 Book Live Demo
               </Button>
             </Box>
@@ -254,8 +254,7 @@ export default function IoTHomes() {
               color: 'rgba(255,255,255,0.7)'
             }}
           >
-            SKOEGLE delivers secure GPS, geofencing, and cloud-powered IoT solutions for a smarter future.
-          </Typography>
+Powering industries with intelligent automation, secure GPS, and scalable IoT infrastructure — for a truly connected future.          </Typography>
         </Box>
 
         {/* Solutions Grid */}
@@ -264,8 +263,8 @@ export default function IoTHomes() {
             variant="h4"
             sx={{ textAlign: 'center', fontWeight: 700, mb: 4 }}
           >
-            Discover SKOEGLE’s GPS, Geofencing, and Cloud IoT Solutions
-          </Typography>
+            Unlock Smart Control with GPS, Geofencing & Cloud IoT by SKOEGLE          
+            </Typography>
 
           <Grid container spacing={4}>
             {iotSolutions
@@ -344,8 +343,7 @@ export default function IoTHomes() {
             variant="h4"
             sx={{ fontWeight: 700, mb: 3, textAlign: 'center' }}
           >
-            SKOEGLE-Powered IoT and Cloud Integration
-          </Typography>
+            Empowering Industries with SKOEGLE’s IoT & Cloud Synergy          </Typography>
           <Typography
             variant="body1"
             sx={{
@@ -355,8 +353,10 @@ export default function IoTHomes() {
               mx: 'auto'
             }}
           >
-            The SKOEGLE IoT ecosystem delivers predictive automation, secure GPS,
-            geofencing, and scalable cloud-native performance for both homes and industries.
+            SKOEGLE’s IoT ecosystem delivers predictive automation, real-time GPS, smart geofencing,
+            and scalable cloud-native performance — optimized for both home and industrial use.
+
+
           </Typography>
           <Grid container spacing={4} alignItems="center">
             <Grid item xs={12} md={6}>
@@ -377,16 +377,18 @@ export default function IoTHomes() {
                 </Typography>
                 <ul style={{ paddingLeft: 20 }}>
                   <li>
-                    <Typography>Real-time GPS location tracking</Typography>
+                    <Typography>Live GPS tracking with real-time accuracy
+
+                    </Typography>
                   </li>
                   <li>
-                    <Typography>Smart geofencing alerts</Typography>
+                    <Typography>Intelligent geofencing and automated alerts</Typography>
                   </li>
                   <li>
-                    <Typography>Seamless cloud-based API integrations</Typography>
+                    <Typography>Effortless cloud API connectivity</Typography>
                   </li>
                   <li>
-                    <Typography>Edge-to-cloud server architecture</Typography>
+                    <Typography>Robust edge-to-cloud server infrastructure</Typography>
                   </li>
                 </ul>
               </Box>

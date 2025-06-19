@@ -34,16 +34,12 @@ export default function App() {
             </Typography>
 
             <Typography sx={{ color: "#616161", mb: 3 }}>
-            We customize our solutions,
-designed for your goals, 
+           Unlock new levels of efficiency and innovation by integrating smart IoT solutions tailored to your business needs.
+From real-time data insights to intelligent automation, we help you stay ahead in a connected world.
 <br/>
-shaped by your challenges
-<br/>
+<br/></Typography>
 
-
-            </Typography>
-
-            <Button
+            {/* <Button
               variant="outlined"
               sx={{
                 color: "#0288d1",
@@ -60,7 +56,7 @@ shaped by your challenges
               }}
             >
               Learn More
-            </Button>
+            </Button> */}
 
             {/* Right-side Mini Image */}
             <Box mt={4}>

@@ -43,7 +43,6 @@ const MENU_ITEMS = [
   { label: "Products", path: "/products" },
   { label: "Services", path: "/services" },
   { label: "Support", path: "/support" },
-  { label: "Your Orders", path: "/orders" },
 ];
 
 const MORE_DROPDOWN_ITEMS = [
@@ -238,6 +237,20 @@ export default function ResponsiveNavbar() {
                 </Box>
               )}
 
+              {isSignedIn && (
+                <Button
+                  onClick={() => router.push("/orders")}
+                  sx={{
+                    textTransform: "none",
+                    fontWeight: 500,
+                    color: "#000",
+                    "&:hover": { color: BRAND_COLOR },
+                  }}
+                >
+                  Your Orders
+                </Button>
+              )}
+
               {isSignedIn ? (
                 <UserButton />
               ) : (
@@ -336,6 +349,20 @@ export default function ResponsiveNavbar() {
                   />
                 </ListItemButton>
               ))}
+
+              {isSignedIn && (
+                <ListItemButton
+                  onClick={() => {
+                    router.push("/orders");
+                    setMenuOpen(false);
+                  }}
+                >
+                  <ListItemText
+                    primary="Your Orders"
+                    primaryTypographyProps={{ fontSize: 16, fontWeight: 500 }}
+                  />
+                </ListItemButton>
+              )}
 
               <ListItemButton onClick={() => setMobileMoreOpen((prev) => !prev)}>
                 <ListItemText
