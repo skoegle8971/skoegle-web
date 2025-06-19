@@ -3,9 +3,10 @@
 import { Box, Typography, Button, Grid, Card, CardContent } from '@mui/material';
 import { styled } from '@mui/system';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation'; // App Router version
 
 const GradientText = styled('span')({
-  background: 'linear-gradient(to right, #001f3f, #0074D9)', // dark blue gradient
+  background: 'linear-gradient(to right, #001f3f, #0074D9)',
   WebkitBackgroundClip: 'text',
   WebkitTextFillColor: 'transparent',
 });
@@ -14,26 +15,32 @@ const services = [
   {
     title: 'Robotic Automation',
     image: '/blog1.jpg',
-    description: 'Lorem ipsum dolor sit sedar conse adipiscing el sed do eiusmod.',
+    description: 'Streamline operations with intelligent robotic systems that boost efficiency, reduce manual errors, and scale seamlessly.',
   },
   {
     title: 'Machine Learning',
     image: '/blog3.jpg',
-    description: 'Lorem ipsum dolor sit sedar conse adipiscing el sed do eiusmod.',
+    description: 'Unlock insights and drive smarter decisions with ML-powered data models that evolve with your business.',
   },
   {
     title: 'AI For Conversation',
     image: '/blog2.jpg',
-    description: 'Lorem ipsum dolor sit sedar conse adipiscing el sed do eiusmod.',
+    description: 'Deliver human-like customer experiences with advanced conversational AI that powers chatbots, voice assistants, and more.',
   },
   {
     title: 'Internet Of Things',
     image: '/image.png',
-    description: 'Lorem ipsum dolor sit sedar conse adipiscing el sed do eiusmod.',
+    description: 'Connect, monitor, and control devices in real time with IoT solutions that enhance automation and predictive capabilities.',
   },
 ];
 
 export default function IotServices() {
+  const router = useRouter(); // for redirection
+
+  const handleRedirect = () => {
+    router.push('/services'); // Redirect to the "services" route
+  };
+
   return (
     <Box
       sx={{
@@ -44,7 +51,6 @@ export default function IotServices() {
         color: '#000',
       }}
     >
-      {/* HEADER */}
       <Typography
         variant="h4"
         sx={{
@@ -57,7 +63,6 @@ export default function IotServices() {
         Explore Best <GradientText>Iot Services</GradientText>
       </Typography>
 
-      {/* CARDS */}
       <Grid container spacing={4}>
         {services.map((service, index) => (
           <Grid item xs={12} sm={6} md={6} key={index}>
@@ -104,10 +109,10 @@ export default function IotServices() {
         ))}
       </Grid>
 
-      {/* BUTTON */}
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 6 }}>
         <Button
           variant="outlined"
+          onClick={handleRedirect}
           sx={{
             color: '#00bfff',
             borderColor: '#00bfff',

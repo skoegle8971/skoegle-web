@@ -18,14 +18,20 @@ const blogPosts = [
   {
     title: 'Transforming Industries And Changing Lives With AI',
     image: '/blog1.jpg',
+    description:
+      'AI is revolutionizing sectors like healthcare, finance, and manufacturing by boosting productivity and personalizing user experiences.',
   },
   {
     title: 'Exploring The Ethics Of AI And Robotics In Society',
     image: '/blog4.jpg',
+    description:
+      "As AI grows, ethical concerns around privacy, bias, and automation's social impact are gaining critical attention.",
   },
   {
     title: 'How AI Is Changing The Face Of Digital Marketing',
     image: '/image7.jpg',
+    description:
+      'AI is reshaping digital marketing by enabling real-time personalization and predictive insights. It allows brands to better understand customer behavior, deliver targeted campaigns, and engage more effectively across digital channels.',
   },
 ];
 
@@ -34,15 +40,13 @@ export default function App() {
     alert(`Clicked: ${title}`);
   };
 
+  const handleViewAllBlogs = () => {
+    window.open('https://skoegle.blogspot.com/?m=1', '_blank'); // ✅ Open in new tab
+  };
+
   return (
     <Box sx={{ bgcolor: '#f5f5f5', color: '#000', minHeight: '100vh' }}>
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          py: 6,
-        }}
-      >
+      <Box sx={{ display: 'flex', alignItems: 'center', py: 6 }}>
         <Container maxWidth="lg">
           <Box textAlign="center" mb={4}>
             <Typography variant="h4" sx={{ fontWeight: 700 }}>
@@ -52,8 +56,7 @@ export default function App() {
               </Box>
             </Typography>
             <Typography variant="body2" color="text.secondary" mt={1}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua
+              Stay informed with cutting-edge insights, trends, and discussions shaping the future of AI, IoT, and automation.
             </Typography>
           </Box>
 
@@ -111,7 +114,7 @@ export default function App() {
                           {post.title}
                         </Typography>
                         <Typography variant="body2" color="text.secondary" mt={1}>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+                          {post.description}
                         </Typography>
                       </CardContent>
                     </Card>
@@ -121,11 +124,11 @@ export default function App() {
             ))}
           </Grid>
 
-          {/* Add View All Services Button Below */}
+          {/* View All Blogs Button */}
           <Box textAlign="center" mt={6}>
             <Button
               variant="outlined"
-              onClick={() => console.log('View all services clicked')}
+              onClick={handleViewAllBlogs}
               sx={{
                 borderRadius: '999px',
                 borderColor: '#00CFFF',

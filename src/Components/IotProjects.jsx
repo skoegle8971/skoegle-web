@@ -15,25 +15,25 @@ export default function App() {
     {
       title: 'IoT Technology',
       description:
-        'Explore how IoT connects smart devices to automate environments and deliver real-time insights.',
+        'Empower your business with SKOEGLE’s IoT platform that connects devices, automates environments, and delivers actionable insights in real time.',
       image: '/iot.jpg',
     },
     {
       title: 'Tracking Technology',
       description:
-        'Discover how GPS and IoT enable efficient asset and vehicle tracking across industries.',
+        'Streamline operations with smart GPS and IoT tracking solutions designed to provide end-to-end visibility and control across your entire asset network.',
       image: '/image1.jpg',
     },
     {
-      title: 'Smart Home Automation',
+      title: 'Smart Automation',
       description:
-        'Control lights, appliances, and security systems remotely using smart IoT solutions for further info.',
+        'Upgrade your lifestyle with intelligent automation that controls lights, appliances, and security remotely for enhanced comfort and efficiency.',
       image: '/image3.jpg',
     },
     {
       title: 'Industrial IoT Solutions',
       description:
-        'Monitor and manage machinery, energy consumption, and predictive maintenance with IIoT.',
+        'Drive industrial performance with real-time monitoring, predictive maintenance, and smart analytics using SKOEGLE’s IIoT-driven infrastructure.',
       image: '/image6.jpg',
     },
   ];
@@ -142,7 +142,7 @@ export default function App() {
       </Grid>
 
       {/* Bottom Button */}
-      <Box textAlign="center">
+      {/* <Box textAlign="center">
         <Button
           variant="outlined"
           sx={{
@@ -161,7 +161,7 @@ export default function App() {
         >
           View All Projects
         </Button>
-      </Box>
+      </Box> */}
     </Box>
   );
 }
