@@ -58,7 +58,7 @@ export default function Footer() {
 
   const ourBrands = [
     { name: "Vmarg", url: "https://vmarg.skoegle.com" },
-    { name: "Dmarg", url: "https://geocam.skoegle.com" }
+    { name: "Dmarg", url: "https://geocam.skoegle.com" },
   ];
 
   const mainLinks = [
@@ -191,11 +191,14 @@ export default function Footer() {
             </Typography>
             {mainLinks.map((item) => (
               <Typography key={item.label} variant="body2" mb={1.5}>
-                <NextLink href={item.href} passHref legacyBehavior>
-                  <MuiLink underline="hover" color="inherit">
-                    {item.label}
-                  </MuiLink>
-                </NextLink>
+                <MuiLink
+                  component={NextLink}
+                  href={item.href}
+                  underline="hover"
+                  color="inherit"
+                >
+                  {item.label}
+                </MuiLink>
               </Typography>
             ))}
           </Grid>
@@ -207,11 +210,14 @@ export default function Footer() {
             </Typography>
             {additionalLinks.map((item) => (
               <Typography key={item.label} variant="body2" mb={1.5}>
-                <NextLink href={item.href} passHref legacyBehavior>
-                  <MuiLink underline="hover" color="inherit">
-                    {item.label}
-                  </MuiLink>
-                </NextLink>
+                <MuiLink
+                  component={NextLink}
+                  href={item.href}
+                  underline="hover"
+                  color="inherit"
+                >
+                  {item.label}
+                </MuiLink>
               </Typography>
             ))}
           </Grid>
