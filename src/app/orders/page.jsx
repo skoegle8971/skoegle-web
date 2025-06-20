@@ -53,7 +53,7 @@ export default function OrdersPage() {
 
   return (
     <Layout>
-    <Container maxWidth="md" sx={{ pt: 4 }}>
+    <Container maxWidth="md" sx={{ pt: 10 }}>
       <Typography variant="h4" gutterBottom fontWeight={600}>
         Your Orders
       </Typography>
