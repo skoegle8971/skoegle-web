@@ -1,116 +1,195 @@
+
 "use client";
+
 import Layout from "../../Layout/Layout";
-import { Box, Typography, TextField, Button, Paper, Alert } from "@mui/material";
-import { useState } from "react";
+import {
+  Box,
+  Grid,
+  TextField,
+  Typography,
+  Button,
+  Paper,
+  Divider,
+  Stack,
+  Container,
+} from "@mui/material";
+import EmailIcon from "@mui/icons-material/Email";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import PhoneIcon from "@mui/icons-material/Phone";
+import SendIcon from "@mui/icons-material/Send";
+import { useRef } from "react";
 
-export default function Support() {
-  const [form, setForm] = useState({
-    email: "",
-    subject: "",
-    message: "",
-  });
-  const [status, setStatus] = useState(null);
+export default function Contact() {
+  const formRef = useRef(null);
 
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!form.email || !form.subject || !form.message) {
-      setStatus({ success: false, message: "Please fill in all fields." });
+    const form = formRef.current;
+    if (!form.checkValidity()) {
+      form.reportValidity();
       return;
     }
-
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        setStatus({ success: true, message: data.message });
-        setForm({ email: "", subject: "", message: "" });
-      } else {
-        setStatus({ success: false, message: data.message || "An error occurred." });
-      }
-    } catch (error) {
-      console.error(error);
-      setStatus({ success: false, message: "An error occurred. Please try again later." });
-    }
+    console.log("Form submitted");
   };
 
   return (
     <Layout>
-      <Box sx={{ p: { xs: 2, md: 6 }, maxWidth: "800px", mx: "auto" }}>
-        <Typography variant="h4" fontWeight="bold" gutterBottom>
-          <br />
-          Support Center
-        </Typography>
-
-        <Typography variant="body1" mb={4}>
-          We're here to help! Fill out the form below and we'll get back to you as soon as possible.
-        </Typography>
-
-        <Paper elevation={3} sx={{ p: 4, mb: 4 }}>
-          <Typography variant="h6" gutterBottom>
-            Contact Us
+      <Box sx={{ py: 8, backgroundColor: "#f9f9f9", overflowX: "hidden" }}>
+        <Container maxWidth="lg">
+          <Typography
+            variant="h4"
+            fontWeight="bold"
+            textAlign="center"
+            margin={'10px'}
+            mb={2}
+          >
+            Sales & Support
           </Typography>
 
-          <form onSubmit={handleSubmit} noValidate>
-            <TextField
-              label="Your Email"
-              name="email"
-              type="email"
-              value={form.email}
-              onChange={handleChange}
-              fullWidth
-              margin="normal"
-              required
-            />
-            <TextField
-              label="Subject"
-              name="subject"
-              value={form.subject}
-              onChange={handleChange}
-              fullWidth
-              margin="normal"
-              required
-            />
-            <TextField
-              label="Message"
-              name="message"
-              value={form.message}
-              onChange={handleChange}
-              fullWidth
-              multiline
-              rows={4}
-              margin="normal"
-              required
-            />
-            <Button type="submit" variant="contained" sx={{ mt: 2 }}>
-              Submit
-            </Button>
-          </form>
+          <Typography
+            variant="h6"
+            textAlign="center"
+            color="text.secondary"
+            fontWeight="bold"
+            mb={1}
+          >
+            When Innovation Meets Technology!
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            textAlign="center"
+            color="text.secondary"
+            mb={6}
+          >
+            Provide your details, and we'll get back to you.
+          </Typography>
 
-          {status && (
-            <Alert
-              severity={status.success ? "success" : "error"}
-              sx={{ mt: 3 }}
-            >
-              {status.message}
-            </Alert>
-          )}
-        </Paper>
+          <Grid container spacing={4}>
+            {/* Left - Contact Info */}
+            <Grid item xs={12} md={5}>
+              <Paper
+                elevation={1}
+                sx={{
+                  p: { xs: 2, sm: 3 },
+                  borderRadius: 2,
+                  backgroundColor: "white",
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-start",
+                }}
+              >
+                <Typography variant="h6" gutterBottom>
+                  Contact Information
+                </Typography>
+                <Divider sx={{ my: 2 }} />
+
+                <Stack spacing={3}>
+                  <Stack direction="row" spacing={2} alignItems="center">
+                    <EmailIcon color="primary" />
+                    <Typography>
+                      <a
+                        href="mailto:gayathri@sales.skoegle.com"
+                        style={{ color: "#1976d2", textDecoration: "none" }}
+                      >
+                        gayathri@sales.skoegle.com
+                      </a>
+                    </Typography>
+                  </Stack>
+
+                  <Stack direction="row" spacing={2} alignItems="center">
+                    <PhoneIcon color="primary" />
+                    <Typography>
+                      <a
+                        href="tel:+919591505241"
+                        style={{ color: "#1976d2", textDecoration: "none" }}
+                      >
+                        +91 95915 05241
+                      </a>
+                    </Typography>
+                  </Stack>
+
+                  <Stack direction="row" spacing={2} alignItems="flex-start">
+                    <LocationOnIcon color="primary" sx={{ mt: "2px" }} />
+                    <Typography>
+                      52/2, 2nd Main Rd, Vyalikaval,<br />
+                      Lower Palace Orchards, Malleshwaram,<br />
+                      Bangalore, India
+                    </Typography>
+                  </Stack>
+                </Stack>
+              </Paper>
+            </Grid>
+
+            {/* Right - Contact Form */}
+            <Grid item xs={12} md={7}>
+              <Paper
+                elevation={3}
+                sx={{
+                  p: { xs: 2, sm: 3 },
+                  borderRadius: 2,
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <Typography variant="h6" gutterBottom>
+                  Send us a message
+                </Typography>
+
+                <Box
+                  component="form"
+                  ref={formRef}
+                  onSubmit={handleSubmit}
+                  noValidate
+                  sx={{
+                    mt: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 2,
+                    flexGrow: 1,
+                  }}
+                >
+                  <TextField
+                    label="Name"
+                    variant="outlined"
+                    fullWidth
+                    required
+                    name="name"
+                  />
+                  <TextField
+                    label="Email"
+                    variant="outlined"
+                    fullWidth
+                    required
+                    type="email"
+                    name="email"
+                  />
+                  <TextField
+                    label="Message"
+                    variant="outlined"
+                    fullWidth
+                    multiline
+                    rows={4}
+                    name="message"
+                  />
+
+                  <Box sx={{ textAlign: "center", mt: 2 }}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      endIcon={<SendIcon />}
+                      size="large"
+                      type="submit"
+                    >
+                      Send Message
+                    </Button>
+                  </Box>
+                </Box>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Container>
       </Box>
     </Layout>
   );

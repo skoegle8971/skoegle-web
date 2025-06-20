@@ -43,13 +43,15 @@ const MENU_ITEMS = [
   { label: "Products", path: "/products" },
   { label: "Services", path: "/services" },
   { label: "Support", path: "/support" },
+  { label: "About Us", path: "/about" },
 ];
 
 const MORE_DROPDOWN_ITEMS = [
-  { label: "About Us", path: "/about" },
   { label: "Careers", path: "/careers" },
-  { label: "Blog", path: "https://skoegle.blogspot.com/?m=1", external: true },
   { label: "Contact Us", path: "/contact" },
+  { label: "Blog", path: "https://skoegle.blogspot.com/?m=1", external: true },
+  { label: "Gallery", path: "/gallery" },
+  { label: "Invite", path: "/invite" },
 ];
 
 export default function ResponsiveNavbar() {
@@ -96,14 +98,11 @@ export default function ResponsiveNavbar() {
         <Toolbar sx={{ justifyContent: "space-between", px: { xs: 2, md: 4 } }}>
           {/* Left Side */}
           <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 1, md: 4 } }}>
-            <Link href="/" passHref legacyBehavior>
+            <Link href="/" style={{ textDecoration: "none", color: BRAND_COLOR }}>
               <Typography
                 variant="h6"
-                component="a"
                 sx={{
                   fontWeight: "bold",
-                  color: BRAND_COLOR,
-                  textDecoration: "none",
                   "&:hover": { textDecoration: "underline" },
                 }}
               >
@@ -172,24 +171,43 @@ export default function ResponsiveNavbar() {
                       >
                         <Paper elevation={4}>
                           <MenuList>
-                            {MORE_DROPDOWN_ITEMS.map(({ label, path }) => (
-                              <MenuItem
-                                key={path}
-                                onClick={() => {
-                                  router.push(path);
-                                  setDesktopMoreOpen(false);
-                                }}
-                                sx={{
-                                  fontSize: "14px",
-                                  "&:hover": {
-                                    backgroundColor: "rgba(0, 119, 204, 0.08)",
-                                    color: BRAND_COLOR,
-                                  },
-                                }}
-                              >
-                                {label}
-                              </MenuItem>
-                            ))}
+                            {MORE_DROPDOWN_ITEMS.map(({ label, path, external }) =>
+                              external ? (
+                                <MenuItem
+                                  key={path}
+                                  component="a"
+                                  href={path}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  sx={{
+                                    fontSize: "14px",
+                                    "&:hover": {
+                                      backgroundColor: "rgba(0, 119, 204, 0.08)",
+                                      color: BRAND_COLOR,
+                                    },
+                                  }}
+                                >
+                                  {label}
+                                </MenuItem>
+                              ) : (
+                                <MenuItem
+                                  key={path}
+                                  onClick={() => {
+                                    router.push(path);
+                                    setDesktopMoreOpen(false);
+                                  }}
+                                  sx={{
+                                    fontSize: "14px",
+                                    "&:hover": {
+                                      backgroundColor: "rgba(0, 119, 204, 0.08)",
+                                      color: BRAND_COLOR,
+                                    },
+                                  }}
+                                >
+                                  {label}
+                                </MenuItem>
+                              )
+                            )}
                           </MenuList>
                         </Paper>
                       </motion.div>
@@ -377,14 +395,22 @@ export default function ResponsiveNavbar() {
               </ListItemButton>
               <Collapse in={mobileMoreOpen} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                  {MORE_DROPDOWN_ITEMS.map(({ label, path }) => (
+                  {MORE_DROPDOWN_ITEMS.map(({ label, path, external }) => (
                     <ListItemButton
                       key={path}
                       sx={{ pl: 4 }}
-                      onClick={() => {
-                        router.push(path);
-                        setMenuOpen(false);
-                      }}
+                      component={external ? "a" : "button"}
+                      href={external ? path : undefined}
+                      onClick={
+                        !external
+                          ? () => {
+                              router.push(path);
+                              setMenuOpen(false);
+                            }
+                          : undefined
+                      }
+                      target={external ? "_blank" : undefined}
+                      rel={external ? "noopener noreferrer" : undefined}
                     >
                       <ListItemText
                         primary={label}

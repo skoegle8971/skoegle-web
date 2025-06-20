@@ -122,7 +122,7 @@ const renderSkeletons = () => {
 
                 <Button
                   size="small"
-                  onClick={() => router.push(`/products/view/PRDssDS001`)}
+                  onClick={() => router.push(`/products/view/${product.productId}`)}
                   sx={{ color: '#2196f3', textTransform: 'none', fontWeight: 'bold' }}
                 >
                   Read more &gt;
