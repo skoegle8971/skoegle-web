@@ -19,7 +19,7 @@ import {
 } from '@mui/material';
 
 const Cryptr = require('cryptr');
-const cryptr = new Cryptr('1234567890abcdef'); // Use env var in production
+const cryptr = new Cryptr('1234567890abcdef'); // ⚠️ Use env variable in production
 
 export default function Checkout() {
   const { user, isLoaded, isSignedIn } = useUser();
@@ -34,6 +34,9 @@ export default function Checkout() {
   const [state, setState] = useState('');
   const [district, setDistrict] = useState('');
   const [loading, setLoading] = useState(true);
+
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -80,13 +83,16 @@ export default function Checkout() {
   };
 
   const handleCheckout = () => {
-    if (!phoneNumber.trim() || !deliveryAddress.trim()) {
-      return alert("Please enter both phone number and delivery address.");
+    const finalName = user?.fullName || fullName;
+    const finalEmail = user?.primaryEmailAddress?.emailAddress || email;
+
+    if (!finalName || !finalEmail || !phoneNumber.trim() || !deliveryAddress.trim()) {
+      return alert("Please complete all required fields including name, email, phone number, and address.");
     }
 
     const payload = {
-      name: user.fullName,
-      email: user.primaryEmailAddress?.emailAddress,
+      name: finalName,
+      email: finalEmail,
       amount: product.amount,
       redirectingurl: `https://skoegle.com/orders`,
       address: deliveryAddress,
@@ -161,17 +167,19 @@ export default function Checkout() {
                 <TextField
                   fullWidth
                   label="Full Name"
-                  value={user.fullName}
+                  value={user.fullName || fullName}
+                  onChange={(e) => setFullName(e.target.value)}
                   margin="normal"
-                  disabled
+                  disabled={!!user.fullName}
                 />
 
                 <TextField
                   fullWidth
                   label="Email"
-                  value={user.primaryEmailAddress?.emailAddress}
+                  value={user.primaryEmailAddress?.emailAddress || email}
+                  onChange={(e) => setEmail(e.target.value)}
                   margin="normal"
-                  disabled
+                  disabled={!!user.primaryEmailAddress}
                 />
 
                 <TextField
