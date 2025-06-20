@@ -43,13 +43,15 @@ const MENU_ITEMS = [
   { label: "Products", path: "/products" },
   { label: "Services", path: "/services" },
   { label: "Support", path: "/support" },
+  { label: "About Us", path: "/about" },
 ];
 
 const MORE_DROPDOWN_ITEMS = [
-  { label: "About Us", path: "/about" },
   { label: "Careers", path: "/careers" },
-  { label: "Blog", path: "https://skoegle.blogspot.com/?m=1", external: true },
   { label: "Contact Us", path: "/contact" },
+  { label: "Blog", path: "https://skoegle.blogspot.com/?m=1", external: true },
+  { label: "Gallery", path: "/gallery" },
+  { label: "Invite", path: "/invite" },
 ];
 
 export default function ResponsiveNavbar() {

@@ -73,7 +73,7 @@ const renderSkeletons = () => {
       >
         <Container maxWidth="md" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
           <Typography variant="h2" fontWeight="bold">
-            ALL <span style={{ color: '#2196f3' }}>PRODUCTS</span>
+           <span style={{ color: '#2196f3' }}>  ALL PRODUCTS</span>
           </Typography>
         </Container>
       </Box>
