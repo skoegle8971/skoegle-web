@@ -180,21 +180,21 @@ export default function ProductPage() {
                     {product.downloads.android && (
                       <MuiLink href={product.downloads.android} target="_blank" underline="hover">
                         <Button startIcon={<AndroidIcon />} variant="outlined" fullWidth>
-                          Android App
+                          Android 
                         </Button>
                       </MuiLink>
                     )}
                     {product.downloads.ios && (
                       <MuiLink href={product.downloads.ios} target="_blank" underline="hover">
                         <Button startIcon={<AppleIcon />} variant="outlined" fullWidth>
-                          iOS App
+                         Windows
                         </Button>
                       </MuiLink>
                     )}
                     {product.downloads.pdfManual && (
                       <MuiLink href={product.downloads.pdfManual} target="_blank" underline="hover">
                         <Button startIcon={<PictureAsPdfIcon />} variant="outlined" fullWidth>
-                          PDF Manual
+                         Website
                         </Button>
                       </MuiLink>
                     )}
