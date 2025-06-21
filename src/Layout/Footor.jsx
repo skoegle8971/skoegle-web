@@ -64,7 +64,7 @@ export default function Footer() {
   const mainLinks = [
     { label: "About us", href: "/about" },
     { label: "Our Products", href: "/products" },
-    { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Privacy Policy", href: "/privacypolicy" },
     { label: "Terms and Conditions", href: "/terms" },
     { label: "Contact Us", href: "/contact" },
   ];
