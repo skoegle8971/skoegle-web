@@ -2,6 +2,8 @@
 
 import Layout from "../../../../Layout/Layout";
 import { useUser } from '@clerk/nextjs';
+import NextLink from 'next/link';
+import Link from '@mui/material/Link';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -34,9 +36,9 @@ export default function Checkout() {
   const [state, setState] = useState('');
   const [district, setDistrict] = useState('');
   const [loading, setLoading] = useState(true);
-
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
+  const [agreedToTerms, setAgreedToTerms] = useState(false); // ✅ added
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -258,12 +260,36 @@ export default function Checkout() {
 
                     <Typography variant="body1"><strong>Amount:</strong> ₹{product.amount}</Typography>
 
+                    {/* ✅ Terms and Conditions Checkbox */}
+                    <Box sx={{ mt: 2 }}>
+  <label style={{ display: 'flex', alignItems: 'center' }}>
+    <input
+      type="checkbox"
+      checked={agreedToTerms}
+      onChange={() => setAgreedToTerms(prev => !prev)}
+      style={{ marginRight: '8px' }}
+    />
+    I agree to the{' '}
+    <Link
+      component={NextLink}
+      href="/sales"
+      target="_blank"
+      rel="noopener noreferrer"
+      underline="hover"
+      sx={{ ml: 0.5 }}
+    >
+      Terms and Conditions
+    </Link>
+  </label>
+</Box>
+
                     <Button
                       fullWidth
                       variant="contained"
                       color="primary"
                       sx={{ mt: 3 }}
                       onClick={handleCheckout}
+                      disabled={!agreedToTerms} // ✅ Button disabled until checkbox is checked
                     >
                       Place Order & Pay
                     </Button>
@@ -279,3 +305,4 @@ export default function Checkout() {
     </Layout>
   );
 }
+
