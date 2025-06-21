@@ -1,5 +1,6 @@
 import { Analytics } from '@vercel/analytics/next';
 import { ClerkProvider, SignedIn, SignedOut, SignIn, UserButton } from '@clerk/nextjs';
+import { ProductProvider } from "../Store/Store";
 import { IBM_Plex_Sans } from 'next/font/google';
 const ibmPlexSans = IBM_Plex_Sans({
   subsets: ['latin'],
@@ -17,7 +18,7 @@ export default function RootLayout({ children }) {
     <ClerkProvider appearance={{ baseTheme: "light" }}>
       <html lang="en">
         <body className={ibmPlexSans.className} style={{ margin: 0, padding: 0 }}>
-          <main>{children}</main>
+          <main><ProductProvider>{children}</ProductProvider></main>
             <Analytics />
         </body>
       </html>

@@ -38,14 +38,14 @@ import ContactSupportIcon from '@mui/icons-material/ContactSupport';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CloseIcon from '@mui/icons-material/Close';
-
+import { useProducts } from '@/Store/Store';
 export default function ProductPage() {
   const { productId } = useParams();
   const router = useRouter();
   const hasFetched = useRef(false);
 
   const { isSignedIn, isLoaded } = useUser();
-
+  const { products, setProducts } = useProducts();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -161,6 +161,14 @@ export default function ProductPage() {
                 >
                   Buy Now
                 </Button>
+                <Button
+                  onClick={() => setProducts(prev => [...prev, product])}
+                  variant="contained"
+                  color="success"
+                  startIcon={<PaymentIcon />}
+                >
+                  Add to Cart
+                </Button>
 
                 <Button
                   component={Link}
@@ -180,21 +188,21 @@ export default function ProductPage() {
                     {product.downloads.android && (
                       <MuiLink href={product.downloads.android} target="_blank" underline="hover">
                         <Button startIcon={<AndroidIcon />} variant="outlined" fullWidth>
-                          Android 
+                          Android
                         </Button>
                       </MuiLink>
                     )}
                     {product.downloads.ios && (
                       <MuiLink href={product.downloads.ios} target="_blank" underline="hover">
                         <Button startIcon={<AppleIcon />} variant="outlined" fullWidth>
-                         Windows
+                          Windows
                         </Button>
                       </MuiLink>
                     )}
                     {product.downloads.pdfManual && (
                       <MuiLink href={product.downloads.pdfManual} target="_blank" underline="hover">
                         <Button startIcon={<PictureAsPdfIcon />} variant="outlined" fullWidth>
-                         Website
+                          Website
                         </Button>
                       </MuiLink>
                     )}
