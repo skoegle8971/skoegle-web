@@ -38,7 +38,7 @@ export default function Checkout() {
   const [loading, setLoading] = useState(true);
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
-  const [agreedToTerms, setAgreedToTerms] = useState(false); // ✅ added
+  const [agreedToTerms, setAgreedToTerms] = useState(true); // ✅ added
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -283,16 +283,18 @@ export default function Checkout() {
   </label>
 </Box>
 
-                    <Button
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      sx={{ mt: 3 }}
-                      onClick={handleCheckout}
-                      disabled={!agreedToTerms} // ✅ Button disabled until checkbox is checked
-                    >
-                      Place Order & Pay
-                    </Button>
+                  {agreedToTerms && (
+  <Button
+    fullWidth
+    variant="contained"
+    color="primary"
+    sx={{ mt: 3 }}
+    onClick={handleCheckout}
+  >
+    Place Order & Pay
+  </Button>
+)}
+
                   </>
                 ) : (
                   <Typography variant="body2">Product not found.</Typography>
