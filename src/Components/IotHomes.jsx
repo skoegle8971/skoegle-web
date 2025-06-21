@@ -1,4 +1,3 @@
-// src/Components/IoTHomes.jsx
 'use client';
 
 import {
@@ -66,32 +65,36 @@ export default function IoTHomes() {
 
   const iotSolutions = [
     {
-      title: "SKOEGLE GPS Tracker",
-      description: "Get real-time GPS tracking for vehicles, assets, and personnel — powered by secure, cloud-connected IoT infrastructure.",
+      title: "SKOEGLE ID Card Tracker",
+      description: "Stay one step ahead with our advanced ID Card Tracking solution. Whether for schools, offices, or industrial premises, our tracker ensures every movement is monitored and secured.",
       category: "gps",
       icon: <GpsFixedIcon />,
-      image: "/id-card holder-ap.jpg"
+      image: "/id-card holder-ap.jpg",
+      link: "/products/view/cmttlxuz"
     },
     {
-      title: "SKOEGLE Cloud IoT Platform",
-      description: "Centralized IoT device management with geofencing, analytics, and remote control — all in Skoegle’s secure cloud ecosystem.",
+      title: "SKOEGLE Pet Tracker",
+      description: "Keep your furry friends safe with our smart Pet Tracking solution. Whether at home or outdoors, monitor their location in real-time and receive instant alerts for unexpected movement or boundary breaches.",
       category: "cloud",
       icon: <CloudIcon />,
-      image: "/hip-hanging-ap.jpg"
+      image: "/products/pettracker/Blue.jpg",
+      link: "/products/view/PRDssDS001"
     },
     {
-      title: "SKOEGLE Geo-fencing System",
-      description: "Set virtual boundaries and trigger automated alerts using Skoegle's GPS-enabled geofencing intelligence.",
+      title: "SKOEGLE Shoe Tracker",
+      description: "Step into the future with our smart Shoe Tracker — designed to ensure safety, activity tracking, and peace of mind for people of all ages, with real-time location updates and movement insights.",
       category: "geo-fencing",
       icon: <MapIcon />,
-      image: "/kids-shoe-ap.jpg"
+      image: "/kids-shoe-ap.jpg",
+      link: "/products/view/9iclen0u"
     },
     {
-      title: "SKOEGLE Fleet Management",
-      description: "Empower fleet efficiency with predictive diagnostics, live route tracking, and driver behavior insights — all through an AI-enhanced, cloud-connected platform.",
+      title: "SKOEGLE Vehicle Tracker",
+      description: "Empower your drive with smart vehicle tracking. Whether for personal use or fleet management, our Vehicle Tracker ensures safety, real-time monitoring, and complete control — all from your fingertips.",
       category: "gps",
       icon: <DirectionsCarIcon />,
-      image: "/trekking-tracker-ap.jpg"
+      image: "/products/vehicletracker/Black.jpg",
+      link: "/products/view/0f5msiw6"
     }
   ];
 
@@ -133,19 +136,19 @@ export default function IoTHomes() {
             </Typography>
             <Box sx={{ display: 'flex', gap: 2 }}>
               <Button
-  component={Link}
-  href="/products"
-  variant="contained"
-  size="large"
-  endIcon={<ArrowForward />}
-  sx={{
-    px: 4,
-    py: 1.5,
-    borderRadius: 2
-  }}
->
-  Get Started
-</Button>
+                component={Link}
+                href="/products"
+                variant="contained"
+                size="large"
+                endIcon={<ArrowForward />}
+                sx={{
+                  px: 4,
+                  py: 1.5,
+                  borderRadius: 2
+                }}
+              >
+                Get Started
+              </Button>
               <Button
                 component={Link}
                 href="/contact"
@@ -256,7 +259,7 @@ export default function IoTHomes() {
               color: 'rgba(255,255,255,0.7)'
             }}
           >
-Powering industries with intelligent automation, secure GPS, and scalable IoT infrastructure — for a truly connected future.          </Typography>
+            Powering industries with intelligent automation, secure GPS, and scalable IoT infrastructure — for a truly connected future.          </Typography>
         </Box>
 
         {/* Solutions Grid */}
@@ -265,8 +268,8 @@ Powering industries with intelligent automation, secure GPS, and scalable IoT in
             variant="h4"
             sx={{ textAlign: 'center', fontWeight: 700, mb: 4 }}
           >
-            Unlock Smart Control with GPS, Geofencing & Cloud IoT by SKOEGLE          
-            </Typography>
+            Unlock Smart Control with GPS, Geofencing & Cloud IoT by SKOEGLE
+          </Typography>
 
           <Grid container spacing={4}>
             {iotSolutions
@@ -322,9 +325,12 @@ Powering industries with intelligent automation, secure GPS, and scalable IoT in
                       </Typography>
                     </CardContent>
                     <Box sx={{ p: 2, textAlign: 'right' }}>
-                      <IconButton aria-label="Learn more" color="primary">
-                        <ArrowForward />
-                      </IconButton>
+                      <Link href={solution.link} passHref legacyBehavior>
+                        <IconButton aria-label="Learn more" color="primary" component="a">
+                          <ArrowForward />
+                        </IconButton>
+                      </Link>
+
                     </Box>
                   </Card>
                 </Grid>
