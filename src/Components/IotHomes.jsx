@@ -133,17 +133,19 @@ export default function IoTHomes() {
             </Typography>
             <Box sx={{ display: 'flex', gap: 2 }}>
               <Button
-                variant="contained"
-                size="large"
-                endIcon={<ArrowForward />}
-                sx={{
-                  px: 4,
-                  py: 1.5,
-                  borderRadius: 2
-                }}
-              >
-                Get Started
-              </Button>
+  component={Link}
+  href="/products"
+  variant="contained"
+  size="large"
+  endIcon={<ArrowForward />}
+  sx={{
+    px: 4,
+    py: 1.5,
+    borderRadius: 2
+  }}
+>
+  Get Started
+</Button>
               <Button
                 component={Link}
                 href="/contact"
