@@ -1,5 +1,5 @@
 import Cryptr from 'cryptr';
-const cryptr = new Cryptr('1234567890abcdef'); 
+const cryptr = new Cryptr('5sd4f54s5f45sf45sdf5sfs4d5f4s54f5sdf45s45f4s5f45s4f5ds4vsd54s5f'); 
 
 export const encrypt = (text) => {
   if (!text) return '';
