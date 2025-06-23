@@ -23,6 +23,17 @@ import {
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr('1234567890abcdef'); // ⚠️ Use env variable in production
 
+// Validation helpers
+const validateEmail = (email) => {
+  // Basic email regex
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+};
+
+const validatePhoneNumber = (phone) => {
+  // Validates Indian phone numbers (10 digits, starts with 6-9)
+  return /^[6-9]\d{9}$/.test(phone);
+};
+
 export default function Checkout() {
   const { user, isLoaded, isSignedIn } = useUser();
   const { productId } = useParams();
@@ -38,7 +49,10 @@ export default function Checkout() {
   const [loading, setLoading] = useState(true);
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
-  const [agreedToTerms, setAgreedToTerms] = useState(true); // ✅ added
+  const [agreedToTerms, setAgreedToTerms] = useState(true);
+
+  // Optional: For inline error handling (advanced UX)
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -87,9 +101,23 @@ export default function Checkout() {
   const handleCheckout = () => {
     const finalName = user?.fullName || fullName;
     const finalEmail = user?.primaryEmailAddress?.emailAddress || email;
+    let newErrors = {};
 
-    if (!finalName || !finalEmail || !phoneNumber.trim() || !deliveryAddress.trim()) {
-      return alert("Please complete all required fields including name, email, phone number, and address.");
+    // Validate fields
+    if (!finalName.trim()) newErrors.fullName = "Please enter your full name.";
+    if (!finalEmail.trim()) newErrors.email = "Please enter your email address.";
+    else if (!validateEmail(finalEmail.trim())) newErrors.email = "Please enter a valid email address.";
+    if (!phoneNumber.trim()) newErrors.phoneNumber = "Please enter your phone number.";
+    else if (!validatePhoneNumber(phoneNumber.trim())) newErrors.phoneNumber = "Please enter a valid 10-digit phone number.";
+    if (!deliveryAddress.trim()) newErrors.deliveryAddress = "Please enter your delivery address.";
+    if (!pincode.trim() || pincode.length !== 6) newErrors.pincode = "Please enter a valid 6-digit pincode.";
+    if (!agreedToTerms) newErrors.terms = "You must agree to the Terms and Conditions before placing the order.";
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) {
+      // Optionally, scroll to the first error field.
+      return;
     }
 
     const payload = {
@@ -173,6 +201,8 @@ export default function Checkout() {
                   onChange={(e) => setFullName(e.target.value)}
                   margin="normal"
                   disabled={!!user.fullName}
+                  error={!!errors.fullName}
+                  helperText={errors.fullName}
                 />
 
                 <TextField
@@ -182,6 +212,8 @@ export default function Checkout() {
                   onChange={(e) => setEmail(e.target.value)}
                   margin="normal"
                   disabled={!!user.primaryEmailAddress}
+                  error={!!errors.email}
+                  helperText={errors.email}
                 />
 
                 <TextField
@@ -190,6 +222,8 @@ export default function Checkout() {
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   margin="normal"
+                  error={!!errors.phoneNumber}
+                  helperText={errors.phoneNumber}
                 />
 
                 <TextField
@@ -198,6 +232,8 @@ export default function Checkout() {
                   value={pincode}
                   onChange={(e) => handlePincodeChange(e.target.value)}
                   margin="normal"
+                  error={!!errors.pincode}
+                  helperText={errors.pincode}
                 />
 
                 <TextField
@@ -232,6 +268,8 @@ export default function Checkout() {
                   value={deliveryAddress}
                   onChange={(e) => setDeliveryAddress(e.target.value)}
                   margin="normal"
+                  error={!!errors.deliveryAddress}
+                  helperText={errors.deliveryAddress}
                 />
               </CardContent>
             </Card>
@@ -260,41 +298,44 @@ export default function Checkout() {
 
                     <Typography variant="body1"><strong>Amount:</strong> ₹{product.amount}</Typography>
 
-                    {/* ✅ Terms and Conditions Checkbox */}
+                    {/* Terms and Conditions Checkbox */}
                     <Box sx={{ mt: 2 }}>
-  <label style={{ display: 'flex', alignItems: 'center' }}>
-    <input
-      type="checkbox"
-      checked={agreedToTerms}
-      onChange={() => setAgreedToTerms(prev => !prev)}
-      style={{ marginRight: '8px' }}
-    />
-    I agree to the{' '}
-    <Link
-      component={NextLink}
-      href="/sales"
-      target="_blank"
-      rel="noopener noreferrer"
-      underline="hover"
-      sx={{ ml: 0.5 }}
-    >
-      Terms and Conditions
-    </Link>
-  </label>
-</Box>
+                      <label style={{ display: 'flex', alignItems: 'center' }}>
+                        <input
+                          type="checkbox"
+                          checked={agreedToTerms}
+                          onChange={() => setAgreedToTerms(prev => !prev)}
+                          style={{ marginRight: '8px' }}
+                        />
+                        I agree to the{' '}
+                        <Link
+                          component={NextLink}
+                          href="/sales"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          underline="hover"
+                          sx={{ ml: 0.5 }}
+                        >
+                          Terms and Conditions
+                        </Link>
+                      </label>
+                      {errors.terms && (
+                        <Typography variant="caption" color="error" sx={{ display: 'block', mt: 1 }}>
+                          {errors.terms}
+                        </Typography>
+                      )}
+                    </Box>
 
-                  {agreedToTerms && (
-  <Button
-    fullWidth
-    variant="contained"
-    color="primary"
-    sx={{ mt: 3 }}
-    onClick={handleCheckout}
-  >
-    Place Order & Pay
-  </Button>
-)}
-
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      sx={{ mt: 3 }}
+                      onClick={handleCheckout}
+                      disabled={!agreedToTerms}
+                    >
+                      Place Order & Pay
+                    </Button>
                   </>
                 ) : (
                   <Typography variant="body2">Product not found.</Typography>
@@ -307,4 +348,3 @@ export default function Checkout() {
     </Layout>
   );
 }
-
