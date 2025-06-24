@@ -1,4 +1,5 @@
 import { Analytics } from '@vercel/analytics/next';
+import SyncUser from "../Components/SyncUser";
 import { ClerkProvider, SignedIn, SignedOut, SignIn, UserButton } from '@clerk/nextjs';
 import { IBM_Plex_Sans } from 'next/font/google';
 const ibmPlexSans = IBM_Plex_Sans({
@@ -19,6 +20,7 @@ export default function RootLayout({ children }) {
         <body className={ibmPlexSans.className} style={{ margin: 0, padding: 0 }}>
           <main>{children}</main>
             <Analytics />
+            <SyncUser />
         </body>
       </html>
     </ClerkProvider>

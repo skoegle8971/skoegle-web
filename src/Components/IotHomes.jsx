@@ -151,7 +151,7 @@ export default function IoTHomes() {
               </Button>
               <Button
                 component={Link}
-                href="/contact"
+                href="/support"
                 variant="outlined"
                 size="large"
                 sx={{
@@ -161,7 +161,7 @@ export default function IoTHomes() {
                   borderWidth: 2,
                 }}
               >
-                Book Live Demo
+                Book Demo
               </Button>
             </Box>
           </Grid>
