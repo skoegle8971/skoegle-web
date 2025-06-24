@@ -1,5 +1,5 @@
 import { Analytics } from '@vercel/analytics/next';
-import SyncUser from "@/components/SyncUser";
+import SyncUser from "../Components/SyncUser";
 import { ClerkProvider, SignedIn, SignedOut, SignIn, UserButton } from '@clerk/nextjs';
 import { IBM_Plex_Sans } from 'next/font/google';
 const ibmPlexSans = IBM_Plex_Sans({
