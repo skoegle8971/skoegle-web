@@ -72,11 +72,9 @@ export default function Footer() {
   const additionalLinks = [
     { label: "Sign In", href: "/signin" },
     { label: "Sign up", href: "/signup" },
-    { label: "Blogs", href: "/blog" },
-    { label: "News", href: "/news" },
     { label: "Careers", href: "/careers" },
-    { label: "Our Team", href: "/team" },
-    { label: "Our Innovations", href: "/innovations" },
+    { label: "Our Team", href: "/gallery" },
+    { label: "Our Innovations", href: "https://skoegle.blogspot.com/?m=1", external: true},
   ];
 
   return (
