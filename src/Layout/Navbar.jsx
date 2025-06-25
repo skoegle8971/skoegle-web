@@ -1,8 +1,6 @@
-// src/Layout/Navbar.jsx
-
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import {
   AppBar,
@@ -56,6 +54,7 @@ const MORE_DROPDOWN_ITEMS = [
 
 export default function ResponsiveNavbar() {
   const router = useRouter();
+  const pathname = usePathname();
   const { isSignedIn } = useUser();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -88,6 +87,13 @@ export default function ResponsiveNavbar() {
       setSearchOpen(false);
     }
   };
+
+  // Determine auth page for button
+  const isSignInPage = pathname === "/signin";
+  const isSignUpPage = pathname === "/signup";
+  const showAuthButton = isSignInPage || isSignUpPage;
+  const authButtonLabel = isSignInPage ? "Sign up" : "Sign in";
+  const authButtonPath = isSignInPage ? "/signup" : "/signin";
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -269,8 +275,29 @@ export default function ResponsiveNavbar() {
                 </Button>
               )}
 
-              {isSignedIn ? (
-                <UserButton />
+              {showAuthButton ? (
+                <Button
+                  variant="contained"
+                  onClick={() => router.push(authButtonPath)}
+                  sx={{
+                    backgroundColor: BRAND_COLOR,
+                    textTransform: "none",
+                    fontWeight: 500,
+                    "&:hover": { backgroundColor: "#005fa3" },
+                  }}
+                >
+                  {authButtonLabel}
+                </Button>
+              ) : isSignedIn ? (
+                <UserButton
+                  appearance={{
+                    elements: {
+                      userButtonPopoverFooter: {
+                        display: "none",
+                      },
+                    },
+                  }}
+                />
               ) : (
                 <Button
                   variant="contained"
@@ -404,9 +431,9 @@ export default function ResponsiveNavbar() {
                       onClick={
                         !external
                           ? () => {
-                              router.push(path);
-                              setMenuOpen(false);
-                            }
+                            router.push(path);
+                            setMenuOpen(false);
+                          }
                           : undefined
                       }
                       target={external ? "_blank" : undefined}
@@ -426,8 +453,33 @@ export default function ResponsiveNavbar() {
           <Divider />
 
           <Box sx={{ p: 2 }}>
-            {isSignedIn ? (
-              <UserButton />
+            {showAuthButton ? (
+              <Button
+                variant="contained"
+                fullWidth
+                onClick={() => {
+                  router.push(authButtonPath);
+                  setMenuOpen(false);
+                }}
+                sx={{
+                  backgroundColor: BRAND_COLOR,
+                  textTransform: "none",
+                  fontWeight: 500,
+                  "&:hover": { backgroundColor: "#005fa3" },
+                }}
+              >
+                {authButtonLabel}
+              </Button>
+            ) : isSignedIn ? (
+              <UserButton
+                appearance={{
+                  elements: {
+                    userButtonPopoverFooter: {
+                      display: "none",
+                    },
+                  },
+                }}
+              />
             ) : (
               <Button
                 variant="contained"

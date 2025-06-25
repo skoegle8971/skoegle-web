@@ -81,7 +81,7 @@ export default function ProductsPage() {
       {/* Description Section */}
       <Container sx={{ py: 6 }}>
         <Typography variant="body1" paragraph>
-          Founded in 2018, <strong>Skoegle IoT Innovations</strong> has emerged as a leading force in the rapidly evolving Internet of Things (IoT) landscape. We specialize in designing and manufacturing intelligent connected devices tailored for industries such as logistics, fleet and asset tracking, vehicle and bike rentals, smart security, predictive maintenance, energy monitoring, and industrial automation.
+          Founded in 2019, <strong>Skoegle IoT Innovations</strong> has emerged as a leading force in the rapidly evolving Internet of Things (IoT) landscape. We specialize in designing and manufacturing intelligent connected devices tailored for industries such as logistics, fleet and asset tracking, vehicle and bike rentals, smart security, predictive maintenance, energy monitoring, and industrial automation.
 
           With a growing portfolio of 20+ smart devices and scalable software platforms, our mission is to deliver real-time, data-driven solutions that enhance operational efficiency, safety, and decision-making. Whether you're looking for off-the-shelf solutions or need a custom-built system, our expert team can help you find or develop the right IoT product to fit your unique business needs.
         </Typography>
