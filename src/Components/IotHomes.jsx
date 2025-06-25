@@ -131,8 +131,13 @@ export default function IoTHomes() {
             >
               Smart Living with Skoegle IoT            </Typography>
             <Typography variant="h5" sx={{ mb: 4, color: 'text.secondary' }}>
-              Next-gen IoT, GPS, and geofencing solutions powered by secure cloud technology — built for smarter, safer, and more connected lifestyles.
+              Transforming Ideas Into Reality,
 
+              In a world driven by technology, Skoegle is your powerhouse of innovation – crafting intelligent, scalable, and game-changing solutions across every vertical.
+
+              We’re not just building products – we’re shaping the future.
+
+              Welcome to the future of technology.
             </Typography>
             <Box sx={{ display: 'flex', gap: 2 }}>
               <Button
@@ -325,7 +330,7 @@ export default function IoTHomes() {
                       </Typography>
                     </CardContent>
                     <Box sx={{ p: 2, textAlign: 'right' }}>
-                      <Link href={solution.link} passHref legacyBehavior>
+                      <Link href={solution?.link} passHref>
                         <IconButton aria-label="Learn more" color="primary" component="a">
                           <ArrowForward />
                         </IconButton>
