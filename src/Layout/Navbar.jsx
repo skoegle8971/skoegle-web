@@ -79,15 +79,6 @@ export default function ResponsiveNavbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  useEffect(() => {
-
-      console.clear();
-  setTimeout(() => {
-        console.clear()
-      }, 5000);
-
-  });
-
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();

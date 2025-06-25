@@ -2,6 +2,7 @@ import { Analytics } from '@vercel/analytics/next';
 import SyncUser from "../Components/SyncUser";
 import { ClerkProvider, SignedIn, SignedOut, SignIn, UserButton } from '@clerk/nextjs';
 import { IBM_Plex_Sans } from 'next/font/google';
+import DetectDevToolsRedirect from '@/Components/DetectDevToolsRedirect';
 const ibmPlexSans = IBM_Plex_Sans({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
@@ -21,6 +22,7 @@ export default function RootLayout({ children }) {
           <main>{children}</main>
             <Analytics />
             <SyncUser />
+            <DetectDevToolsRedirect/>
         </body>
       </html>
     </ClerkProvider>
