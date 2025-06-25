@@ -16,7 +16,7 @@ import {
   Button,
   Box,
 } from "@mui/material";
-
+import {encrypt,decrypt} from "../../utils/crypter"; // Adjust the import path as necessary
 export default function OrdersPage() {
   const { user, isLoaded, isSignedIn } = useUser();
   const router = useRouter();
@@ -40,7 +40,8 @@ export default function OrdersPage() {
           const response = await axios.get(
             `https://payments.skoegle.com/api/order/history/?email=${user.emailAddresses[0]?.emailAddress}`
           );
-          setOrders(response.data.data || []);
+          //  console.log("Fetched orders:", JSON.parse(decrypt(response.data.data)));
+          setOrders(JSON.parse(decrypt(response.data.data)) || []);
         } catch (error) {
           console.error("Error fetching orders:", error);
         } finally {
