@@ -23,9 +23,10 @@ export default function SyncUser() {
       };
 
       try {
-        console.log("Syncing user with payload:", payload);
-        await axios.post("/api/userdata", payload);
-        console.log("User synced successfully");
+        // console.log("Syncing user with payload:", payload);
+       const data = await axios.post("/api/userdata", payload);
+       console.log("User synced successfully:", data.data);
+        // console.log("User synced successfully");
       } catch (error) {
         console.error("Error syncing user with Axios:", error.response?.data || error.message);
       }

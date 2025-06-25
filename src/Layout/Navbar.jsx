@@ -79,6 +79,7 @@ export default function ResponsiveNavbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchText.trim()) {
