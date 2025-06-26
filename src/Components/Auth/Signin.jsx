@@ -46,7 +46,7 @@ function SignInInner() {
           />
           <Typography variant="body2" sx={{ marginTop: "1rem" }}>
             Don’t have an account?{" "}
-            <Link href="/signup" passHref legacyBehavior>
+            <Link href="/auth/signup" passHref legacyBehavior>
               <Button variant="text" sx={{ textTransform: "none", padding: 0, color: "#0070f3" }}>
                 Sign up
               </Button>
