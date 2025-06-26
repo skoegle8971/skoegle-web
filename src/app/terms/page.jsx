@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Typography, Box } from '@mui/material';
-import Layout from "../../Layout/Layout";
+import Layout from "../../Components/Layout/Layout";
 
 const Terms = () => {
   return (

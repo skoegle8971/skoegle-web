@@ -1,11 +1,11 @@
 import { lazy, Suspense } from 'react';
-import Layout from '../Layout/Layout';
+import Layout from '../Components/Layout/Layout';
 
-const IotHomes = lazy(() => import('../Components/IotHomes'));
-const IotProjects = lazy(() => import('../Components/IotProjects'));
-const IotServices = lazy(() => import('../Components/IotServices'));
-const IotTech = lazy(() => import('../Components/IotTech'));
-const IotBlogs = lazy(() => import('../Components/IotBlogs'));
+const IotHomes = lazy(() => import('../Components/Home/IotHomes'));
+const IotProjects = lazy(() => import('../Components/Home/IotProjects'));
+const IotServices = lazy(() => import('../Components/Home/IotServices'));
+const IotTech = lazy(() => import('../Components/Home/IotTech'));
+const IotBlogs = lazy(() => import('../Components/Home/IotBlogs'));
 
 export default function App() {
   return (

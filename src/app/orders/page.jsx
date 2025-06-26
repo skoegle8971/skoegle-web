@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import Layout from "../../Layout/Layout";
+import Layout from "../../Components/Layout/Layout";
 import {
   Container,
   Typography,
@@ -16,7 +16,7 @@ import {
   Button,
   Box,
 } from "@mui/material";
-import {encrypt,decrypt} from "../../utils/crypter"; // Adjust the import path as necessary
+import {encrypt,decrypt} from "../../ServerCopmonents/utils/crypter"; // Adjust the import path as necessary
 export default function OrdersPage() {
   const { user, isLoaded, isSignedIn } = useUser();
   const router = useRouter();

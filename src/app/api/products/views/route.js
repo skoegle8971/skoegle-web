@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { connectToDatabase } from '@/lib/mongodb';
-import Product from '@/models/ProductView';
+import { connectToDatabase } from '@/ServerCopmonents/lib/mongodb';
+import Product from '@/ServerCopmonents/models/ProductView';
 
 // POST: Create a product
 export async function POST(request) {

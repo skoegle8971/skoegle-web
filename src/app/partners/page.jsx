@@ -1,6 +1,6 @@
 "use client";
 
-import Layout from "../../Layout/Layout";
+import Layout from "../../Components/Layout/Layout";
 
 export default function Partners() {
   return (

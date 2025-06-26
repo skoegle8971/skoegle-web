@@ -3,7 +3,7 @@
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
-import Layout from "../../../../Layout/Layout";
+import Layout from "../../../../Components/Layout/Layout";
 import axios from 'axios';
 import Link from 'next/link';
 

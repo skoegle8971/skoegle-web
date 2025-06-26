@@ -1,8 +1,8 @@
 import { Analytics } from '@vercel/analytics/next';
-import SyncUser from "../Components/SyncUser";
+import SyncUser from "../Components/Home/SyncUser";
 import { ClerkProvider, SignedIn, SignedOut, SignIn, UserButton } from '@clerk/nextjs';
 import { IBM_Plex_Sans } from 'next/font/google';
-import DetectDevToolsRedirect from '@/Components/DetectDevToolsRedirect';
+import DetectDevToolsRedirect from '@/Components/Home/DetectDevToolsRedirect';
 const ibmPlexSans = IBM_Plex_Sans({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],

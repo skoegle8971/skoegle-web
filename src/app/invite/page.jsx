@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Head from 'next/head';
-import Layout from "../../Layout/Layout";
+import Layout from "../../Components/Layout/Layout";
 import {
   Container,
   Typography,

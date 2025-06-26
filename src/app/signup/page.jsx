@@ -1,7 +1,7 @@
 "use client";
 
 import { SignUp } from "@clerk/nextjs";
-import Layout from "../../Layout/Layout"; // Adjust the path if necessary
+import Layout from "../../Components/Layout/Layout"; // Adjust the path if necessary
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
