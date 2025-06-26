@@ -1,6 +1,6 @@
-import User from '@/models/User';
+import User from '@/ServerCopmonents/models/User';
 import { NextResponse } from 'next/server';
-import { connectToDatabase } from '@/lib/mongodb';
+import { connectToDatabase } from '@/ServerCopmonents/lib/mongodb';
 
 export async function POST(req) {
     const data = await req.json();
