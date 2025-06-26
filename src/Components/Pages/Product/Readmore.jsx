@@ -1,9 +1,8 @@
 'use client';
 
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
-import Layout from "../../../../Components/Layout/Layout";
 import axios from 'axios';
 import Link from 'next/link';
 
@@ -16,7 +15,7 @@ import {
   CardMedia,
   Link as MuiLink,
   Box,
-  CircularProgress,
+  Skeleton,
   Paper,
   Table,
   TableBody,
@@ -27,7 +26,6 @@ import {
   Dialog,
   DialogContent,
   IconButton,
-  Skeleton
 } from '@mui/material';
 
 import AndroidIcon from '@mui/icons-material/Android';
@@ -39,8 +37,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CloseIcon from '@mui/icons-material/Close';
 
-export default function ProductPage() {
-  const { productId } = useParams();
+export default function Readmore({ productId }) {
   const router = useRouter();
   const hasFetched = useRef(false);
 
@@ -54,23 +51,27 @@ export default function ProductPage() {
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && isLoaded && !isSignedIn) {
-      const currentPath = window.location.pathname + window.location.search;
-      const redirectUrl = encodeURIComponent(currentPath);
-      router.replace(`/auth/signin?redirect_url=${redirectUrl}`);
-    }
+    if (!isLoaded || isSignedIn) return;
+    const currentPath = window.location.pathname + window.location.search;
+    const redirectUrl = encodeURIComponent(currentPath);
+    router.replace(`/auth/signin?redirect_url=${redirectUrl}`);
   }, [isLoaded, isSignedIn, router]);
 
   useEffect(() => {
     if (!productId || hasFetched.current || !isSignedIn) return;
     hasFetched.current = true;
 
+    const controller = new AbortController();
+
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(`/api/products/views?productId=${productId}`);
+        const res = await axios.get(`/api/products/views?productId=${productId}`, {
+          signal: controller.signal,
+        });
         if (!res.data?.data) throw new Error(res.data.message || 'Failed to fetch product');
         setProduct(res.data.data);
       } catch (err) {
+        if (axios.isCancel(err)) return;
         setError(err.message || 'Error loading product');
       } finally {
         setLoading(false);
@@ -78,14 +79,14 @@ export default function ProductPage() {
     };
 
     fetchProduct();
+    return () => controller.abort();
   }, [productId, isSignedIn]);
 
-  const mediaItems = product
-    ? [...(product.productImages || []), ...(product.video ? [product.video] : [])]
-    : [];
+  const isVideo = (url) => url?.split('?')[0].endsWith('.mp4');
+  const mediaItems = product ? [...(product.productImages || []), ...(product.video ? [product.video] : [])] : [];
 
   return (
-    <Layout>
+    <>
       <br /><br /><br /><br />
       <Container maxWidth="lg" sx={{ py: 4 }}>
         {!isLoaded || !isSignedIn || loading ? (
@@ -112,16 +113,15 @@ export default function ProductPage() {
           <Typography color="error">Error: {error}</Typography>
         ) : (
           <Grid container spacing={4}>
+            {/* Media Items */}
             <Grid item xs={12} md={6}>
               <Grid container spacing={2}>
                 {mediaItems.slice(0, 6).map((media, idx) => (
                   <Grid item xs={6} sm={4} key={idx}>
                     <Card onClick={() => { setIsModalOpen(true); setCurrentMediaIndex(idx); }} sx={{ cursor: 'pointer' }}>
-                      {media.includes('.mp4') ? (
-                        <CardMedia component="video" src={media} sx={{ height: 140 }} muted />
-                      ) : (
-                        <CardMedia component="img" image={media} sx={{ height: 140, objectFit: 'contain' }} />
-                      )}
+                      {isVideo(media)
+                        ? <CardMedia component="video" src={media} sx={{ height: 140 }} muted />
+                        : <CardMedia component="img" image={media} sx={{ height: 140, objectFit: 'contain' }} />}
                     </Card>
                   </Grid>
                 ))}
@@ -129,13 +129,7 @@ export default function ProductPage() {
                   <Grid item xs={6} sm={4}>
                     <Card
                       onClick={() => { setIsModalOpen(true); setCurrentMediaIndex(6); }}
-                      sx={{
-                        height: 140,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        cursor: 'pointer'
-                      }}
+                      sx={{ height: 140, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
                     >
                       <Typography variant="subtitle1">+{mediaItems.length - 6} More</Typography>
                     </Card>
@@ -144,6 +138,7 @@ export default function ProductPage() {
               </Grid>
             </Grid>
 
+            {/* Product Info */}
             <Grid item xs={12} md={6}>
               <Typography variant="h4" gutterBottom>{product.name}</Typography>
               <Typography variant="subtitle1" gutterBottom>{product.subheading}</Typography>
@@ -154,14 +149,13 @@ export default function ProductPage() {
               <Stack direction="row" spacing={2} sx={{ mb: 3 }}>
                 <Button
                   component={Link}
-                  href={`/products/checkout/${product?.productId}`}
+                  href={`/pages/products/checkout/${product?.productId}`}
                   variant="contained"
                   color="success"
                   startIcon={<PaymentIcon />}
                 >
                   Buy Now
                 </Button>
-
                 <Button
                   component={Link}
                   href="/contact"
@@ -173,35 +167,31 @@ export default function ProductPage() {
                 </Button>
               </Stack>
 
+              {/* Downloads */}
               {product.downloads && (
                 <Box sx={{ mb: 4 }}>
                   <Typography variant="h6" gutterBottom>Downloads & Apps</Typography>
                   <Stack spacing={1}>
                     {product.downloads.android && (
                       <MuiLink href={product.downloads.android} target="_blank" underline="hover">
-                        <Button startIcon={<AndroidIcon />} variant="outlined" fullWidth>
-                          Android 
-                        </Button>
+                        <Button startIcon={<AndroidIcon />} variant="outlined" fullWidth>Android</Button>
                       </MuiLink>
                     )}
                     {product.downloads.ios && (
                       <MuiLink href={product.downloads.ios} target="_blank" underline="hover">
-                        <Button startIcon={<AppleIcon />} variant="outlined" fullWidth>
-                         Windows
-                        </Button>
+                        <Button startIcon={<AppleIcon />} variant="outlined" fullWidth>iOS</Button>
                       </MuiLink>
                     )}
                     {product.downloads.pdfManual && (
                       <MuiLink href={product.downloads.pdfManual} target="_blank" underline="hover">
-                        <Button startIcon={<PictureAsPdfIcon />} variant="outlined" fullWidth>
-                         Website
-                        </Button>
+                        <Button startIcon={<PictureAsPdfIcon />} variant="outlined" fullWidth>Manual</Button>
                       </MuiLink>
                     )}
                   </Stack>
                 </Box>
               )}
 
+              {/* Features */}
               {product.productFeatures?.length > 0 && (
                 <Box sx={{ mb: 4 }}>
                   <Typography variant="h6" gutterBottom>Features</Typography>
@@ -226,6 +216,7 @@ export default function ProductPage() {
                 </Box>
               )}
 
+              {/* Specifications */}
               {product.specifications?.length > 0 && (
                 <Box sx={{ mb: 4 }}>
                   <Typography variant="h6" gutterBottom>Specifications</Typography>
@@ -257,43 +248,32 @@ export default function ProductPage() {
         )}
       </Container>
 
-      {/* Modal for media items */}
+      {/* Media Preview Modal */}
       <Dialog open={isModalOpen} onClose={() => setIsModalOpen(false)} maxWidth="md" fullWidth>
         <DialogContent sx={{ position: 'relative', p: 0, bgcolor: 'black' }}>
-          <IconButton
-            onClick={() => setIsModalOpen(false)}
-            sx={{ position: 'absolute', top: 8, right: 8, color: 'white', zIndex: 10 }}
-          >
+          <IconButton aria-label="close" onClick={() => setIsModalOpen(false)} sx={{ position: 'absolute', top: 8, right: 8, color: 'white', zIndex: 10 }}>
             <CloseIcon />
           </IconButton>
 
           {currentMediaIndex > 0 && (
-            <IconButton
-              onClick={() => setCurrentMediaIndex((i) => i - 1)}
-              sx={{ position: 'absolute', top: '50%', left: 8, transform: 'translateY(-50%)', color: 'white', zIndex: 10 }}
-            >
+            <IconButton aria-label="previous" onClick={() => setCurrentMediaIndex((i) => i - 1)} sx={{ position: 'absolute', top: '50%', left: 8, transform: 'translateY(-50%)', color: 'white', zIndex: 10 }}>
               <ArrowBackIosIcon />
             </IconButton>
           )}
 
           {currentMediaIndex < mediaItems.length - 1 && (
-            <IconButton
-              onClick={() => setCurrentMediaIndex((i) => i + 1)}
-              sx={{ position: 'absolute', top: '50%', right: 8, transform: 'translateY(-50%)', color: 'white', zIndex: 10 }}
-            >
+            <IconButton aria-label="next" onClick={() => setCurrentMediaIndex((i) => i + 1)} sx={{ position: 'absolute', top: '50%', right: 8, transform: 'translateY(-50%)', color: 'white', zIndex: 10 }}>
               <ArrowForwardIosIcon />
             </IconButton>
           )}
 
           <Box sx={{ width: '100%', height: '70vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            {mediaItems[currentMediaIndex]?.includes('.mp4') ? (
-              <video src={mediaItems[currentMediaIndex]} controls style={{ maxWidth: '100%', maxHeight: '100%' }} />
-            ) : (
-              <img src={mediaItems[currentMediaIndex]} alt={`media-${currentMediaIndex}`} style={{ maxWidth: '100%', maxHeight: '100%' }} />
-            )}
+            {isVideo(mediaItems[currentMediaIndex])
+              ? <video src={mediaItems[currentMediaIndex]} controls style={{ maxWidth: '100%', maxHeight: '100%' }} />
+              : <img src={mediaItems[currentMediaIndex]} alt={`media-${currentMediaIndex}`} style={{ maxWidth: '100%', maxHeight: '100%' }} />}
           </Box>
         </DialogContent>
       </Dialog>
-    </Layout>
+    </>
   );
 }

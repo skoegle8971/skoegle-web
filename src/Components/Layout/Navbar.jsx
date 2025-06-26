@@ -38,7 +38,7 @@ const BRAND_COLOR = "rgb(13, 13, 228)";
 
 const MENU_ITEMS = [
   { label: "Home", path: "/" },
-  { label: "Products", path: "/products" },
+  { label: "Products", path: "/pages/products" },
   { label: "Services", path: "/services" },
   { label: "Support", path: "/support" },
   { label: "About Us", path: "/about" },
@@ -264,7 +264,7 @@ export default function ResponsiveNavbar() {
 
               {isSignedIn && (
                 <Button
-                  onClick={() => router.push("/orders")}
+                  onClick={() => router.push("/pages/orders")}
                   sx={{
                     textTransform: "none",
                     fontWeight: 500,
@@ -399,7 +399,7 @@ export default function ResponsiveNavbar() {
               {isSignedIn && (
                 <ListItemButton
                   onClick={() => {
-                    router.push("/orders");
+                    router.push("/pages/orders");
                     setMenuOpen(false);
                   }}
                 >
