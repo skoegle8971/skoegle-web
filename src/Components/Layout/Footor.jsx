@@ -70,8 +70,8 @@ export default function Footer() {
   ];
 
   const additionalLinks = [
-    { label: "Sign In", href: "/signin" },
-    { label: "Sign up", href: "/signup" },
+    { label: "Sign In", href: "/auth/signin" },
+    { label: "Sign up", href: "/auth/signup" },
     { label: "Careers", href: "/careers" },
     { label: "Our Team", href: "/gallery" },
     { label: "Our Innovations", href: "https://skoegle.blogspot.com/?m=1", external: true},

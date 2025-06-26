@@ -28,7 +28,7 @@ export default function OrdersPage() {
     if (typeof window !== "undefined" && isLoaded && !isSignedIn) {
       const currentPath = window.location.pathname + window.location.search;
       const redirectUrl = encodeURIComponent(currentPath);
-      router.replace(`/signin?redirect_url=${redirectUrl}`);
+      router.replace(`/auth/signin?redirect_url=${redirectUrl}`);
     }
   }, [isLoaded, isSignedIn, router]);
 
