@@ -14,9 +14,8 @@ import {
   Button,
   Skeleton
 } from '@mui/material';
-import Layout from "../../Components/Layout/Layout";
 
-export default function ProductsPage() {
+export default function Products() {
   const router = useRouter();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -31,6 +30,7 @@ export default function ProductsPage() {
       .catch(err => console.error("Failed to fetch products:", err))
       .finally(() => setLoading(false));
   }, []);
+
   const renderSkeletons = () => {
     return Array.from({ length: 8 }).map((_, index) => (
       <Grid item xs={12} sm={6} md={3} key={index}>
@@ -38,7 +38,7 @@ export default function ProductsPage() {
           sx={{
             boxShadow: 3,
             borderRadius: 2,
-            minHeight: 360, // Matches expected height of product card
+            minHeight: 360,
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
@@ -58,7 +58,7 @@ export default function ProductsPage() {
   };
 
   return (
-    <Layout>
+    <>
       {/* Poster Section */}
       <Box
         sx={{
@@ -73,7 +73,7 @@ export default function ProductsPage() {
       >
         <Container maxWidth="md" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
           <Typography variant="h2" fontWeight="bold">
-            <span style={{ color: '#2196f3' }}>  ALL PRODUCTS</span>
+            <span style={{ color: '#2196f3' }}> ALL PRODUCTS</span>
           </Typography>
         </Container>
       </Box>
@@ -90,9 +90,7 @@ export default function ProductsPage() {
 
           For latest product details, updates, and support, visit our official websites: <strong>www.skoegle.com</strong> and <strong>www.skoegle.in</strong>.
         </Typography>
-
       </Container>
-
 
       {/* Products Grid */}
       <Container sx={{ pb: 6 }}>
@@ -119,7 +117,7 @@ export default function ProductsPage() {
 
                     <Button
                       size="small"
-                      onClick={() => router.push(`/products/view/${product.productId}`)}
+                      onClick={() => router.push(`/pages/products/view/${product.productId}`)}
                       sx={{ color: '#2196f3', textTransform: 'none', fontWeight: 'bold' }}
                     >
                       Read more &gt;
@@ -156,6 +154,6 @@ export default function ProductsPage() {
             ))}
         </Grid>
       </Container>
-    </Layout>
+    </>
   );
 }

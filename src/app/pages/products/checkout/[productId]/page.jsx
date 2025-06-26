@@ -1,6 +1,6 @@
 'use client';
 
-import Layout from "../../../../Components/Layout/Layout";
+import Layout from "../../../../../Components/Layout/Layout";
 import { useUser } from '@clerk/nextjs';
 import NextLink from 'next/link';
 import Link from '@mui/material/Link';
