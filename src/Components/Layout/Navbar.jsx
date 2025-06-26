@@ -90,11 +90,11 @@ export default function ResponsiveNavbar() {
   };
 
   // Determine auth page for button
-  const isSignInPage = pathname === "/signin";
-  const isSignUpPage = pathname === "/signup";
+  const isSignInPage = pathname === "/auth/signin";
+  const isSignUpPage = pathname === "/auth/signup";
   const showAuthButton = isSignInPage || isSignUpPage;
   const authButtonLabel = isSignInPage ? "Sign up" : "Sign in";
-  const authButtonPath = isSignInPage ? "/signup" : "/signin";
+  const authButtonPath = isSignInPage ? "/auth/signup" : "/auth/signin";
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -302,7 +302,7 @@ export default function ResponsiveNavbar() {
               ) : (
                 <Button
                   variant="contained"
-                  onClick={() => router.push("/signin")}
+                  onClick={() => router.push("/auth/signin")}
                   sx={{
                     backgroundColor: BRAND_COLOR,
                     textTransform: "none",
@@ -486,7 +486,7 @@ export default function ResponsiveNavbar() {
                 variant="contained"
                 fullWidth
                 onClick={() => {
-                  router.push("/signin");
+                  router.push("/auth/signin");
                   setMenuOpen(false);
                 }}
                 sx={{

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Head from "next/head";
-import Layout from "../../Layout/Layout";
+import Layout from "../../Components/Layout/Layout";
 
 const AboutPage = () => {
   const [hoveredLeader, setHoveredLeader] = useState(null);

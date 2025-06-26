@@ -1,5 +1,5 @@
-import { connectToDatabase } from '@/lib/mongodb';
-import Product from '@/models/Product';
+import { connectToDatabase } from '@/ServerCopmonents/lib/mongodb';
+import Product from '@/ServerCopmonents/models/Product';
 
 function generateRandomId() {
   return Math.random().toString(36).substring(2, 10);

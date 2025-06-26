@@ -1,6 +1,6 @@
 'use client';
 
-import Layout from "../../../../Layout/Layout";
+import Layout from "../../../../Components/Layout/Layout";
 import { useUser } from '@clerk/nextjs';
 import NextLink from 'next/link';
 import Link from '@mui/material/Link';
@@ -65,7 +65,7 @@ export default function Checkout() {
     if (typeof window !== 'undefined' && isLoaded && !isSignedIn) {
       const currentPath = window.location.pathname + window.location.search;
       const redirectUrl = encodeURIComponent(currentPath);
-      router.replace(`/signin?redirect_url=${redirectUrl}`);
+      router.replace(`/auth/signin?redirect_url=${redirectUrl}`);
     }
   }, [isLoaded, isSignedIn, router]);
 

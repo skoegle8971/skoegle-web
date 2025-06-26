@@ -14,7 +14,7 @@ import {
   Button,
   Skeleton
 } from '@mui/material';
-import Layout from "../../Layout/Layout";
+import Layout from "../../Components/Layout/Layout";
 
 export default function ProductsPage() {
   const router = useRouter();

@@ -1,7 +1,7 @@
 import Footor from "./Footor";
 import Navbar from "./Navbar";
 
-export default function App({ children }) {
+export default function Layout({ children }) {
   return (
     <div style={styles.wrapper}>
       <div style={{position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000}}>

@@ -14,7 +14,7 @@ import {
   Fade,
   Zoom,
 } from "@mui/material";
-import Layout from "../../Layout/Layout";
+import Layout from "../../Components/Layout/Layout";
 import { motion } from "framer-motion";
 import styled from "@emotion/styled";
 
