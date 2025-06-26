@@ -1,6 +1,6 @@
 "use client";
 
-import Layout from "../../Components/Layout/Layout";
+import Layout from "@/Layout/Layout"; 
 import {
   Box,
   Typography,
