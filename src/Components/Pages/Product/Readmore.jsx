@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import axios from 'axios';
@@ -37,10 +37,11 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CloseIcon from '@mui/icons-material/Close';
 
-export default function Readmore({ productId }) {
+export default function Readmore() {
   const router = useRouter();
-  const hasFetched = useRef(false);
+  const { productId } = useParams();
 
+  const hasFetched = useRef(false);
   const { isSignedIn, isLoaded } = useUser();
 
   const [product, setProduct] = useState(null);
@@ -51,10 +52,13 @@ export default function Readmore({ productId }) {
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
 
   useEffect(() => {
-    if (!isLoaded || isSignedIn) return;
-    const currentPath = window.location.pathname + window.location.search;
-    const redirectUrl = encodeURIComponent(currentPath);
-    router.replace(`/auth/signin?redirect_url=${redirectUrl}`);
+    if (!isLoaded) return;
+    if (!isSignedIn) {
+      const currentPath = window.location.pathname + window.location.search;
+      const redirectUrl = encodeURIComponent(currentPath);
+      router.replace(`/auth/signin?redirect_url=${redirectUrl}`);
+      return;
+    }
   }, [isLoaded, isSignedIn, router]);
 
   useEffect(() => {

@@ -70,7 +70,7 @@ export default function IoTHomes() {
       category: "gps",
       icon: <GpsFixedIcon />,
       image: "/id-card holder-ap.jpg",
-      link: "/products/view/cmttlxuz"
+      link: "/pages/products/view/cmttlxuz"
     },
     {
       title: "SKOEGLE Pet Tracker",
@@ -78,7 +78,7 @@ export default function IoTHomes() {
       category: "cloud",
       icon: <CloudIcon />,
       image: "/products/pettracker/Blue.jpg",
-      link: "/products/view/PRDssDS001"
+      link: "/pages/products/view/PRDssDS001"
     },
     {
       title: "SKOEGLE Shoe Tracker",
@@ -86,7 +86,7 @@ export default function IoTHomes() {
       category: "geo-fencing",
       icon: <MapIcon />,
       image: "/kids-shoe-ap.jpg",
-      link: "/products/view/9iclen0u"
+      link: "/pages/products/view/9iclen0u"
     },
     {
       title: "SKOEGLE Vehicle Tracker",
@@ -94,7 +94,7 @@ export default function IoTHomes() {
       category: "gps",
       icon: <DirectionsCarIcon />,
       image: "/products/vehicletracker/Black.jpg",
-      link: "/products/view/0f5msiw6"
+      link: "/pages/products/view/0f5msiw6"
     }
   ];
 
@@ -142,7 +142,7 @@ export default function IoTHomes() {
             <Box sx={{ display: 'flex', gap: 2 }}>
               <Button
                 component={Link}
-                href="/products"
+                href="/pages/products"
                 variant="contained"
                 size="large"
                 endIcon={<ArrowForward />}
@@ -330,8 +330,8 @@ export default function IoTHomes() {
                       </Typography>
                     </CardContent>
                     <Box sx={{ p: 2, textAlign: 'right' }}>
-                      <Link href={solution?.link} passHref>
-                        <IconButton aria-label="Learn more" color="primary" component="a">
+                      <Link href={solution?.link}>
+                        <IconButton aria-label="Learn more" color="primary">
                           <ArrowForward />
                         </IconButton>
                       </Link>
