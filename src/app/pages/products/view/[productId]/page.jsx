@@ -154,7 +154,7 @@ export default function ProductPage() {
               <Stack direction="row" spacing={2} sx={{ mb: 3 }}>
                 <Button
                   component={Link}
-                  href={`/products/checkout/${product?.productId}`}
+                  href={`/pages/products/checkout/${product?.productId}`}
                   variant="contained"
                   color="success"
                   startIcon={<PaymentIcon />}
