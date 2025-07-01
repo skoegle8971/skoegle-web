@@ -97,11 +97,11 @@ Please follow up with the sender.
       });
 
       // Send internal notification to HR (v1)
-      // await axios.post("/api/sendemail/v1", {
-      //   to: "info@skoegle.in",
-      //   subject: `New Contact Enquiry from ${name}`,
-      //   text: internalMessage,
-      // });
+      await axios.post("/api/sendemail/v1", {
+        to: "info@skoegle.in",
+        subject: `New Contact Enquiry from ${name}`,
+        text: internalMessage,
+      });
          await axios.post("/api/sendemail/v1", {
         to: "admin@skoegle.com",
         subject: `New Contact Enquiry from ${name}`,
