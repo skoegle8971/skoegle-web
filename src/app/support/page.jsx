@@ -1,4 +1,3 @@
-
 "use client";
 
 import Layout from "../../Components/Layout/Layout";
@@ -12,24 +11,110 @@ import {
   Divider,
   Stack,
   Container,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PhoneIcon from "@mui/icons-material/Phone";
 import SendIcon from "@mui/icons-material/Send";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import axios from "axios";
 
 export default function Contact() {
   const formRef = useRef(null);
+  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = formRef.current;
+
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
-    console.log("Form submitted");
+
+    const formData = new FormData(form);
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const phone = formData.get("phone");
+    const message = formData.get("message");
+
+    const userMessage = `
+Dear ${name},
+
+Thank you for contacting Skoegle IoT Innovations Pvt. Ltd.  
+We’ve received your message and will get back to you shortly.
+
+Here’s a copy of what you sent us:
+
+Name: ${name}  
+Email: ${email}  
+Phone: ${phone}  
+Message:  
+${message}
+
+Best regards,  
+Team Skoegle  
+https://www.skoegle.com  
+`;
+
+    const internalMessage = `
+Hello,
+
+You received a new Enquiry from the website:
+
+Name: ${name}  
+Email: ${email}  
+Phone: ${phone}  
+Message:  
+${message}
+
+Please follow up accordingly.
+
+- Skoegle Web Team
+`;
+
+    setLoading(true);
+
+    try {
+      // Send confirmation to user
+      await axios.post("/api/sendemail/v2", {
+        to: email,
+        subject: "We’ve received your message | Skoegle IoT Innovations",
+        text: userMessage,
+      });
+
+      // Send internal copy
+      await axios.post("/api/sendemail/v1", {
+        to: "gayathri@sales.skoegle.com",
+        subject: `New Website Inquiry from ${name}`,
+        text: internalMessage,
+      });
+          await axios.post("/api/sendemail/v1", {
+        to: "admin@skoegle.com",
+        subject: `New Website Inquiry from ${name}`,
+        text: internalMessage,
+      });
+
+      setSnackbar({
+        open: true,
+        message: "Message sent successfully!",
+        severity: "success",
+      });
+
+      form.reset();
+    } catch (error) {
+      console.error("Email sending error:", error);
+      setSnackbar({
+        open: true,
+        message: "Failed to send message. Please try again.",
+        severity: "error",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -40,7 +125,7 @@ export default function Contact() {
             variant="h4"
             fontWeight="bold"
             textAlign="center"
-            margin={'10px'}
+            margin="10px"
             mb={2}
           >
             Sales & Support
@@ -166,12 +251,28 @@ export default function Contact() {
                     name="email"
                   />
                   <TextField
+                    label="Phone"
+                    variant="outlined"
+                    fullWidth
+                    required
+                    name="phone"
+                    type="tel"
+                  />
+                  <TextField
                     label="Message"
                     variant="outlined"
                     fullWidth
+                    required
                     multiline
                     rows={4}
                     name="message"
+                    inputProps={{ maxLength: 2000 }}
+                    helperText="Max 2000 characters"
+                    sx={{
+                      "& .MuiInputBase-root": {
+                        minHeight: "120px",
+                      },
+                    }}
                   />
 
                   <Box sx={{ textAlign: "center", mt: 2 }}>
@@ -181,8 +282,9 @@ export default function Contact() {
                       endIcon={<SendIcon />}
                       size="large"
                       type="submit"
+                      disabled={loading}
                     >
-                      Send Message
+                      {loading ? "Sending..." : "Send Message"}
                     </Button>
                   </Box>
                 </Box>
@@ -190,6 +292,22 @@ export default function Contact() {
             </Grid>
           </Grid>
         </Container>
+
+        {/* Snackbar for alert */}
+        <Snackbar
+          open={snackbar.open}
+          autoHideDuration={6000}
+          onClose={() => setSnackbar({ ...snackbar, open: false })}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        >
+          <Alert
+            onClose={() => setSnackbar({ ...snackbar, open: false })}
+            severity={snackbar.severity}
+            sx={{ width: "100%" }}
+          >
+            {snackbar.message}
+          </Alert>
+        </Snackbar>
       </Box>
     </Layout>
   );

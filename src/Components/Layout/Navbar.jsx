@@ -48,7 +48,7 @@ const MORE_DROPDOWN_ITEMS = [
   { label: "Careers", path: "/careers" },
   { label: "Contact Us", path: "/contact" },
   { label: "Blog", path: "https://skoegle.blogspot.com/?m=1", external: true },
-  { label: "Gallery", path: "/gallery" },
+  // { label: "Gallery", path: "/gallery" },
   { label: "Invite", path: "/invite" },
 ];
 
