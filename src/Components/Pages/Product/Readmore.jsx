@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import axios from 'axios';
 import Link from 'next/link';
-
+import { useProducts } from '@/Store/Store';
 import {
   Container,
   Typography,
@@ -39,9 +39,8 @@ import CloseIcon from '@mui/icons-material/Close';
 
 export default function Readmore() {
   const router = useRouter();
-  const { productId } = useParams();
-
   const hasFetched = useRef(false);
+  const {products,setProducts} = useProducts()
   const { isSignedIn, isLoaded } = useUser();
 
   const [product, setProduct] = useState(null);
@@ -169,6 +168,28 @@ export default function Readmore() {
                 >
                   Contact Us
                 </Button>
+                
+
+ {products.some(p => p.productId === product.productId) ? (
+    <Button
+      component={Link}
+      href="/cart"
+      variant="contained"
+      color="primary"
+      startIcon={<PaymentIcon />}
+    >
+      Go to Cart
+    </Button>
+  ) : (
+    <Button
+      onClick={() => setProducts(prev => [...prev, product])}
+      variant="contained"
+      color="success"
+      startIcon={<PaymentIcon />}
+    >
+      Add to Cart
+    </Button>
+  )}
               </Stack>
 
               {/* Downloads */}
@@ -200,8 +221,9 @@ export default function Readmore() {
                 <Box sx={{ mb: 4 }}>
                   <Typography variant="h6" gutterBottom>Features</Typography>
                   <Grid container spacing={2}>
-                    {product.productFeatures.map((f) => (
-                      <Grid item xs={12} sm={6} key={f._id}>
+                    {product.productFeatures.map((f, index) => (
+  <Grid item xs={12} sm={6} key={`${f?._id || 'feature'}-${index}`}>
+
                         <Card sx={{ display: 'flex', alignItems: 'center' }}>
                           <CardMedia
                             component="img"

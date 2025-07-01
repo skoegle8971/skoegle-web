@@ -38,12 +38,13 @@ import ContactSupportIcon from '@mui/icons-material/ContactSupport';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CloseIcon from '@mui/icons-material/Close';
+import { useProducts } from '@/Store/Store';
 
 export default function ProductPage() {
   const { productId } = useParams();
   const router = useRouter();
   const hasFetched = useRef(false);
-
+  const { products, setProducts } = useProducts()
   const { isSignedIn, isLoaded } = useUser();
 
   const [product, setProduct] = useState(null);
@@ -161,7 +162,27 @@ export default function ProductPage() {
                 >
                   Buy Now
                 </Button>
-            
+
+                {products.some(p => p.productId === product.productId) ? (
+                  <Button
+                    component={Link}
+                    href="/cart"
+                    variant="contained"
+                    color="primary"
+                    startIcon={<PaymentIcon />}
+                  >
+                    Go to Cart
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => setProducts(prev => [...prev, product])}
+                    variant="contained"
+                    color="success"
+                    startIcon={<PaymentIcon />}
+                  >
+                    Add to Cart
+                  </Button>
+                )}
 
                 <Button
                   component={Link}
