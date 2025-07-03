@@ -261,12 +261,12 @@ const AboutPage = () => {
                     <p className="position">{leader.position}</p>
                     <p className="bio">{leader.bio}</p>
                     <div className="social-links">
-                      <a href={leader.social.linkedin} aria-label={`${leader.name} LinkedIn`}>
+                      {/* <a href={leader.social.linkedin} aria-label={`${leader.name} LinkedIn`}> */}
                         <span className="social-icon">in</span>
-                      </a>
-                      <a href={leader.social.twitter} aria-label={`${leader.name} Twitter`}>
+                      {/* </a> */}
+                      {/* <a href={leader.social.twitter} aria-label={`${leader.name} Twitter`}> */}
                         <span className="social-icon">𝕏</span>
-                      </a>
+                      {/* </a> */}
                     </div>
                   </div>
                 </div>
