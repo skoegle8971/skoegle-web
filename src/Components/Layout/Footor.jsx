@@ -50,7 +50,7 @@ export default function Footer() {
     },
     {
       icon: LanguageIcon,
-      url: "https://skoegle.in",
+      url: "https://skoegle.com",
       label: "Website",
       hoverColor: "#0A66C2",
     },

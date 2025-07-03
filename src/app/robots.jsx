@@ -10,8 +10,7 @@ export default function robots() {
       },
     ],
     sitemap: [
-      'https://skoegle.com/sitemap.xml',
-      'https://skoegle.in/sitemap.xml',
+      'https://skoegle.com/sitemap.xml'
     ],
   }
 }

@@ -69,7 +69,7 @@ Dear User,
 You have been invited to explore the smart solutions offered by **Skoegle IoT Innovations Pvt. Ltd.** — a leading force in the rapidly evolving Internet of Things (IoT) space.
 
 🔗 **Our Products:** https://skoegle.com/pages/products  
-🌐 **Official Websites:** https://skoegle.com | https://skoegle.in  
+🌐 **Official Websites:** https://skoegle.com  
 🛒 **Available On:** Flipkart: https://shorturl.at/QPP8z | IndiaMart: https://shorturl.at/CHFuu  
 
 ---

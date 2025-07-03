@@ -17,7 +17,7 @@ export const metadata = {
   keywords: [
     'Skoegle',
     'skoegle.com',
-    'skoegle.in',
+    'skoegle.com',
     'Skoegle GPS',
     'Skoegle Trackers',
     'Skoegle IoT',
