@@ -12,7 +12,7 @@ const PrivacyPolicy = () => {
         </Typography>
 
         <Typography paragraph>
-          SKOEGLE IOT INNOVATIONS PVT LTD recognizes the importance of maintaining your privacy. We value your privacy and appreciate your trust in us. This policy describes how we treat user information we collect on https://skoegle.in/. This Privacy Policy applies to current and former visitors to our websites.
+          SKOEGLE IOT INNOVATIONS PVT LTD recognizes the importance of maintaining your privacy. We value your privacy and appreciate your trust in us. This policy describes how we treat user information we collect on https://skoegle.com/. This Privacy Policy applies to current and former visitors to our websites.
         </Typography>
 
         <Typography paragraph>
