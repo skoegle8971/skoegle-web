@@ -1,7 +1,7 @@
 export default function sitemap() {
   const lastModified = new Date();
 
-  const baseUrls = ['https://skoegle.com', 'https://skoegle.in'];
+  const baseUrls = ['https://skoegle.com'];
 
   const paths = [
     '/', // home
