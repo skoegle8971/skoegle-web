@@ -104,7 +104,7 @@ Team SKOEGLE
 
     try {
       // Send to HR
-      await axios.post("/api/sendemail/v2", {
+      await axios.post("/api/sendemail/v1", {
         to: ["divya@hr.skoegle.com", "nethra@hr.skoegle.com","admin@skoegle.com"],
         subject: `New Application for ${data.position}`,
         text: hrText,
