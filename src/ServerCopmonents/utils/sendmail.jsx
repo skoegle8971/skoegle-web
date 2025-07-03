@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Head from 'next/head';
-import Layout from "@/Layout/Layout";
+import Layout from "../../Components/Layout/Layout";
 import {
   Container,
   Typography,
@@ -21,7 +21,7 @@ import {
 } from '@mui/material';
 import { Email, Send, Business, Group, Web } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
-import axios from 'axios';
+import sendEmail from "@/SendMail/sendmail";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(4),
@@ -66,35 +66,28 @@ export default function InvitePage() {
     const text = `
 Dear User,
 
-You have been invited to explore the smart solutions offered by **Skoegle IoT Innovations Pvt. Ltd.**
+You have been invited to explore the smart solutions offered by **Skoegle IoT Innovations Pvt. Ltd.** — a leading force in the rapidly evolving Internet of Things (IoT) space.
 
-🔗 **Products:** https://skoegle.com/pages/products  
-🌐 **Websites:** https://skoegle.com | https://skoegle.in  
+🔗 **Our Products:** https://skoegle.com/pages/products  
+🌐 **Official Websites:** https://skoegle.com | https://skoegle.in  
 🛒 **Available On:** Flipkart: https://shorturl.at/QPP8z | IndiaMart: https://shorturl.at/CHFuu  
 
 ---
 
 **About Us:**  
-Founded in 2019, Skoegle specializes in intelligent IoT devices for logistics, fleet and asset tracking, vehicle and bike rentals, predictive maintenance, energy monitoring, smart security, and industrial automation.
+Founded in 2019, Skoegle specializes in intelligent IoT devices for logistics, fleet tracking, bike/vehicle rentals, predictive maintenance, smart energy, surveillance, and automation. With 20+ devices and a scalable platform, we empower businesses with real-time data and control.
 
-We offer 20+ innovative products, backed by OTA updates, AI-powered insights, and cyber-secure firmware.
+All products include standard warranties, OTA updates, AI-powered features, and cyber-secure firmware patches.
+
+We’d love to have you as part of our journey.
 
 Best Regards,  
 **Team Skoegle**  
-support@skoegle.com
+support@skoegle.com  
     `;
 
     try {
-      const response = await axios.post('/api/sendemail/v2', {
-        to: email,
-        subject,
-        text
-      });
-
-      if (response.data?.success === false) {
-        throw new Error(response.data.error || 'Failed to send');
-      }
-
+      await sendEmail(email, subject, text, 'v1');
       setSnackbarMessage(`Invitation sent successfully to ${email}!`);
       setSnackbarSeverity('success');
       setSnackbarOpen(true);
@@ -132,7 +125,6 @@ support@skoegle.com
         </Box>
 
         <Grid container spacing={4}>
-          {/* Invite Form Section */}
           <Grid item xs={12} md={6}>
             <StyledPaper elevation={3}>
               <Box display="flex" flexDirection="column" alignItems="center" mb={4}>
@@ -182,7 +174,6 @@ support@skoegle.com
             </StyledPaper>
           </Grid>
 
-          {/* About Section */}
           <Grid item xs={12} md={6}>
             <Box height="100%" display="flex" flexDirection="column">
               <Card sx={{ flex: 1 }}>
@@ -200,7 +191,6 @@ support@skoegle.com
                     leader through our commitment to quality, customer satisfaction, and continuous innovation.
                   </Typography>
 
-                  {/* Feature Cards */}
                   <Box mt="auto" pt={2}>
                     <Grid container spacing={2}>
                       <Grid item xs={12} sm={6}>
@@ -253,7 +243,6 @@ support@skoegle.com
         </Grid>
       </Container>
 
-      {/* Snackbar for alerts */}
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={6000}

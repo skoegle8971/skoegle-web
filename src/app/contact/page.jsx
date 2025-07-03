@@ -1,6 +1,6 @@
 "use client";
 
-import Layout from "../../Components/Layout/Layout";
+import Layout from "@/Layout/Layout";
 import {
   Box,
   Grid,
@@ -11,24 +11,119 @@ import {
   Divider,
   Stack,
   Container,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PhoneIcon from "@mui/icons-material/Phone";
 import SendIcon from "@mui/icons-material/Send";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import axios from "axios";
 
 export default function Contact() {
   const formRef = useRef(null);
+  const [loading, setLoading] = useState(false);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = formRef.current;
+
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
-    console.log("Form submitted");
+
+    const formData = new FormData(form);
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const phone = formData.get("phone");
+    const message = formData.get("message");
+
+    const wordCount = message.trim().split(/\s+/).length;
+    if (wordCount > 2000) {
+      setSnackbar({
+        open: true,
+        message: "Message cannot exceed 2000 words.",
+        severity: "error",
+      });
+      return;
+    }
+
+    const userMessage = `
+Dear ${name},
+
+Thank you for contacting Skoegle IoT Innovations Pvt. Ltd.  
+We’ve received your message and will get back to you shortly.
+
+Here’s a copy of your message:
+----------------------------
+${message}
+----------------------------
+
+Best regards,  
+Team Skoegle  
+www.skoegle.com | www.skoegle.in
+    `;
+
+    const internalMessage = `
+New Enquiry received from the website:
+
+Name: ${name}
+Email: ${email}
+Phone: ${phone}
+
+Message:
+----------------------------
+${message}
+----------------------------
+
+Please follow up with the sender.
+    `;
+
+    setLoading(true);
+
+    try {
+      // Send email to external user (v2)
+      await axios.post("/api/sendemail/v2", {
+        to: email,
+        subject: "Thank you for contacting Skoegle",
+        text: userMessage,
+      });
+
+      // Send internal notification to HR (v1)
+      await axios.post("/api/sendemail/v1", {
+        to: "info@skoegle.in",
+        subject: `New Contact Enquiry from ${name}`,
+        text: internalMessage,
+      });
+         await axios.post("/api/sendemail/v1", {
+        to: "admin@skoegle.com",
+        subject: `New Contact Enquiry from ${name}`,
+        text: internalMessage,
+      });
+
+      setSnackbar({
+        open: true,
+        message: "Message sent successfully!",
+        severity: "success",
+      });
+      form.reset();
+    } catch (error) {
+      console.error("Error sending email:", error);
+      setSnackbar({
+        open: true,
+        message: "Failed to send message. Please try again.",
+        severity: "error",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -39,7 +134,7 @@ export default function Contact() {
             variant="h4"
             fontWeight="bold"
             textAlign="center"
-            margin={'10px'}
+            margin={"10px"}
             mb={2}
           >
             Contact Us
@@ -75,7 +170,6 @@ export default function Contact() {
                   height: "100%",
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "flex-start",
                 }}
               >
                 <Typography variant="h6" gutterBottom>
@@ -88,10 +182,10 @@ export default function Contact() {
                     <EmailIcon color="primary" />
                     <Typography>
                       <a
-                        href="mailto:info@skoegle.com"
+                        href="mailto:info@skoegle.in"
                         style={{ color: "#1976d2", textDecoration: "none" }}
                       >
-                        info@skoegle.com
+                        info@skoegle.in
                       </a>
                     </Typography>
                   </Stack>
@@ -128,8 +222,6 @@ export default function Contact() {
                   p: { xs: 2, sm: 3 },
                   borderRadius: 2,
                   height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
                 }}
               >
                 <Typography variant="h6" gutterBottom>
@@ -165,12 +257,28 @@ export default function Contact() {
                     name="email"
                   />
                   <TextField
+                    label="Phone Number"
+                    variant="outlined"
+                    fullWidth
+                    required
+                    type="tel"
+                    name="phone"
+                  />
+                  <TextField
                     label="Message"
                     variant="outlined"
                     fullWidth
-                    multiline
-                    rows={4}
+                    required
                     name="message"
+                    multiline
+                    rows={5}
+                    helperText="Max 2000 words"
+                    inputProps={{ maxLength: 15000 }}
+                    sx={{
+                      "& .MuiInputBase-root": {
+                        minHeight: "140px",
+                      },
+                    }}
                   />
 
                   <Box sx={{ textAlign: "center", mt: 2 }}>
@@ -180,8 +288,9 @@ export default function Contact() {
                       endIcon={<SendIcon />}
                       size="large"
                       type="submit"
+                      disabled={loading}
                     >
-                      Send Message
+                      {loading ? "Sending..." : "Send Message"}
                     </Button>
                   </Box>
                 </Box>
@@ -189,6 +298,21 @@ export default function Contact() {
             </Grid>
           </Grid>
         </Container>
+
+        <Snackbar
+          open={snackbar.open}
+          autoHideDuration={6000}
+          onClose={() => setSnackbar({ ...snackbar, open: false })}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        >
+          <Alert
+            onClose={() => setSnackbar({ ...snackbar, open: false })}
+            severity={snackbar.severity}
+            sx={{ width: "100%" }}
+          >
+            {snackbar.message}
+          </Alert>
+        </Snackbar>
       </Box>
     </Layout>
   );

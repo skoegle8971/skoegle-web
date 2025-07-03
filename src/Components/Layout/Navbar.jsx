@@ -21,6 +21,7 @@ import {
   Button,
   useTheme,
   useMediaQuery,
+  Badge
 } from "@mui/material";
 import { FiSearch } from "react-icons/fi";
 import {
@@ -31,9 +32,11 @@ import {
   HiOutlineChevronUp,
 } from "react-icons/hi";
 import { useUser, UserButton } from "@clerk/nextjs";
+// import { IconButton, Badge } from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-
+import { useProducts } from "@/Store/Store";
 const BRAND_COLOR = "rgb(13, 13, 228)";
 
 const MENU_ITEMS = [
@@ -48,7 +51,7 @@ const MORE_DROPDOWN_ITEMS = [
   { label: "Careers", path: "/careers" },
   { label: "Contact Us", path: "/contact" },
   { label: "Blog", path: "https://skoegle.blogspot.com/?m=1", external: true },
-  { label: "Gallery", path: "/gallery" },
+  // { label: "Gallery", path: "/gallery" },
   { label: "Invite", path: "/invite" },
 ];
 
@@ -59,7 +62,7 @@ export default function ResponsiveNavbar() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const isDesktop = !isMobile;
-
+const {products} = useProducts()
   const [desktopMoreOpen, setDesktopMoreOpen] = useState(false);
   const moreRef = useRef(null);
 
@@ -263,6 +266,7 @@ export default function ResponsiveNavbar() {
               )}
 
               {isSignedIn && (
+                <>
                 <Button
                   onClick={() => router.push("/pages/orders")}
                   sx={{
@@ -274,6 +278,15 @@ export default function ResponsiveNavbar() {
                 >
                   Your Orders
                 </Button>
+                  <IconButton
+                    onClick={() => router.push("/cart")}
+                    sx={{ color: "#000", "&:hover": { color: BRAND_COLOR } }}
+                  >
+                    <Badge badgeContent={products.length} color="error" showZero>
+                      <ShoppingCartIcon />
+                    </Badge>
+                  </IconButton>
+                </>
               )}
 
               {showAuthButton ? (
@@ -397,7 +410,7 @@ export default function ResponsiveNavbar() {
               ))}
 
               {isSignedIn && (
-                <ListItemButton
+                <>                <ListItemButton
                   onClick={() => {
                     router.push("/pages/orders");
                     setMenuOpen(false);
@@ -408,6 +421,16 @@ export default function ResponsiveNavbar() {
                     primaryTypographyProps={{ fontSize: 16, fontWeight: 500 }}
                   />
                 </ListItemButton>
+                         <IconButton
+                    onClick={() => router.push("/cart")}
+                    sx={{ color: "#000", "&:hover": { color: BRAND_COLOR } }}
+                  >
+                    <Badge badgeContent={products.length} color="error" showZero>
+                      <ShoppingCartIcon />
+                    </Badge>
+                  </IconButton>
+                </>
+
               )}
 
               <ListItemButton onClick={() => setMobileMoreOpen((prev) => !prev)}>

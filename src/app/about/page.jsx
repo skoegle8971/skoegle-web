@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Head from "next/head";
 import Layout from "../../Components/Layout/Layout";
+import Link from 'next/link';
 
 const AboutPage = () => {
   const [hoveredLeader, setHoveredLeader] = useState(null);
@@ -210,7 +211,7 @@ const AboutPage = () => {
           </div>
         </section>
 
-        {/* Journey Section */}
+        {/* Journey Section
         <section className="journey-section">
           <div className="container">
             <h2>Our Journey</h2>
@@ -230,7 +231,7 @@ const AboutPage = () => {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Leadership Section */}
         <section className="leadership-section">
@@ -295,12 +296,16 @@ const AboutPage = () => {
             <div className="cta-container">
               <h3>{data.teamCta.title}</h3>
               <p>{data.teamCta.description}</p>
-              <button className="cta-button">{data.teamCta.buttonText}</button>
+                <Link href="/careers" passHref>
+                  <button className="cta-button" type="button">
+                    {data.teamCta.buttonText}
+                  </button>
+                </Link>            
             </div>
           </div>
         </section>
 
-        {/* Testimonial Section */}
+        {/* Testimonial Section
         <section className="testimonial-section">
           <div className="container">
             <h2>What Our Clients Say</h2>
@@ -315,23 +320,27 @@ const AboutPage = () => {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* CTA Section */}
         <section className="about-cta">
           <div className="container">
             <h2>{data.cta.title}</h2>
             <p>{data.cta.description}</p>
-            <div className="cta-buttons">
-              {data.cta.buttons.map((button, index) => (
-                <button 
-                  key={index} 
-                  className={`${button.type}-cta`}
-                >
-                  {button.text}
-                </button>
-              ))}
-            </div>
+           <div className="cta-buttons">
+  {data.cta.buttons.map((button, index) => {
+    // Determine the href based on button type
+    const href = button.text === "Get a Demo" ? "/support" : "/contact";
+
+    return (
+      <Link key={index} href={href}>
+        <button className={`${button.type}-cta`}>
+          {button.text}
+        </button>
+      </Link>
+    );
+  })}
+</div>
           </div>
         </section>
 

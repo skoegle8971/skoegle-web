@@ -17,7 +17,7 @@ import {
 import Layout from "../../Components/Layout/Layout";
 import { motion } from "framer-motion";
 import styled from "@emotion/styled";
-
+import Link from 'next/link';
 const services = [
   {
     title: "Automotive IoT Solutions",
@@ -250,6 +250,7 @@ export default function Services() {
                 cutting-edge IoT solutions. Contact us today to start building a
                 smarter, more connected future.
               </Typography>
+              <Link href="/contact" passHref>
               <Button
                 variant="contained"
                 size="large"
@@ -269,6 +270,7 @@ export default function Services() {
               >
                 Contact Us
               </Button>
+              </Link>
             </Box>
           </motion.div>
         </Container>
