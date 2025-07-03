@@ -163,7 +163,7 @@ export default function ProductPage() {
                   Buy Now
                 </Button>
 
-                {products.some(p => p.productId === product.productId) ? (
+{/*                 {products.some(p => p.productId === product.productId) ? (
                   <Button
                     component={Link}
                     href="/cart"
@@ -182,7 +182,7 @@ export default function ProductPage() {
                   >
                     Add to Cart
                   </Button>
-                )}
+                )} */}
 
                 <Button
                   component={Link}
