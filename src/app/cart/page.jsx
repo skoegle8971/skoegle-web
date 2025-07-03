@@ -2,6 +2,7 @@
 
 import { useProducts } from "@/Store/Store";
 import Layout from "@/Layout/Layout";
+import { useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -68,13 +69,23 @@ export default function CartPage() {
     });
   };
 
-  const handleCheckout = () => {
-    if (!isSignedIn) {
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && isLoaded && !isSignedIn) {
       const currentPath = window.location.pathname + window.location.search;
       const redirectUrl = encodeURIComponent(currentPath);
-      router.replace(`/signin?redirect_url=${redirectUrl}`);
-      return;
+      router.replace(`/auth/signin?redirect_url=${redirectUrl}`);
     }
+  }, [isLoaded, isSignedIn, router]);
+
+
+  const handleCheckout = () => {
+    // if (!isSignedIn) {
+    //   const currentPath = window.location.pathname + window.location.search;
+    //   const redirectUrl = encodeURIComponent(currentPath);
+    //   router.replace(`/auth/signin?redirect_url=${redirectUrl}`);
+    //   return;
+    // }
 
     const userName = user?.fullName || "Guest";
     const userEmail = user?.primaryEmailAddress?.emailAddress || "guest@example.com";
@@ -105,7 +116,7 @@ export default function CartPage() {
 
   return (
     <Layout>
-      <Box sx={{ padding: 4 }}>
+      <Box sx={{ padding: 10 }}>
         <Typography variant="h4" gutterBottom>
           Your Cart
         </Typography>
