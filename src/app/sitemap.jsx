@@ -46,12 +46,12 @@ export default function sitemap() {
 
   // External subdomains / blogs (included once)
   dynamicEntries.push(
-    {
-      url: 'https://skoegle.blogspot.com/?m=1',
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.2,
-    },
+    // {
+    //   url: 'https://skoegle.blogspot.com/?m=1',
+    //   lastModified,
+    //   changeFrequency: 'monthly',
+    //   priority: 0.2,
+    // },
     {
       url: 'https://vmarg.skoegle.com/',
       lastModified,
