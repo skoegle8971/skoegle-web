@@ -14,7 +14,10 @@ const ibmPlexSans = IBM_Plex_Sans({
 export const metadata = {
   title: 'Skoegle',
   description: 'Skoegle offers smart GPS and IoT tracking solutions for pets, vehicles, people, and valuable assets.',
-  robots: 'index, follow', // ✅ Add this line
+  robots: 'index, follow',
+    alternates: {
+    canonical: 'https://skoegle.com/'
+  },
   keywords: [
     'Skoegle',
     'skoegle.com',
