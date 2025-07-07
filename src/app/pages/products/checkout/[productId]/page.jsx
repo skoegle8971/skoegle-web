@@ -115,7 +115,7 @@ export default function Checkout() {
       name: finalName,
       email: finalEmail,
       amount: product.amount,
-      redirectingurl: `https://paymemts.skoegle.com/pages/orders`,
+      redirectingurl: `https://skoegle.com/pages/orders`,
       address: deliveryAddress,
       phonenumber: phoneNumber,
       userid: user.id,
