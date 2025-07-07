@@ -27,7 +27,9 @@ import {
   Dialog,
   DialogContent,
   IconButton,
-  Skeleton
+  Skeleton,
+  Tabs,
+  Tab
 } from '@mui/material';
 
 import AndroidIcon from '@mui/icons-material/Android';
@@ -44,7 +46,7 @@ export default function ProductPage() {
   const { productId } = useParams();
   const router = useRouter();
   const hasFetched = useRef(false);
-  const { products, setProducts } = useProducts()
+  const { products, setProducts } = useProducts();
   const { isSignedIn, isLoaded } = useUser();
 
   const [product, setProduct] = useState(null);
@@ -53,6 +55,11 @@ export default function ProductPage() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
+  const [activeTab, setActiveTab] = useState(0);
+
+const handleTabChange = (_, newValue) => {
+    setActiveTab(newValue);
+  };
 
   useEffect(() => {
     if (typeof window !== 'undefined' && isLoaded && !isSignedIn) {
@@ -163,7 +170,7 @@ export default function ProductPage() {
                   Buy Now
                 </Button>
 
-{/*                 {products.some(p => p.productId === product.productId) ? (
+                {/* {products.some(p => p.productId === product.productId) ? (
                   <Button
                     component={Link}
                     href="/cart"
@@ -195,9 +202,69 @@ export default function ProductPage() {
                 </Button>
               </Stack>
 
-              {product.downloads && (
-                <Box sx={{ mb: 4 }}>
-                  <Typography variant="h6" gutterBottom>Downloads & Apps</Typography>
+              {/* Tabbed Interface */}
+              <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}>
+                <Tabs value={activeTab} onChange={handleTabChange} textColor="primary" indicatorColor="primary">
+                  <Tab label="FEATURES" />
+                  <Tab label="SPECIFICATIONS" />
+                  <Tab label="DOWNLOADS" />
+                </Tabs>
+              </Box>
+
+              {/* FEATURES */}
+              <Box hidden={activeTab !== 0}>
+                {product.productFeatures?.length > 0 ? (
+                  <Grid container spacing={2}>
+                    {product.productFeatures.map((f) => (
+                      <Grid item xs={12} sm={6} key={f._id}>
+                        <Card sx={{ display: 'flex', alignItems: 'center' }}>
+                          <CardMedia
+                            component="img"
+                            image={f.image}
+                            alt={f.title}
+                            sx={{ width: 60, height: 60, objectFit: 'contain', ml: 2 }}
+                          />
+                          <CardContent>
+                            <Typography variant="subtitle1">{f.title}</Typography>
+                            <Typography variant="body2" color="text.secondary">{f.subheading}</Typography>
+                          </CardContent>
+                        </Card>
+                      </Grid>
+                    ))}
+                  </Grid>
+                ) : (
+                  <Typography>No Features listed.</Typography>
+                )}
+              </Box>
+
+              {/* SPECIFICATIONS */}
+              <Box hidden={activeTab !== 1}>
+                {product.specifications?.length > 0 ? (
+                  product.specifications.map((spec) => (
+                    <Box key={spec._id} sx={{ mb: 2 }}>
+                      <Typography variant="subtitle1" gutterBottom>{spec.category}</Typography>
+                      <Paper variant="outlined">
+                        <Table>
+                          <TableBody>
+                            {Object.entries(spec.data).map(([key, value]) => (
+                              <TableRow key={key}>
+                                <TableCell sx={{ fontWeight: 600 }}>{key}</TableCell>
+                                <TableCell>{value}</TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </Paper>
+                    </Box>
+                  ))
+                ) : (
+                  <Typography>No Specifications available.</Typography>
+                )}
+              </Box>
+
+              {/* DOWNLOADS */}
+              <Box hidden={activeTab !== 2}>
+                {product.downloads ? (
                   <Stack spacing={1}>
                     {product.downloads.android && (
                       <MuiLink href={product.downloads.android} target="_blank" underline="hover">
@@ -221,55 +288,10 @@ export default function ProductPage() {
                       </MuiLink>
                     )}
                   </Stack>
-                </Box>
-              )}
-
-              {product.productFeatures?.length > 0 && (
-                <Box sx={{ mb: 4 }}>
-                  <Typography variant="h6" gutterBottom>Features</Typography>
-                  <Grid container spacing={2}>
-                    {product.productFeatures.map((f) => (
-                      <Grid item xs={12} sm={6} key={f._id}>
-                        <Card sx={{ display: 'flex', alignItems: 'center' }}>
-                          <CardMedia
-                            component="img"
-                            image={f.image}
-                            alt={f.title}
-                            sx={{ width: 60, height: 60, objectFit: 'contain', ml: 2 }}
-                          />
-                          <CardContent>
-                            <Typography variant="subtitle1">{f.title}</Typography>
-                            <Typography variant="body2" color="text.secondary">{f.subheading}</Typography>
-                          </CardContent>
-                        </Card>
-                      </Grid>
-                    ))}
-                  </Grid>
-                </Box>
-              )}
-
-              {product.specifications?.length > 0 && (
-                <Box sx={{ mb: 4 }}>
-                  <Typography variant="h6" gutterBottom>Specifications</Typography>
-                  {product.specifications.map((spec) => (
-                    <Box key={spec._id} sx={{ mb: 2 }}>
-                      <Typography variant="subtitle1" gutterBottom>{spec.category}</Typography>
-                      <Paper variant="outlined">
-                        <Table>
-                          <TableBody>
-                            {Object.entries(spec.data).map(([key, value]) => (
-                              <TableRow key={key}>
-                                <TableCell sx={{ fontWeight: 600 }}>{key}</TableCell>
-                                <TableCell>{value}</TableCell>
-                              </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table>
-                      </Paper>
-                    </Box>
-                  ))}
-                </Box>
-              )}
+                ) : (
+                  <Typography>No Downloads available.</Typography>
+                )}
+              </Box>
 
               <Typography variant="caption" display="block" color="text.secondary" mt={3}>
                 Last updated: {new Date(product.updatedAt).toLocaleDateString()}

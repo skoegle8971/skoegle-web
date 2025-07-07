@@ -115,7 +115,7 @@ export default function Checkout() {
       name: finalName,
       email: finalEmail,
       amount: product.amount,
-      redirectingurl: `http://localhost:3000/pages/orders`,
+      redirectingurl: `https://paymemts.skoegle.com/pages/orders`,
       address: deliveryAddress,
       phonenumber: phoneNumber,
       userid: user.id,
@@ -125,7 +125,7 @@ export default function Checkout() {
 
     try {
       const encrypted = cryptr.encrypt(JSON.stringify(payload));
-      const finalURL = `http://localhost:5000/pay?data=${encodeURIComponent(encrypted)}`;
+      const finalURL = `https://payments.skoegle.com/pay?data=${encodeURIComponent(encrypted)}`;
       router.push(finalURL);
     } catch (error) {
       console.error("Encryption/Redirection failed:", error);
