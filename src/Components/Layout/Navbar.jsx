@@ -33,7 +33,7 @@ import {
 } from "react-icons/hi";
 import { useUser, UserButton } from "@clerk/nextjs";
 // import { IconButton, Badge } from '@mui/material';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+// import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useProducts } from "@/Store/Store";
@@ -62,15 +62,21 @@ export default function ResponsiveNavbar() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const isDesktop = !isMobile;
-const {products} = useProducts()
+  const { products } = useProducts()
   const [desktopMoreOpen, setDesktopMoreOpen] = useState(false);
   const moreRef = useRef(null);
 
+  const [hasMounted, setHasMounted] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileMoreOpen, setMobileMoreOpen] = useState(false);
 
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
+
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -120,7 +126,7 @@ const {products} = useProducts()
               </Typography>
             </Link>
 
-            {isDesktop && (
+            {hasMounted && isDesktop && (
               <Box component="nav" sx={{ display: "flex", gap: 3 }}>
                 {MENU_ITEMS.map(({ label, path }) => (
                   <Button
@@ -130,10 +136,8 @@ const {products} = useProducts()
                       color: "#000",
                       fontWeight: 500,
                       textTransform: "none",
-                      position: "relative",
-                      "&:hover": {
-                        color: BRAND_COLOR,
-                      },
+                      "&:hover": { color: BRAND_COLOR },
+
                     }}
                   >
                     {label}
@@ -229,7 +233,7 @@ const {products} = useProducts()
           </Box>
 
           {/* Right Side */}
-          {isDesktop ? (
+          {hasMounted && isDesktop ? (
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
               {searchOpen ? (
                 <Box component="form" onSubmit={handleSearchSubmit}>
@@ -258,6 +262,7 @@ const {products} = useProducts()
                     color: "#555",
                     cursor: "pointer",
                     "&:hover": { color: BRAND_COLOR },
+
                   }}
                 >
                   <FiSearch size={18} />
@@ -267,18 +272,18 @@ const {products} = useProducts()
 
               {isSignedIn && (
                 <>
-                <Button
-                  onClick={() => router.push("/pages/orders")}
-                  sx={{
-                    textTransform: "none",
-                    fontWeight: 500,
-                    color: "#000",
-                    "&:hover": { color: BRAND_COLOR },
-                  }}
-                >
-                  Your Orders
-                </Button>
-{/*                   <IconButton
+                  <Button
+                    onClick={() => router.push("/pages/orders")}
+                    sx={{
+                      textTransform: "none",
+                      fontWeight: 500,
+                      color: "#000",
+                      "&:hover": { color: BRAND_COLOR },
+                    }}
+                  >
+                    Your Orders
+                  </Button>
+                  {/*                   <IconButton
                     onClick={() => router.push("/cart")}
                     sx={{ color: "#000", "&:hover": { color: BRAND_COLOR } }}
                   >
@@ -335,9 +340,12 @@ const {products} = useProducts()
               >
                 <FiSearch size={20} />
               </IconButton>
-              <IconButton onClick={() => setMenuOpen(true)} sx={{ color: "#555" }}>
-                <HiOutlineMenu size={26} />
-              </IconButton>
+              {isMobile && (
+                <IconButton onClick={() => setMenuOpen(true)}>
+                  <HiOutlineMenu size={26} />
+                </IconButton>
+              )}
+
             </Box>
           )}
         </Toolbar>
@@ -421,14 +429,14 @@ const {products} = useProducts()
                     primaryTypographyProps={{ fontSize: 16, fontWeight: 500 }}
                   />
                 </ListItemButton>
-                         <IconButton
+                  {/* <IconButton
                     onClick={() => router.push("/cart")}
                     sx={{ color: "#000", "&:hover": { color: BRAND_COLOR } }}
                   >
                     <Badge badgeContent={products.length} color="error" showZero>
                       <ShoppingCartIcon />
                     </Badge>
-                  </IconButton>
+                  </IconButton> */}
                 </>
 
               )}

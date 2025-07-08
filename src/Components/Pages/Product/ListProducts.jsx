@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useRouter } from 'next/navigation'; // for Next.js App Router
+import { useRouter } from 'next/navigation';
 import {
   Grid,
   Card,
@@ -21,14 +21,26 @@ export default function Products() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('/api/products')
-      .then(res => {
-        if (res.data.success) {
-          setProducts(res.data.products);
-        }
-      })
-      .catch(err => console.error("Failed to fetch products:", err))
-      .finally(() => setLoading(false));
+    const cachedData = sessionStorage.getItem("products_cache");
+
+    if (cachedData) {
+      // Load from sessionStorage
+      console.log(" Loaded products from sessionStorage"); 
+      setProducts(JSON.parse(cachedData));
+      setLoading(false);
+    } else {
+      // Load from API
+      axios.get('/api/products')
+        .then(res => {
+          if (res.data.success) {
+            console.log(" Fetched products from API"); 
+            setProducts(res.data.products);
+            sessionStorage.setItem("products_cache", JSON.stringify(res.data.products));
+          }
+        })
+        .catch(err => console.error(" Failed to fetch products:", err)) 
+        .finally(() => setLoading(false));
+    }
   }, []);
 
   const renderSkeletons = () => {
@@ -79,7 +91,7 @@ export default function Products() {
       </Box>
 
       {/* Description Section */}
-      <Container sx={{ py: 6 }}>
+       <Container sx={{ py: 6 }}>
         <Typography variant="body1" paragraph>
           Founded in 2019, <strong>Skoegle IoT Innovations</strong> has emerged as a leading force in the rapidly evolving Internet of Things (IoT) landscape. We specialize in designing and manufacturing intelligent connected devices tailored for industries such as logistics, fleet and asset tracking, vehicle and bike rentals, smart security, predictive maintenance, energy monitoring, and industrial automation.
 
