@@ -7,7 +7,7 @@ import Link from '@mui/material/Link';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import { encrypt, decrypt } from "@/ServerCopmonents/utils/crypter";
 import {
   Grid,
   Card,
@@ -20,9 +20,6 @@ import {
   Skeleton,
   CircularProgress,
 } from '@mui/material';
-
-const Cryptr = require('cryptr');
-const cryptr = new Cryptr('5sd4f54s5f45sf45sdf5sfs4d5f4s54f5sdf45s45f4s5f45s4f5ds4vsd54s5f'); // ⚠️ Use env variable in production
 
 const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 const validatePhoneNumber = (phone) => /^[6-9]\d{9}$/.test(phone);
@@ -124,7 +121,7 @@ export default function Checkout() {
     };
 
     try {
-      const encrypted = cryptr.encrypt(JSON.stringify(payload));
+      const encrypted = encrypt(JSON.stringify(payload));
       const finalURL = `https://payments.skoegle.com/pay?data=${encodeURIComponent(encrypted)}`;
       router.push(finalURL);
     } catch (error) {
