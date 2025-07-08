@@ -166,7 +166,7 @@ export default function Footer() {
               </Typography>
             </Box>
 
-            <Typography variant="h6">Our Best Products:</Typography>
+            <Typography variant="h6">Our Hot Products:</Typography>
             {ourBrands.map((brand) => (
               <MuiLink
                 key={brand.name}
