@@ -111,7 +111,7 @@ export default function App() {
                 <Typography sx={{ color: '#555', mt: 1 }}>
                   {project.description}
                 </Typography>
-                <Button
+                {/* <Button
                   endIcon={<ArrowForwardIcon />}
                   sx={{
                     mt: 2,
@@ -122,7 +122,7 @@ export default function App() {
                   }}
                 >
                   View Details
-                </Button>
+                </Button> */}
               </CardContent>
             </Card>
           </Grid>
