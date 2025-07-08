@@ -47,18 +47,6 @@ export default function App() {
         px: 2,
       }}
     >
-      {/* Header */}
-      <Typography
-        variant="h3"
-        sx={{
-          color: '#000',
-          textAlign: 'center',
-          mb: 4,
-          fontFamily: 'Orbitron, sans-serif',
-        }}
-      >
-        Iot-Projects
-      </Typography>
 
       {/* Subheading */}
       <Typography
@@ -123,7 +111,7 @@ export default function App() {
                 <Typography sx={{ color: '#555', mt: 1 }}>
                   {project.description}
                 </Typography>
-                <Button
+                {/* <Button
                   endIcon={<ArrowForwardIcon />}
                   sx={{
                     mt: 2,
@@ -134,7 +122,7 @@ export default function App() {
                   }}
                 >
                   View Details
-                </Button>
+                </Button> */}
               </CardContent>
             </Card>
           </Grid>

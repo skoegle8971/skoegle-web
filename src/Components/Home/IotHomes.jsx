@@ -264,7 +264,7 @@ export default function IoTHomes() {
               color: 'rgba(255,255,255,0.7)'
             }}
           >
-            Powering industries with intelligent automation, secure GPS, and scalable IoT infrastructure — for a truly connected future.          </Typography>
+            Powering industries with intelligent automation, secure GPS, and scalable IoT infrastructure for a truly connected future.          </Typography>
         </Box>
 
         {/* Solutions Grid */}
@@ -273,7 +273,9 @@ export default function IoTHomes() {
             variant="h4"
             sx={{ textAlign: 'center', fontWeight: 700, mb: 4 }}
           >
-            Unlock Smart Control with GPS, Geofencing & Cloud IoT by SKOEGLE
+            Unlock Smart Control with GPS, 
+            <Box component="span" sx={{ color: '#0099cc' }}>
+            Geofencing & Cloud IoT by SKOEGLE</Box>
           </Typography>
 
           <Grid container spacing={4}>
@@ -356,7 +358,10 @@ export default function IoTHomes() {
             variant="h4"
             sx={{ fontWeight: 700, mb: 3, textAlign: 'center' }}
           >
-            Empowering Industries with SKOEGLE’s IoT & Cloud Synergy          </Typography>
+            Empowering Industries with <br />
+            <Box component="span" sx={{ color: '#0099cc' }}>
+            SKOEGLE’s IoT & Cloud Synergy    </Box>      
+          </Typography>
           <Typography
             variant="body1"
             sx={{

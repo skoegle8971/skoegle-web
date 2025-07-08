@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation'; // App Router version
 
 const GradientText = styled('span')({
-  background: 'linear-gradient(to right, #001f3f, #0074D9)',
+  background: 'linear-gradient( #0074D9)',
   WebkitBackgroundClip: 'text',
   WebkitTextFillColor: 'transparent',
 });
