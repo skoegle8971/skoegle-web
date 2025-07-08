@@ -21,6 +21,8 @@ import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
 import Cryptr from "cryptr";
 
+
+
 const cryptr = new Cryptr("1234567890abcdef"); // ⚠️ Replace with process.env in production
 const GST_RATE = 0.18;
 const MAX_TOTAL = 100000;
@@ -135,15 +137,18 @@ export default function CartPage() {
                       component="img"
                       image={product?.productImages?.[0] || "/placeholder.png"}
                       alt={product?.name}
+                      onClick={() => router.push(`/pages/products/view/${product.productId}`)}
                       sx={{
                         width: 120,
                         height: 100,
                         objectFit: "cover",
                         borderRadius: 1,
                         mr: 2,
+                        cursor: 'pointer'
                       }}
                     />
-                    <Box sx={{ flexGrow: 1 }}>
+
+                   <Box sx={{ flexGrow: 1 }}>
                       <Typography variant="h6">{product?.name}</Typography>
                       <Typography variant="body2">{product?.subheading}</Typography>
                       <Typography variant="body2">
