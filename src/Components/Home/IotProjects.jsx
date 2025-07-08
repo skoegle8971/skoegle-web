@@ -47,18 +47,6 @@ export default function App() {
         px: 2,
       }}
     >
-      {/* Header */}
-      <Typography
-        variant="h3"
-        sx={{
-          color: '#000',
-          textAlign: 'center',
-          mb: 4,
-          fontFamily: 'Orbitron, sans-serif',
-        }}
-      >
-        Iot-Projects
-      </Typography>
 
       {/* Subheading */}
       <Typography

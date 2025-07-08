@@ -4,9 +4,6 @@ export default function App() {
   return (
     <>
       <Box sx={{ bgcolor: "#f5f5f5", color: "#212121", py: 5, px: { xs: 2, md: 8 } }}>
-        <Typography variant="h3" sx={{ fontWeight: "bold", mb: 4, fontFamily: "Orbitron, sans-serif" }}>
-          IotTech
-        </Typography>
 
         <Grid container spacing={4} alignItems="center">
           {/* Left Image */}
