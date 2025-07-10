@@ -14,6 +14,7 @@ import {
   Button,
   Skeleton
 } from '@mui/material';
+import Link from 'next/link';
 
 export default function Products() {
   const router = useRouter();
@@ -115,26 +116,29 @@ export default function Products() {
             : products.map(product => (
               <Grid item xs={12} sm={6} md={3} key={product._id}>
                 <Card sx={{ boxShadow: 3, borderRadius: 2 }}>
-                  <CardMedia
-                    component="img"
-                    height="160"
-                    image={product?.productImages[0]}
-                    alt={product.productName}
-                    sx={{ objectFit: 'contain', p: 2 }}
-                  />
+                  <Link href={`/pages/products/view/${product.productId}`} passHref>
+              <CardMedia
+                component="img"
+                image={product.productImages?.[0] || '/placeholder.png'}
+                alt={product.name}
+                sx={{
+                  height: 180,
+                  objectFit: 'contain',
+                  cursor: 'pointer',
+                }}
+              />
+            </Link>
                   <CardContent sx={{ textAlign: 'center' }}>
                     <Typography variant="h6" fontWeight="bold">
                       {product.productName}
                     </Typography>
 
-                    <Button
-                      size="small"
-                      onClick={() => router.push(`/pages/products/view/${product.productId}`)}
-                      sx={{ color: '#2196f3', textTransform: 'none', fontWeight: 'bold' }}
-                    >
-                      Read more &gt;
-                    </Button>
-
+                    <Link
+                href={`/pages/products/view/${product.productId}`}
+                style={{ color: '#1976d2', fontWeight: 'bold', textDecoration: 'none' }}
+              >
+                Read more &gt;
+              </Link>
                     <Typography
                       variant="body2"
                       color="text.secondary"
