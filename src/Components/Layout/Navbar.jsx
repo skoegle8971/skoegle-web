@@ -33,7 +33,7 @@ import {
 } from "react-icons/hi";
 import { useUser, UserButton } from "@clerk/nextjs";
 // import { IconButton, Badge } from '@mui/material';
-// import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useProducts } from "@/Store/Store";
@@ -283,14 +283,14 @@ export default function ResponsiveNavbar() {
                   >
                     Your Orders
                   </Button>
-                  {/*                   <IconButton
+                                    <IconButton
                     onClick={() => router.push("/cart")}
                     sx={{ color: "#000", "&:hover": { color: BRAND_COLOR } }}
                   >
                     <Badge badgeContent={products.length} color="error" showZero>
                       <ShoppingCartIcon />
                     </Badge>
-                  </IconButton> */}
+                  </IconButton>
                 </>
               )}
 
@@ -429,14 +429,14 @@ export default function ResponsiveNavbar() {
                     primaryTypographyProps={{ fontSize: 16, fontWeight: 500 }}
                   />
                 </ListItemButton>
-                  {/* <IconButton
+                  <IconButton
                     onClick={() => router.push("/cart")}
                     sx={{ color: "#000", "&:hover": { color: BRAND_COLOR } }}
                   >
                     <Badge badgeContent={products.length} color="error" showZero>
                       <ShoppingCartIcon />
                     </Badge>
-                  </IconButton> */}
+                  </IconButton>
                 </>
 
               )}

@@ -111,9 +111,10 @@ export default function CartPage() {
       cart: orderSummary,
     };
 
-    const encrypted = cryptr.encrypt(JSON.stringify(payload));
-    const finalURL = `https://payments.skoegle.com/pay?data=${encodeURIComponent(encrypted)}`;
-    router.push(finalURL);
+    alert("Payment Gateway is Under Intigration for cart")
+    // const encrypted = cryptr.encrypt(JSON.stringify(payload));
+    // const finalURL = `https://payments.skoegle.com/pay?data=${encodeURIComponent(encrypted)}`;
+    // router.push(finalURL);
   };
 
   return (
