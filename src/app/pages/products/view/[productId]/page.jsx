@@ -16,7 +16,7 @@ import {
   CardMedia,
   Link as MuiLink,
   Box,
-  CircularProgress,
+  Skeleton,
   Paper,
   Table,
   TableBody,
@@ -27,19 +27,19 @@ import {
   Dialog,
   DialogContent,
   IconButton,
-  Skeleton,
   Tabs,
   Tab
 } from '@mui/material';
 
 import AndroidIcon from '@mui/icons-material/Android';
-import AppleIcon from '@mui/icons-material/Apple';
+import DesktopWindowsIcon from '@mui/icons-material/DesktopWindows'; // ✅ Replaced WindowsIcon
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import PaymentIcon from '@mui/icons-material/Payment';
 import ContactSupportIcon from '@mui/icons-material/ContactSupport';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CloseIcon from '@mui/icons-material/Close';
+
 import { useProducts } from '@/Store/Store';
 
 export default function ProductPage() {
@@ -52,12 +52,11 @@ export default function ProductPage() {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
   const [activeTab, setActiveTab] = useState(0);
 
-const handleTabChange = (_, newValue) => {
+  const handleTabChange = (_, newValue) => {
     setActiveTab(newValue);
   };
 
@@ -202,7 +201,6 @@ const handleTabChange = (_, newValue) => {
                 </Button>
               </Stack>
 
-              {/* Tabbed Interface */}
               <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}>
                 <Tabs value={activeTab} onChange={handleTabChange} textColor="primary" indicatorColor="primary">
                   <Tab label="FEATURES" />
@@ -274,13 +272,15 @@ const handleTabChange = (_, newValue) => {
                         </Button>
                       </MuiLink>
                     )}
+
                     {product.downloads.ios && (
                       <MuiLink href={product.downloads.ios} target="_blank" underline="hover">
-                        <Button startIcon={<AppleIcon />} variant="outlined" fullWidth>
+                        <Button startIcon={<DesktopWindowsIcon />} variant="outlined" fullWidth>
                           Windows
                         </Button>
                       </MuiLink>
                     )}
+
                     {product.downloads.pdfManual && (
                       <MuiLink href={product.downloads.pdfManual} target="_blank" underline="hover">
                         <Button startIcon={<PictureAsPdfIcon />} variant="outlined" fullWidth>
@@ -359,30 +359,20 @@ const handleTabChange = (_, newValue) => {
         )}
       </Container>
 
-      {/* Modal for media items */}
+      {/* Modal Viewer */}
       <Dialog open={isModalOpen} onClose={() => setIsModalOpen(false)} maxWidth="md" fullWidth>
         <DialogContent sx={{ position: 'relative', p: 0, bgcolor: 'black' }}>
-          <IconButton
-            onClick={() => setIsModalOpen(false)}
-            sx={{ position: 'absolute', top: 8, right: 8, color: 'white', zIndex: 10 }}
-          >
+          <IconButton onClick={() => setIsModalOpen(false)} sx={{ position: 'absolute', top: 8, right: 8, color: 'white' }}>
             <CloseIcon />
           </IconButton>
 
           {currentMediaIndex > 0 && (
-            <IconButton
-              onClick={() => setCurrentMediaIndex((i) => i - 1)}
-              sx={{ position: 'absolute', top: '50%', left: 8, transform: 'translateY(-50%)', color: 'white', zIndex: 10 }}
-            >
+            <IconButton onClick={() => setCurrentMediaIndex(i => i - 1)} sx={{ position: 'absolute', top: '50%', left: 8, transform: 'translateY(-50%)', color: 'white' }}>
               <ArrowBackIosIcon />
             </IconButton>
           )}
-
           {currentMediaIndex < mediaItems.length - 1 && (
-            <IconButton
-              onClick={() => setCurrentMediaIndex((i) => i + 1)}
-              sx={{ position: 'absolute', top: '50%', right: 8, transform: 'translateY(-50%)', color: 'white', zIndex: 10 }}
-            >
+            <IconButton onClick={() => setCurrentMediaIndex(i => i + 1)} sx={{ position: 'absolute', top: '50%', right: 8, transform: 'translateY(-50%)', color: 'white' }}>
               <ArrowForwardIosIcon />
             </IconButton>
           )}

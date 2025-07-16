@@ -8,7 +8,6 @@ import axios from "axios";
 import {
   Container,
   Typography,
-  CircularProgress,
   Card,
   CardContent,
   Grid,
@@ -17,8 +16,10 @@ import {
   Box,
   TextField,
   Skeleton,
+  CircularProgress,
 } from "@mui/material";
-import { encrypt, decrypt } from "@/ServerCopmonents/utils/crypter"; // Adjust path if needed
+
+import { encrypt, decrypt } from "@/ServerCopmonents/utils/crypter"; // Adjust the path if needed
 
 export default function Orders() {
   const { user, isLoaded, isSignedIn } = useUser();
@@ -26,6 +27,7 @@ export default function Orders() {
 
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filterLoading, setFilterLoading] = useState(false);
   const [showDateInput, setShowDateInput] = useState(false);
   const [filterDate, setFilterDate] = useState("");
   const [filtered, setFiltered] = useState(false);
@@ -34,6 +36,13 @@ export default function Orders() {
     const date = new Date();
     date.setDate(date.getDate() - 2);
     return date.toISOString().split("T")[0];
+  };
+
+  const isWithinTwoDays = (dateString) => {
+    const now = new Date();
+    const inputDate = new Date(dateString);
+    const diff = now - inputDate;
+    return diff <= 2 * 24 * 60 * 60 * 1000; // 2 days in ms
   };
 
   useEffect(() => {
@@ -46,26 +55,49 @@ export default function Orders() {
 
   const fetchOrders = async (date = "") => {
     if (!user?.emailAddresses?.[0]?.emailAddress) return;
-    setLoading(true);
+    const email = user.emailAddresses[0].emailAddress;
+    const cacheKey = date ? `orders_${email}_${date}` : `orders_${email}_all`;
+
+    if (date && !isWithinTwoDays(date)) {
+      const encryptedData = localStorage.getItem(cacheKey);
+      if (encryptedData) {
+        try {
+          const decryptedData = JSON.parse(decrypt(encryptedData));
+          setOrders(decryptedData);
+          return;
+        } catch (error) {
+          console.error("Error decrypting cached data:", error);
+        }
+      }
+    }
+
     try {
-      const url = `https://payments.skoegle.com/api/order/history?email=${user.emailAddresses[0].emailAddress}${
+      const url = `https://payments.skoegle.com/api/order/history?email=${email}${
         date ? `&date=${date}` : ""
       }`;
 
       const response = await axios.get(url);
-      setOrders(JSON.parse(decrypt(response.data.data)) || []);
+      const decrypted = JSON.parse(decrypt(response.data.data)) || [];
+      setOrders(decrypted);
+
+      if (date && !isWithinTwoDays(date)) {
+        localStorage.setItem(cacheKey, encrypt(JSON.stringify(decrypted)));
+      }
     } catch (error) {
       console.error("Error fetching orders:", error);
       setOrders([]);
-    } finally {
-      setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (isLoaded && isSignedIn && user?.id) {
-      fetchOrders();
-    }
+    const loadInitialOrders = async () => {
+      if (isLoaded && isSignedIn && user?.id) {
+        setLoading(true);
+        await fetchOrders();
+        setLoading(false);
+      }
+    };
+    loadInitialOrders();
   }, [isLoaded, isSignedIn, user]);
 
   const handleFilterClick = () => {
@@ -73,19 +105,43 @@ export default function Orders() {
     setFilterDate(getTwoDaysAgo());
   };
 
-  const handleFilterConfirm = () => {
+  const handleFilterConfirm = async () => {
     if (filterDate) {
-      fetchOrders(filterDate);
+      setFilterLoading(true);
+      await fetchOrders(filterDate);
       setFiltered(true);
+      setFilterLoading(false);
     }
   };
 
-  const handleReset = () => {
+  const handleReset = async () => {
     setShowDateInput(false);
     setFilterDate("");
     setFiltered(false);
-    fetchOrders();
+    setLoading(true);
+    await fetchOrders();
+    setLoading(false);
   };
+
+  useEffect(() => {
+    const cleanOldCache = () => {
+      const now = Date.now();
+      const oneMonth = 30 * 24 * 60 * 60 * 1000;
+      Object.keys(localStorage).forEach((key) => {
+        if (key.startsWith("orders_")) {
+          const parts = key.split("_");
+          const dateStr = parts[2];
+          if (dateStr && !isNaN(Date.parse(dateStr))) {
+            const date = new Date(dateStr).getTime();
+            if (now - date > oneMonth) {
+              localStorage.removeItem(key);
+            }
+          }
+        }
+      });
+    };
+    cleanOldCache();
+  }, []);
 
   return (
     <Container maxWidth="md" sx={{ pt: 10 }}>
@@ -107,9 +163,20 @@ export default function Orders() {
               InputLabelProps={{ shrink: true }}
               value={filterDate}
               onChange={(e) => setFilterDate(e.target.value)}
+              inputProps={{
+                max: new Date().toISOString().split("T")[0],
+              }}
             />
-            <Button variant="contained" onClick={handleFilterConfirm}>
-              Apply Filter
+            <Button
+              variant="contained"
+              onClick={handleFilterConfirm}
+              disabled={filterLoading}
+            >
+              {filterLoading ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                "Apply Filter"
+              )}
             </Button>
             {filtered && (
               <Button variant="outlined" onClick={handleReset}>
@@ -132,7 +199,12 @@ export default function Orders() {
                   <Skeleton variant="text" width="80%" />
                   <Skeleton variant="text" width="70%" />
                   <Skeleton variant="text" width="50%" />
-                  <Skeleton variant="rectangular" height={36} width={180} sx={{ mt: 2 }} />
+                  <Skeleton
+                    variant="rectangular"
+                    height={36}
+                    width={180}
+                    sx={{ mt: 2 }}
+                  />
                 </CardContent>
               </Card>
             </Grid>
