@@ -246,7 +246,8 @@ export default function CartPage() {
               color="primary"
               size="large"
               onClick={handleCheckout}
-              disabled={products.length === 0}
+              de
+              disabled={products.length === 0 || true} 
             >
               Proceed to Checkout
             </Button>
