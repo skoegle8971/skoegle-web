@@ -10,6 +10,17 @@
       ],
       "destination": "https://skoegle.com/:path*",
       "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.skoegle.in"
+        }
+      ],
+      "destination": "https://skoegle.in/:path*",
+      "permanent": true
     }
   ],
   "headers": [
