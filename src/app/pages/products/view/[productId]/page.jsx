@@ -170,7 +170,7 @@ const handleTabChange = (_, newValue) => {
                   Buy Now
                 </Button>
 
-                {/* {products.some(p => p.productId === product.productId) ? (
+                {products.some(p => p.productId === product.productId) ? (
                   <Button
                     component={Link}
                     href="/cart"
@@ -189,16 +189,16 @@ const handleTabChange = (_, newValue) => {
                   >
                     Add to Cart
                   </Button>
-                )} */}
+                )}
 
                 <Button
                   component={Link}
-                  href="/contact"
+                  href="/support"
                   variant="outlined"
                   color="secondary"
                   startIcon={<ContactSupportIcon />}
                 >
-                  Contact Us
+                  Contact Sales
                 </Button>
               </Stack>
 
@@ -208,6 +208,7 @@ const handleTabChange = (_, newValue) => {
                   <Tab label="FEATURES" />
                   <Tab label="SPECIFICATIONS" />
                   <Tab label="DOWNLOADS" />
+                  <Tab label="SUBSCRIPTION"></Tab> 
                 </Tabs>
               </Box>
 
@@ -292,6 +293,63 @@ const handleTabChange = (_, newValue) => {
                   <Typography>No Downloads available.</Typography>
                 )}
               </Box>
+
+
+              {/* SUBSCRIPTION */}
+                <Box hidden={activeTab !== 3}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6} md={4}>
+                      <Card variant="outlined">
+                        <CardContent>
+                          <Typography variant="h6">Basic Plan</Typography>
+                          <Typography variant="body2" color="text.secondary" gutterBottom>
+                            Access to essential features.
+                          </Typography>
+                          <Typography variant="h5" sx={{ mt: 1, mb: 2 }}>
+                            ₹230 / month
+                          </Typography>
+                          <Button variant="contained" fullWidth>
+                            Subscribe
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6} md={4}>
+                      <Card variant="outlined">
+                        <CardContent>
+                          <Typography variant="h6">Pro Plan</Typography>
+                          <Typography variant="body2" color="text.secondary" gutterBottom>
+                            Ideal for teams and small businesses.
+                          </Typography>
+                          <Typography variant="h5" sx={{ mt: 1, mb: 2 }}>
+                            ₹2400 / Year
+                          </Typography>
+                          <Button variant="contained" fullWidth>
+                            Subscribe
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6} md={4}>
+                      <Card variant="outlined">
+                        <CardContent>
+                          <Typography variant="h6">Customize</Typography>
+                          <Typography variant="body2" color="text.secondary" gutterBottom>
+                            customize your solutions.
+                          </Typography>
+                          <Typography variant="h5" sx={{ mt: 1, mb: 2 }}>
+                            <br />
+                          </Typography>
+                          <Button variant="contained" fullWidth>
+                            Contact
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                  </Grid>
+                </Box>
 
               <Typography variant="caption" display="block" color="text.secondary" mt={3}>
                 Last updated: {new Date(product.updatedAt).toLocaleDateString()}
