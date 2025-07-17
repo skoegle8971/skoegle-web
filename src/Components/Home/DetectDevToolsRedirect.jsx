@@ -1,9 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function DetectDevTools() {
   const [showMenu, setShowMenu] = useState(false);
   const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
+  const [canForward, setCanForward] = useState(true); // forward control
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_MY_ENV !== "production") return;
@@ -45,13 +49,15 @@ export default function DetectDevTools() {
       }
     };
 
-   
     const blockCopyPaste = (e) => e.preventDefault();
 
     const handleContextMenu = (e) => {
       e.preventDefault();
       setMenuPosition({ x: e.pageX, y: e.pageY });
       setShowMenu(true);
+
+      // Check if user can go forward (approximate check)
+      setCanForward(window.history.length > 1);
     };
 
     const handleClick = () => {
@@ -60,10 +66,9 @@ export default function DetectDevTools() {
 
     const blockPrint = () => {
       window.stop();
-      window.location.reload(); 
+      window.location.reload();
     };
 
- 
     const blockScreenshot = () => {
       document.body.style.filter = "blur(8px)";
       setTimeout(() => {
@@ -82,11 +87,9 @@ export default function DetectDevTools() {
     document.addEventListener("click", handleClick);
     window.addEventListener("beforeprint", blockPrint);
 
-   
     window.addEventListener("keyup", (e) => {
       if (e.key === "PrintScreen") blockScreenshot();
     });
-
 
     document.body.style.userSelect = "none";
     document.body.style.webkitUserSelect = "none";
@@ -108,6 +111,17 @@ export default function DetectDevTools() {
 
   const handleReload = () => window.location.reload();
   const handleBack = () => window.history.back();
+  const handleForward = () => window.history.forward();
+
+  const navigate = (path) => {
+    if (pathname !== path) {
+      router.push(path);
+    }
+    setShowMenu(false);
+  };
+
+  const isHome = pathname === "/";
+  const isProducts = pathname === "/pages/products";
 
   return (
     <>
@@ -117,18 +131,35 @@ export default function DetectDevTools() {
             position: "absolute",
             top: menuPosition.y,
             left: menuPosition.x,
-            backgroundColor: "#fff",
+            backgroundColor: "#f9f9f9",
             border: "1px solid #ccc",
-            borderRadius: "5px",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+            borderRadius: "4px",
+            boxShadow: "2px 2px 6px rgba(0,0,0,0.1)",
             listStyle: "none",
-            padding: "10px",
-            zIndex: 1000,
+            padding: "4px 0",
+            margin: 0,
+            zIndex: 10000,
+            fontFamily:
+              '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+            fontSize: "13px",
             width: "200px",
+            cursor: "default",
           }}
         >
-          <li style={menuItemStyle} onClick={handleReload}>🔄 Reload</li>
-          <li style={menuItemStyle} onClick={handleBack}>⬅️ Back</li>
+          {!isHome && (
+            <li style={menuItemStyle} onClick={() => navigate("/")}>Home</li>
+          )}
+          <li style={menuItemStyle} onClick={handleReload}>Reload</li>
+          <li style={menuItemStyle} onClick={handleBack}>Back</li>
+          {canForward && (
+            <li style={menuItemStyle} onClick={handleForward}>Forward</li>
+          )}
+          {!isProducts && (
+            <li style={menuItemStyle} onClick={() => navigate("/pages/products")}>Products</li>
+          )}
+          <li style={menuItemStyle} onClick={() => navigate("/vmarg")}>Track at vmarg</li>
+          {/* <li style={menuItemStyle} onClick={() => navigate("/dmarg")}>Sales - dmarg</li> */}
+          <li style={menuItemStyle} onClick={() => navigate("/support")}>Sales and Support</li>
         </ul>
       )}
     </>
@@ -136,8 +167,14 @@ export default function DetectDevTools() {
 }
 
 const menuItemStyle = {
-  padding: "8px 12px",
+  padding: "6px 12px",
   cursor: "pointer",
-  borderRadius: "4px",
+  borderRadius: "3px",
   userSelect: "none",
+  transition: "background 0.2s",
+  margin: "0 4px",
+  whiteSpace: "nowrap",
+  hover: {
+    backgroundColor: "#eaeaea",
+  },
 };

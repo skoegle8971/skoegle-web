@@ -42,7 +42,7 @@ export default function Orders() {
     const now = new Date();
     const inputDate = new Date(dateString);
     const diff = now - inputDate;
-    return diff <= 2 * 24 * 60 * 60 * 1000; // 2 days in ms
+    return diff <= 5 * 24 * 60 * 60 * 1000;
   };
 
   useEffect(() => {
