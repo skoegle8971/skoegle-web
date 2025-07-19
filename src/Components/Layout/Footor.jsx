@@ -93,7 +93,7 @@ export default function Footer() {
           {/* Column 1 - Company Info */}
           <Grid item xs={12} md={4}>
             <Box mb={3}>
-              <img src="/logo.png" alt="Skoegle Logo" style={{ height: 50 }} />
+              <img src="https://yrldiyjabkjrbvuwpahv.supabase.co/storage/v1/object/public/skoegleimages//logo.png" alt="Skoegle Logo" style={{ height: 50 }} />
             </Box>
             <Typography variant="body2" fontWeight="bold" gutterBottom>
               Contact Information

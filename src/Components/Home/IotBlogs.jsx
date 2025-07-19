@@ -17,19 +17,19 @@ import { motion } from 'framer-motion';
 const blogPosts = [
   {
     title: 'Transforming Industries And Changing Lives With AI',
-    image: '/blog1.jpg',
+    image: 'https://yrldiyjabkjrbvuwpahv.supabase.co/storage/v1/object/public/skoegleimages//blog1.jpg',
     description:
       'AI is revolutionizing sectors like healthcare, finance, and manufacturing by boosting productivity and personalizing user experiences.',
   },
   {
     title: 'Exploring The Ethics Of AI And Robotics In Society',
-    image: '/blog4.jpg',
+    image: 'https://yrldiyjabkjrbvuwpahv.supabase.co/storage/v1/object/public/skoegleimages//blog4.jpg',
     description:
       "As AI grows, ethical concerns around privacy, bias, and automation's social impact are gaining critical attention.",
   },
   {
     title: 'How AI Is Changing The Face Of Digital Marketing',
-    image: '/image7.jpg',
+    image: 'https://yrldiyjabkjrbvuwpahv.supabase.co/storage/v1/object/public/skoegleimages//image7.jpg',
     description:
       'AI is reshaping digital marketing by enabling real-time personalization and predictive insights. It allows brands to better understand customer behavior, deliver targeted campaigns, and engage more effectively across digital channels.',
   },

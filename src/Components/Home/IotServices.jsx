@@ -14,22 +14,22 @@ const GradientText = styled('span')({
 const services = [
   {
     title: 'Robotic Automation',
-    image: '/blog1.jpg',
+    image: 'https://yrldiyjabkjrbvuwpahv.supabase.co/storage/v1/object/public/skoegleimages//blog1.jpg',
     description: 'Streamline operations with intelligent robotic systems that boost efficiency, reduce manual errors, and scale seamlessly.',
   },
   {
     title: 'Machine Learning',
-    image: '/blog3.jpg',
+    image: 'https://yrldiyjabkjrbvuwpahv.supabase.co/storage/v1/object/public/skoegleimages//blog3.jpg',
     description: 'Unlock insights and drive smarter decisions with ML-powered data models that evolve with your business.',
   },
   {
     title: 'AI For Conversation',
-    image: '/blog2.jpg',
+    image: 'https://yrldiyjabkjrbvuwpahv.supabase.co/storage/v1/object/public/skoegleimages//blog2.jpg',
     description: 'Deliver human-like customer experiences with advanced conversational AI that powers chatbots, voice assistants, and more.',
   },
   {
     title: 'Internet Of Things',
-    image: '/image.png',
+    image: 'https://yrldiyjabkjrbvuwpahv.supabase.co/storage/v1/object/public/skoegleimages//image.png',
     description: 'Connect, monitor, and control devices in real time with IoT solutions that enhance automation and predictive capabilities.',
   },
 ];
@@ -80,12 +80,20 @@ export default function IotServices() {
               }}
             >
               <Box sx={{ position: 'relative', height: 260 }}>
-                <Image
-                  src={service.image}
-                  alt={service.title}
-                  fill
-                  style={{ objectFit: 'cover', opacity: 0.9 }}
-                />
+                <img
+  src={service.image}
+  alt={service.title}
+  style={{
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    opacity: 0.9,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  }}
+/>
+
               </Box>
               <CardContent sx={{ px: 3, py: 2 }}>
                 <Typography
