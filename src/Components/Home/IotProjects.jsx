@@ -16,25 +16,25 @@ export default function App() {
       title: 'IoT Technology',
       description:
         'Empower your business with SKOEGLE’s IoT platform that connects devices, automates environments, and delivers actionable insights in real time.',
-      image: '/iot.jpg',
+      image: 'https://yrldiyjabkjrbvuwpahv.supabase.co/storage/v1/object/public/skoegleimages//iot.jpg',
     },
     {
       title: 'Tracking Technology',
       description:
         'Streamline operations with smart GPS and IoT tracking solutions designed to provide end-to-end visibility and control across your entire asset network.',
-      image: '/image1.jpg',
+      image: 'https://yrldiyjabkjrbvuwpahv.supabase.co/storage/v1/object/public/skoegleimages//image1.jpg',
     },
     {
       title: 'Smart Automation',
       description:
         'Upgrade your lifestyle with intelligent automation that controls lights, appliances, and security remotely for enhanced comfort and efficiency.',
-      image: '/image3.jpg',
+      image: 'https://yrldiyjabkjrbvuwpahv.supabase.co/storage/v1/object/public/skoegleimages//image3.jpg',
     },
     {
       title: 'Industrial IoT Solutions',
       description:
         'Drive industrial performance with real-time monitoring, predictive maintenance, and smart analytics using SKOEGLE’s IIoT-driven infrastructure.',
-      image: '/image6.jpg',
+      image: 'https://yrldiyjabkjrbvuwpahv.supabase.co/storage/v1/object/public/skoegleimages//image6.jpg',
     },
   ];
 

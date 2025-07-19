@@ -69,7 +69,7 @@ export default function IoTHomes() {
       description: "Stay one step ahead with our advanced ID Card Tracking solution. Whether for schools, offices, or industrial premises, our tracker ensures every movement is monitored and secured.",
       category: "gps",
       icon: <GpsFixedIcon />,
-      image: "/id-card holder-ap.jpg",
+      image: "https://yrldiyjabkjrbvuwpahv.supabase.co/storage/v1/object/public/skoegleimages//Id.png",
       link: "/pages/products/view/cmttlxuz"
     },
     {
@@ -77,7 +77,7 @@ export default function IoTHomes() {
       description: "Keep your furry friends safe with our smart Pet Tracking solution. Whether at home or outdoors, monitor their location in real-time and receive instant alerts for unexpected movement or boundary breaches.",
       category: "cloud",
       icon: <CloudIcon />,
-      image: "/products/pettracker/Blue.jpg",
+      image: "https://yrldiyjabkjrbvuwpahv.supabase.co/storage/v1/object/public/skoegleimages//Pet.png",
       link: "/pages/products/view/PRDssDS001"
     },
     {
@@ -85,7 +85,7 @@ export default function IoTHomes() {
       description: "Step into the future with our smart Shoe Tracker — designed to ensure safety, activity tracking, and peace of mind for people of all ages, with real-time location updates and movement insights.",
       category: "geo-fencing",
       icon: <MapIcon />,
-      image: "/kids-shoe-ap.jpg",
+      image: "https://yrldiyjabkjrbvuwpahv.supabase.co/storage/v1/object/public/skoegleimages//Shoe.png",
       link: "/pages/products/view/9iclen0u"
     },
     {
@@ -93,7 +93,7 @@ export default function IoTHomes() {
       description: "Empower your drive with smart vehicle tracking. Whether for personal use or fleet management, our Vehicle Tracker ensures safety, real-time monitoring, and complete control — all from your fingertips.",
       category: "gps",
       icon: <DirectionsCarIcon />,
-      image: "/products/vehicletracker/Black.jpg",
+      image: "https://yrldiyjabkjrbvuwpahv.supabase.co/storage/v1/object/public/skoegleimages//Veh.png",
       link: "/pages/products/view/0f5msiw6"
     }
   ];
@@ -183,7 +183,7 @@ export default function IoTHomes() {
             >
               <video
                 ref={videoRef}
-                src="/skovid.mp4"
+                src="https://yrldiyjabkjrbvuwpahv.supabase.co/storage/v1/object/public/skoegleimages//skovid%20(1).mp4"
                 autoPlay
                 muted={isMuted}
                 loop
@@ -422,7 +422,7 @@ export default function IoTHomes() {
                 }}
               >
                 <img
-                  src="/image5.jpg"
+                  src="https://yrldiyjabkjrbvuwpahv.supabase.co/storage/v1/object/public/skoegleimages//image5.jpg"
                   alt="SKOEGLE IoT Integration"
                   style={{
                     objectFit: 'cover',

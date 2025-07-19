@@ -12,7 +12,7 @@ export default function App() {
               <CardMedia 
               sx={{ height: 400 }}
                 component="img"
-                image="/image.png" // Replace with actual path
+                image="https://yrldiyjabkjrbvuwpahv.supabase.co/storage/v1/object/public/skoegleimages//image.png" // Replace with actual path
                 alt="Engineers Working"
               />
             </Card>
@@ -60,7 +60,7 @@ From real-time data insights to intelligent automation, we help you stay ahead i
               <Card sx={{ maxWidth: 300, borderRadius: 3 }}>
                 <CardMedia
                   component="img"
-                  image="/image2.png" // Replace with actual path
+                  image="https://yrldiyjabkjrbvuwpahv.supabase.co/storage/v1/object/public/skoegleimages//image2.png" // Replace with actual path
                   alt="iot with Laptop"
                 />
               </Card>

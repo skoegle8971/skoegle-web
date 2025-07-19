@@ -36,7 +36,7 @@ export default function Products() {
           if (res.data.success) {
             console.log(" Fetched products from API"); 
             setProducts(res.data.products);
-            sessionStorage.setItem("products_cache", JSON.stringify(res.data.products));
+            // sessionStorage.setItem("products_cache", JSON.stringify(res.data.products));
           }
         })
         .catch(err => console.error(" Failed to fetch products:", err)) 
